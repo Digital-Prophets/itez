@@ -41,3 +41,28 @@ class District(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class WorkDetail(models.Model):
+    """
+    Include Work Detail properties. 
+    """
+    salary = models.DecimalField( 
+        _("Monthly Salary"),
+        decimal_places=2,
+        max_digits=1000,
+        null=False
+    )
+    company = models.CharField(
+        "Company Name",
+        max_length=200,
+        null=False
+    )
+    insured = models.BooleanField(
+        "Company Insured",
+        default = False
+    )
+    work_address = models.CharField(
+        "Work Address",
+        max_length=300
+    )
