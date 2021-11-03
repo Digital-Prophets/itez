@@ -62,10 +62,11 @@ class WorkDetail(models.Model):
         _("Company Insured"),
         default = False
     )
-    work_address = models.CharField(
+    work_address = models.TextField(
         _("Work Address"),
-        max_length=300
-    )
+        null=True,
+        blank=True
+        )
 
     def __str__(self):
         return self.company
