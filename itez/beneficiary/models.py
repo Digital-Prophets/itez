@@ -47,7 +47,7 @@ class WorkDetail(models.Model):
     """
     Include Work Detail properties. 
     """
-    salary = models.DecimalField( 
+    gross_pay = models.DecimalField( 
         _("Monthly Salary"),
         decimal_places=2,
         max_digits=1000,

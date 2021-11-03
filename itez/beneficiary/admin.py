@@ -13,7 +13,7 @@ class DistrictAdmin(admin.ModelAdmin):
 
 class WorkDetailAdmin(admin.ModelAdmin):
     list_display = [
-        'salary',
+        'gross_pay',
         'company',
         'work_address',
         'insured',
