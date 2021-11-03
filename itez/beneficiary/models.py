@@ -43,39 +43,28 @@ class District(models.Model):
         return self.name
 
 
-class WorkDetail(models.Model):
+class workDetails(models.Model):
     """
     Include Work Detail properties.
     """
-    POSITIVE_CHOICE = "Yes"
-    NEGATIVE_CHOICE = "No"
-    CHOICE_LIST = [
-        (POSITIVE_CHOICE, "Yes"),
-        (NEGATIVE_CHOICE, "No")
-    ]
-
-    salary = models.IntegerField(
-        "Monthly Salary",
+    salary = models.DecimalField(
+        _("Monthly Salary"),
+        decimal_places=2,
+        max_digits=1000,
         null=False
     )
-
     company = models.CharField(
-        "Company Name", 
-        max_length=200, 
+        "Company Name",
+        max_length=200,
         null=False
     )
-
-    insured = models.CharField( 
-        "Is your company insured?", 
-        choices = CHOICE_LIST,
-        max_length=100, 
-        default = POSITIVE_CHOICE
+    insured = models.BooleanField(
+        "Company insured",
+        default=False
     )
-
     work_address = models.CharField(
         "Work Address",
-        null=False,
-        max_length=500
+        max_length=300
     )
 
     def __str__(self):

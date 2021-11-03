@@ -2,7 +2,7 @@ from django.contrib import admin
 from itez.beneficiary.models import (
     Province,
     District,
-    WorkDetail
+    workDetails
 )
 
 class ProvinceAdmin(admin.ModelAdmin):
@@ -11,14 +11,15 @@ class ProvinceAdmin(admin.ModelAdmin):
 class DistrictAdmin(admin.ModelAdmin):
     list_display = ['name', 'created']
 
-class WorkDetailAdmin(admin.ModelAdmin):
+
+class workDetailsAdmin(admin.ModelAdmin):
     list_display = [
         'salary',
         'company',
         'work_address',
-        'insured'
+        'insured',
     ]
 
 admin.site.register(Province, ProvinceAdmin)
 admin.site.register(District, DistrictAdmin)
-admin.site.register(WorkDetail, WorkDetailAdmin)
+admin.site.register(workDetails ,workDetailsAdmin)
