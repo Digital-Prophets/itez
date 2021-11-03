@@ -54,15 +54,18 @@ class WorkDetail(models.Model):
         null=False
     )
     company = models.CharField(
-        "Company Name",
+        _("Company Name"),
         max_length=200,
         null=False
     )
     insured = models.BooleanField(
-        "Company Insured",
+        _("Company Insured"),
         default = False
     )
     work_address = models.CharField(
-        "Work Address",
+        _("Work Address"),
         max_length=300
     )
+
+    def __str__(self):
+        return self.company
