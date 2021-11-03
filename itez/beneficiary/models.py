@@ -34,10 +34,49 @@ class District(models.Model):
 
     province = models.ForeignKey(
         Province,
-        on_delete=PROTECT,
+        on_delete=PROTECT
     )
 
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+
+
+class WorkDetail(models.Model):
+    """
+    Include Work Detail properties.
+    """
+    POSITIVE_CHOICE = "Yes"
+    NEGATIVE_CHOICE = "No"
+    CHOICE_LIST = [
+        (POSITIVE_CHOICE, "Yes"),
+        (NEGATIVE_CHOICE, "No")
+    ]
+
+    salary = models.IntegerField(
+        "Monthly Salary",
+        null=False
+    )
+
+    company = models.CharField(
+        "Company Name", 
+        max_length=200, 
+        null=False
+    )
+
+    insured = models.CharField( 
+        "Is your company insured?.", 
+        choices = CHOICE_LIST,
+        max_length=100, 
+        default = POSITIVE_CHOICE
+    )
+
+    work_address = models.CharField(
+        "Work Address",
+        null=False,
+        max_length=500
+    )
+
+    def __str__(self):
+        return self.company
