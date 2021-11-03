@@ -66,7 +66,7 @@ class WorkDetail(models.Model):
     )
 
     insured = models.CharField( 
-        "Is your company insured?.", 
+        "Is your company insured?", 
         choices = CHOICE_LIST,
         max_length=100, 
         default = POSITIVE_CHOICE
