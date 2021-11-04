@@ -8,6 +8,10 @@ from itez.beneficiary.models import (
 )
 
 
+class BeneficiaryAdmin(admin.ModelAdmin):
+    list_display = ["first_name", "last_name", "beneficiary_code", "created"]
+
+
 class ProvinceAdmin(admin.ModelAdmin):
     list_display = ["name", "created"]
 
@@ -27,10 +31,6 @@ class WorkDetailAdmin(admin.ModelAdmin):
         "work_address",
         "insured",
     ]
-
-
-class BeneficiaryAdmin(admin.ModelAdmin):
-    list_display = ["first_name", "last_name", "beneficiary_code", "created"]
 
 
 admin.site.register(Province, ProvinceAdmin)
