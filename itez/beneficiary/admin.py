@@ -9,7 +9,12 @@ from itez.beneficiary.models import (
 
 
 class BeneficiaryAdmin(admin.ModelAdmin):
-    list_display = ["first_name", "last_name", "beneficiary_code", "created"]
+    list_display = [
+        "first_name",
+        "last_name",
+        "beneficiary_code",
+        "created"
+    ]
 
 
 class ProvinceAdmin(admin.ModelAdmin):
