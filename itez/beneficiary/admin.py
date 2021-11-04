@@ -3,27 +3,38 @@ from itez.beneficiary.models import (
     Province,
     District,
     ServiceArea,
-    WorkDetail
+    WorkDetail,
+    Beneficiary,
 )
 
+
 class ProvinceAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created']
+    list_display = ["name", "created"]
+
 
 class DistrictAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created']
+    list_display = ["name", "created"]
+
 
 class ServiceAreaAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created']
+    list_display = ["name", "created"]
+
 
 class WorkDetailAdmin(admin.ModelAdmin):
     list_display = [
-        'gross_pay',
-        'company',
-        'work_address',
-        'insured',
+        "gross_pay",
+        "company",
+        "work_address",
+        "insured",
     ]
+
+
+class BeneficiaryAdmin(admin.ModelAdmin):
+    list_display = ["first_name", "last_name", "beneficiary_code", "created"]
+
 
 admin.site.register(Province, ProvinceAdmin)
 admin.site.register(District, DistrictAdmin)
 admin.site.register(ServiceArea, ServiceAreaAdmin)
-admin.site.register(WorkDetail ,WorkDetailAdmin)
+admin.site.register(WorkDetail, WorkDetailAdmin)
+admin.site.register(Beneficiary, BeneficiaryAdmin)
