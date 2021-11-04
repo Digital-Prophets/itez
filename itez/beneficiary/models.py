@@ -1,6 +1,8 @@
 from django.db import models
-from django.db.models.deletion import PROTECT
+from django.db.models.deletion import PROTECT 
 from django.utils.translation import gettext_lazy as _
+
+
 
 class Province(models.Model):
     """
@@ -35,6 +37,26 @@ class District(models.Model):
     province = models.ForeignKey(
         Province,
         on_delete=PROTECT,
+    )
+
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ServiceArea(models.Model):
+    """
+    Define service area properties.
+    """
+    name = models.CharField(
+        _('Service Area'),
+        max_length=200
+    )
+
+    district = models.ForeignKey(
+        District,
+        on_delete=PROTECT
     )
 
     created = models.DateTimeField(auto_now_add=True)
