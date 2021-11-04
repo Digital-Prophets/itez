@@ -11,7 +11,7 @@ export CELERY_BROKER_URL="${REDIS_URL}"
 
 
 if [ -z "${DATABASE_USERNAME}" ]; then
-    base_postgres_image_default_user='postgres'
+    base_postgres_image_default_user='docker'
     export DATABASE_USERNAME="${base_postgres_image_default_user}"
 fi
 export DATABASE_URL="postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}"

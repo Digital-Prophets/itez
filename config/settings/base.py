@@ -44,12 +44,12 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USERNAME'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
+        'ENGINE': "django.contrib.gis.db.backends.postgis",
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USERNAME"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT"),
     }
 }
 
