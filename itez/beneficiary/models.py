@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis import models
 from django.db.models.deletion import PROTECT
 from django.db.models.fields.related import create_many_to_many_intermediary_model
 from django.utils.translation import gettext_lazy as _
@@ -16,7 +16,7 @@ class Beneficiary(models.Model):
         ("female", _("Female")),
         ("other", _("Other"))
     )
-  
+
     MARITAL_STATUS = (
         ("single", _("Single")),
         ("married", _("Married")),
