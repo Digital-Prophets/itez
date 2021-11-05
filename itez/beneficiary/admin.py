@@ -6,6 +6,7 @@ from itez.beneficiary.models import (
     ServiceArea,
     WorkDetail,
     Beneficiary,
+    BeneficiaryParent
 )
 
 
@@ -15,7 +16,8 @@ class BeneficiaryAdmin(OSMGeoAdmin):
         "last_name",
         "beneficiary_code",
         "created",
-        "location"
+        "location",
+        "parent_details"
     ]
 
 
@@ -45,3 +47,4 @@ admin.site.register(District, DistrictAdmin)
 admin.site.register(ServiceArea, ServiceAreaAdmin)
 admin.site.register(WorkDetail, WorkDetailAdmin)
 admin.site.register(Beneficiary, BeneficiaryAdmin)
+admin.site.register(BeneficiaryParent)

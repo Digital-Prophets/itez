@@ -24,6 +24,15 @@ class Beneficiary(models.Model):
         ("widowed", _("Widowed")),
     )
 
+    TERTIARY_EDUCATION_QUALIFICATION = (
+        ("certificate", _("Certificate")),
+        ("diploma", _("Diploma")),
+        ("degree", _("Degree")),
+        ("masters", _("Masters")),
+        ("doctrate", _("Doctrate")),
+        ("phd", _("PHD")),
+    )
+
     first_name = models.CharField(
         _("First Name"),
         max_length=200
@@ -48,6 +57,16 @@ class Beneficiary(models.Model):
         null=True,
         blank=True
     )
+    phone_number = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True
+    )
+    email = models.EmailField(
+        max_length=200,
+        null=True,
+        blank=True
+    )
     beneficiary_code = models.UUIDField(
         default=generate_uuid_and_agent_code()[0],
         editable=False
@@ -57,6 +76,39 @@ class Beneficiary(models.Model):
         _("Marital Status"),
         choices=MARITAL_STATUS,
         max_length=100
+    )
+    name_of_spouse = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True
+    )
+    number_of_children = models.IntegerField(
+        null=True,
+        blank=True
+    )
+    number_of_siblings = models.IntegerField(
+        null=True,
+        blank=True
+    )
+    parent_details = models.ForeignKey(
+        'BeneficiaryParent',
+        on_delete=models.PROTECT
+    )
+    junior_secondary_qualification = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True
+    )
+    senior_secondary_qualification = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+    tertiary_eduction_qualification = models.CharField(
+        max_length=300,
+        null=True,
+        blank=True,
+        choices=TERTIARY_EDUCATION_QUALIFICATION
     )
     created = models.DateTimeField(auto_now_add=True)
     location = models.PointField(
@@ -73,6 +125,40 @@ class Beneficiary(models.Model):
         verbose_name = "Beneficiary"
         verbose_name_plural = "Beneficiaries"
         ordering = ["created"]
+
+
+class BeneficiaryParent(models.Model):
+    father_first_name = models.CharField(
+        _("Father First Name"),
+        max_length=200
+    )
+    father_last_name = models.CharField(
+        _("Father Last Name"),
+        max_length=200
+    )
+    mother_first_name = models.CharField(
+        _("Mother First Name"),
+        max_length=200
+    )
+    mother_last_name = models.CharField(
+        _("Mother Last Name"),
+        max_length=200
+    )
+    address = models.TextField(
+        max_length=300,
+        null=True,
+        blank=True
+    )
+    phone_number = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) :
+        return f"Beneficiary Parent: {self.father_first_name} {self.father_last_name}"
+
 
 
 class Province(models.Model):
