@@ -1,5 +1,4 @@
 from django.contrib.gis.db import models
-from django.db.models.deletion import PROTECT
 from django.db.models.fields.related import create_many_to_many_intermediary_model
 from django.utils.translation import gettext_lazy as _
 
@@ -36,15 +35,18 @@ class Beneficiary(models.Model):
     other_name = models.CharField(
         _("Other Name"),
         max_length=200,
-        null=True
+        null=True,
+        blank=True
     )
     gender = models.CharField(
         _("Gender"),
         max_length=100,
-        choices=GENDER
+        choices=GENDER,
     )
     profile_photo = models.ImageField(
-        upload_to="profile_photo/"
+        upload_to="profile_photo/",
+        null=True,
+        blank=True
     )
     beneficiary_code = models.UUIDField(
         default=generate_uuid_and_agent_code()[0],
@@ -94,7 +96,7 @@ class District(models.Model):
 
     province = models.ForeignKey(
         Province,
-        on_delete=PROTECT,
+        on_delete=models.PROTECT,
     )
 
     created = models.DateTimeField(auto_now_add=True)
