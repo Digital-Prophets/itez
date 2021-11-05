@@ -6,27 +6,27 @@ from itez.beneficiary.models import (
     WorkDetail
 )
 
-class ProvinceSerializer(serializers.ModelSerializer):
+class ProvinceModelSerializer(serializers.ModelSerializer):
     """
-    Province Serializer
+    Province Serializer.
     """
     class Meta:
         model = Province
         fields = '__all__'
 
 
-class DistrictSerializer(serializers.ModelSerializer):
+class DistrictModelSerializer(serializers.ModelSerializer):
     """
-    District Serializer
+    District Serializer.
     """
     class Meta:
         model = District
         fields = '__all__'
 
 
-class ServiceAreaSerializer(serializers.ModelSerializer):
+class ServiceAreaModelSerializer(serializers.ModelSerializer):
     """
-    Service Area Serializer
+    Service Area Serializer.
     """
     class Meta:
         model = ServiceArea
@@ -34,9 +34,9 @@ class ServiceAreaSerializer(serializers.ModelSerializer):
 
 
 
-class WorkDetailSerializer(serializers.ModelSerializer):
+class WorkDetailModelSerializer(serializers.ModelSerializer):
     """
-    Work Detail Serializer
+    Work Detail Serializer.
     """
     class Meta:
         model = WorkDetail
