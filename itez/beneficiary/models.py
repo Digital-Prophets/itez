@@ -160,7 +160,6 @@ class BeneficiaryParent(models.Model):
         return f"Beneficiary Parent: {self.father_first_name} {self.father_last_name}"
 
 
-
 class Province(models.Model):
     """
     Implements province properties and required methods.
