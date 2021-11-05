@@ -17,13 +17,17 @@ class BeneficiaryAdmin(OSMGeoAdmin):
         "last_name",
         "beneficiary_ID",
         "created",
-        "location",
         "parent_details"
     ]
 
 
 class BeneficiaryParentAdmin(admin.ModelAdmin):
-    list_display = ["father_first_name", "father_last_name", "mother_first_name", "mother_last_name"]
+    list_display = [
+        "father_first_name",
+        "father_last_name",
+        "mother_first_name", 
+        "mother_last_name"
+    ]
 
 class ProvinceAdmin(admin.ModelAdmin):
     list_display = ["name", "created"]
