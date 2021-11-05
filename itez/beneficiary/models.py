@@ -1,4 +1,4 @@
-from django.contrib.gis import models
+from django.contrib.gis.db import models
 from django.db.models.deletion import PROTECT
 from django.db.models.fields.related import create_many_to_many_intermediary_model
 from django.utils.translation import gettext_lazy as _
@@ -110,7 +110,7 @@ class ServiceArea(models.Model):
 
     name = models.CharField(_("Service Area"), max_length=200)
 
-    district = models.ForeignKey(District, on_delete=PROTECT)
+    district = models.ForeignKey(District, on_delete=models.PROTECT)
 
     created = models.DateTimeField(auto_now_add=True)
 
