@@ -3,6 +3,4 @@ from . import views
 
 
 app_name = "beneficiary"
-urlpatterns = [
-    # path('swagger/', views.schema_view, name='swagger'),
-]
+urlpatterns = []

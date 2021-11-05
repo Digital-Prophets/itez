@@ -333,9 +333,6 @@ CORS_URLS_REGEX = r"^/api/.*$"
 # django-role-permissions
 ROLEPERMISSIONS_MODULE = 'config.settings.roles'
 
-
-
-
 """
 Settings for JWT Token Authentication.
 """
