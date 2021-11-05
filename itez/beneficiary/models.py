@@ -25,7 +25,7 @@ class Beneficiary(models.Model):
     )
 
     EDUCATION_LEVEL = (
-        ("none", _("NONE")),
+        ("none", _("None")),
         ("primary", _("Primary")),
         ("basic", _("Basic")),
         ("secondary", _("Secondary O'Level")),
