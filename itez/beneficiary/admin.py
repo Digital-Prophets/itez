@@ -14,12 +14,15 @@ class BeneficiaryAdmin(OSMGeoAdmin):
     list_display = [
         "first_name",
         "last_name",
-        "beneficiary_code",
+        "beneficiary_id",
         "created",
         "location",
         "parent_details"
     ]
 
+
+class BeneficiaryParentAdmin(admin.ModelAdmin):
+    list_display = ["father_first_name", "father_last_name", "mother_first_name", "mother_last_name"]
 
 class ProvinceAdmin(admin.ModelAdmin):
     list_display = ["name", "created"]
@@ -47,4 +50,4 @@ admin.site.register(District, DistrictAdmin)
 admin.site.register(ServiceArea, ServiceAreaAdmin)
 admin.site.register(WorkDetail, WorkDetailAdmin)
 admin.site.register(Beneficiary, BeneficiaryAdmin)
-admin.site.register(BeneficiaryParent)
+admin.site.register(BeneficiaryParent, BeneficiaryParentAdmin)

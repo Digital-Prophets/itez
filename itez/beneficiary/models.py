@@ -24,7 +24,11 @@ class Beneficiary(models.Model):
         ("widowed", _("Widowed")),
     )
 
-    TERTIARY_EDUCATION_QUALIFICATION = (
+    EDUCATION_LEVEL = (
+        ("none", _("NONE")),
+        ("primary", _("Primary")),
+        ("basic", _("Basic")),
+        ("secondary", _("Secondary O'Level")),
         ("certificate", _("Certificate")),
         ("diploma", _("Diploma")),
         ("degree", _("Degree")),
@@ -67,7 +71,7 @@ class Beneficiary(models.Model):
         null=True,
         blank=True
     )
-    beneficiary_code = models.UUIDField(
+    beneficiary_id = models.UUIDField(
         default=generate_uuid_and_agent_code()[0],
         editable=False
     )
@@ -94,21 +98,11 @@ class Beneficiary(models.Model):
         'BeneficiaryParent',
         on_delete=models.PROTECT
     )
-    junior_secondary_qualification = models.CharField(
-        max_length=200,
-        null=True,
-        blank=True
-    )
-    senior_secondary_qualification = models.CharField(
-        max_length=200,
-        null=True,
-        blank=True,
-    )
-    tertiary_eduction_qualification = models.CharField(
+    education_level = models.CharField(
         max_length=300,
         null=True,
         blank=True,
-        choices=TERTIARY_EDUCATION_QUALIFICATION
+        choices=EDUCATION_LEVEL
     )
     created = models.DateTimeField(auto_now_add=True)
     location = models.PointField(
@@ -149,15 +143,44 @@ class BeneficiaryParent(models.Model):
         null=True,
         blank=True
     )
-    phone_number = models.CharField(
+    father_phone_number = models.CharField(
         max_length=20,
+        null=True,
+        blank=True
+    )
+    mother_phone_number = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True
+    )
+    father_date_of_birth = models.DateField(
+        _("Father's date of birth"),
+        null=True,
+        blank=True
+    )
+    mother_date_of_birth = models.DateField(
+        _("Mother's date of birth"),
+        null=True,
+        blank=True
+    )
+    father_village = models.CharField(
+        _("Father's Village"),
+        max_length=200,
+        null=True,
+        blank=True
+    )
+    mother_village = models.CharField(
+        _("Mother's Village"),
+        max_length=200,
         null=True,
         blank=True
     )
     created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) :
-        return f"Beneficiary Parent: {self.father_first_name} {self.father_last_name}"
+    def __str__(self):
+        return f"Beneficiary Parents are \
+            Father: {self.father_first_name} {self.father_last_name}, \
+            Mother: {self.mother_first_name} {self.mother_last_name}"
 
 
 class Province(models.Model):
