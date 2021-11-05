@@ -72,7 +72,8 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
-    "rolepermissions"
+    "rolepermissions",
+    "drf-yasg"
 ]
 
 LOCAL_APPS = [
