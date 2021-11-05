@@ -60,7 +60,6 @@ class Beneficiary(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
     location = models.PointField(
-        dim=3,
         geography=True,
         blank=True,
         null=True,
