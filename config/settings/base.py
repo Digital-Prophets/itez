@@ -337,7 +337,6 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'ITEZ API',
     'DESCRIPTION': "Comprehensive data management of Intersex and Trans-persons in Zambia",
     'VERSION': '1.0.0',
-    # OTHER SETTINGS
 }
 
 # Settings for JWT Token Authentication.
