@@ -31,6 +31,9 @@ from itez.beneficiary.api.serializers import (
 
 class AgentDetailAPIView(ListModelMixin, CreateModelMixin,
     GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    """
+    API end point for AgentDetail model list, create and update.
+    """
     queryset = AgentDetail.objects.all()
     serializer_class = AgentDetailSerializer
 
@@ -43,6 +46,9 @@ class AgentDetailAPIView(ListModelMixin, CreateModelMixin,
 
 class BeneficiaryAPIView(ListModelMixin, CreateModelMixin,
     GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    """
+    API end point for Beneficiary model list, create and update.
+    """
     queryset = Beneficiary.objects.all()
     serializer_class = BeneficiarySerializer
 
@@ -55,18 +61,9 @@ class BeneficiaryAPIView(ListModelMixin, CreateModelMixin,
 
 class BeneficiaryParentAPIView(ListModelMixin, CreateModelMixin,
     GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
-    queryset = BeneficiaryParent.objects.all()
-    serializer_class = BeneficiaryParentSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class BeneficiaryParentAPIView(ListModelMixin, CreateModelMixin,
-    GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    """
+    API end point for BeneficiaryParent model list, create and update.
+    """
     queryset = BeneficiaryParent.objects.all()
     serializer_class = BeneficiaryParentSerializer
 
