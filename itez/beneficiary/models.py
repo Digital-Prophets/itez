@@ -8,10 +8,10 @@ class AgentDetail(models.Model):
     """
     Create agent detail table with its attributes or columns.
     """
-    MALE        =  1
-    FEMALE      =  2
-    TRANSGENDER =  3
-    OTHER       =  4
+    MALE        =  "1"
+    FEMALE      =  "2"
+    TRANSGENDER =  "3"
+    OTHER       =  "4"
 
     GENDER_CHOICES = (
         (MALE, _("Male")),
@@ -56,7 +56,7 @@ class AgentDetail(models.Model):
     )
 
     def __str__(self):
-        return f"{self.first_name} {self.second_name}"
+        return f"{self.first_name} {self.last_name}"
 
 
 class Beneficiary(models.Model):
