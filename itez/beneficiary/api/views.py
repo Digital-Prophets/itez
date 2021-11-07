@@ -9,6 +9,7 @@ from rest_framework.mixins import (
 from rest_framework.viewsets import GenericViewSet
 
 from itez.beneficiary.models import (
+    AgentDetail,
     Beneficiary,
     BeneficiaryParent,
     Province,
@@ -18,6 +19,7 @@ from itez.beneficiary.models import (
 )
 
 from itez.beneficiary.api.serializers import (
+    AgentDetailSerializer,
     BeneficiarySerializer,
     BeneficiaryParentSerializer,
     ProvinceModelSerializer,
@@ -25,6 +27,19 @@ from itez.beneficiary.api.serializers import (
     ServiceAreaModelSerializer,
     WorkDetailModelSerializer
 )
+
+
+class AgentDetailAPIView(ListModelMixin, CreateModelMixin,
+    GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    queryset = AgentDetail.objects.all()
+    serializer_class = AgentDetailSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
 
 class BeneficiaryAPIView(ListModelMixin, CreateModelMixin,
     GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
