@@ -9,6 +9,7 @@ from rest_framework.mixins import (
 from rest_framework.viewsets import GenericViewSet
 
 from itez.beneficiary.models import (
+    Beneficiary,
     BeneficiaryParent,
     Province,
     District,
@@ -17,12 +18,36 @@ from itez.beneficiary.models import (
 )
 
 from itez.beneficiary.api.serializers import (
+    BeneficiarySerializer,
     BeneficiaryParentSerializer,
     ProvinceModelSerializer,
     DistrictModelSerializer,
     ServiceAreaModelSerializer,
     WorkDetailModelSerializer
 )
+
+class BeneficiaryAPIView(ListModelMixin, CreateModelMixin,
+    GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    queryset = Beneficiary.objects.all()
+    serializer_class = BeneficiarySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class BeneficiaryParentAPIView(ListModelMixin, CreateModelMixin,
+    GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    queryset = BeneficiaryParent.objects.all()
+    serializer_class = BeneficiaryParentSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 class BeneficiaryParentAPIView(ListModelMixin, CreateModelMixin,

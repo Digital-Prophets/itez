@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from itez.users.api.views import UserViewSet
 from itez.beneficiary.api.views import (
+    BeneficiaryAPIView,
     BeneficiaryParentAPIView,
     ProvinceAPIView,
     DistrictAPIView,
@@ -17,6 +18,7 @@ else:
 
 
 router.register("users", UserViewSet)
+router.register("beneficiaries", BeneficiaryAPIView)
 router.register("beneficiary_parents", BeneficiaryParentAPIView)
 router.register("provinces", ProvinceAPIView)
 router.register("districts", DistrictAPIView)
