@@ -19,6 +19,9 @@ class BeneficiarySerializer(serializers.ModelSerializer):
 
 
 class BeneficiaryParentSerializer(serializers.ModelSerializer):
+    """
+    BeneficiaryParent serializer.
+    """
     class Meta:
         model = BeneficiaryParent
         fields = '__all__'
