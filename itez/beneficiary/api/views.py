@@ -43,6 +43,9 @@ class AgentDetailAPIView(ListModelMixin, CreateModelMixin,
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
 
 class BeneficiaryAPIView(ListModelMixin, CreateModelMixin,
     GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
@@ -58,6 +61,9 @@ class BeneficiaryAPIView(ListModelMixin, CreateModelMixin,
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
 
 class BeneficiaryParentAPIView(ListModelMixin, CreateModelMixin,
     GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
@@ -72,6 +78,9 @@ class BeneficiaryParentAPIView(ListModelMixin, CreateModelMixin,
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
 
 class ProvinceAPIView(ListModelMixin,RetrieveModelMixin,
