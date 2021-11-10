@@ -50,7 +50,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         Validates the old_password provided is correct.
 
         Args:
-            value ([str]): Data from the old_password field 
+            value ([str]): Data from the old_password field.
 
         Raises:
             serializers.ValidationError: This exception is raised if the old_password is not correct.
