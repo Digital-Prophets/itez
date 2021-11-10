@@ -107,9 +107,9 @@ class Beneficiary(models.Model):
     )
     profile_photo = ProcessedImageField(
         upload_to='profile_photo',
-        processors=[ResizeToFill(1000, 500)],
+        processors=[ResizeToFill(512, 512)],
         format='JPEG',
-        options={'quality': 80},
+        options={'quality': 100},
         null=True,
         blank=True
     )
