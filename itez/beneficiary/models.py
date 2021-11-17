@@ -330,6 +330,12 @@ class WorkDetail(models.Model):
         null=True,
         blank=True
     )
+    beneficiary = models.OneToOneField(
+        Beneficiary,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.company
