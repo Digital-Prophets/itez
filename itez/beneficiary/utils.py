@@ -1,7 +1,7 @@
 import uuid
 
 
-def generate_uuid_and_agent_code():
+def generate_uuid():
     """
     Generates a seven digit agent ID and a unique ID.
     """
