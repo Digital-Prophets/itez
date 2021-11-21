@@ -4,6 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 
 from rest_framework import serializers
 from rest_framework.fields import ListField
+
 from rolepermissions.roles import assign_role
 
 
@@ -94,18 +95,23 @@ class UserSerializer(serializers.ModelSerializer):
         return [group.name for group in obj.groups.all()]
 
     def create(self, validated_data):
+        password = validated_data.pop('password')
         roles_to_assign = validated_data.pop("groups")
-        user = User.objects.create(**validated_data)
+        
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
 
         if roles_to_assign:
             for role in roles_to_assign:
                 assign_role(user, role)
+        
         return user
     
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
-        instance.usernmae = validated_data.get('username', instance.username)
+        instance.username = validated_data.get('username', instance.username)
         instance.name = validated_data.get('name', instance.name)
         roles_to_assign = validated_data.get("groups", [group.name for group in instance.groups.all()])
         
