@@ -3,18 +3,11 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 
 from rest_framework import serializers
+from rest_framework.fields import ListField
+from rolepermissions.roles import assign_role
+
 
 User = get_user_model()
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ["username", "name", "url"]
-
-        extra_kwargs = {
-            "url": {"view_name": "api:user-detail", "lookup_field": "username"}
-        }
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -77,7 +70,48 @@ class GroupModelSerializer(serializers.ModelSerializer):
     """
     Serializer for the Django Group model.
     """
+    name = serializers.SerializerMethodField()
     class Meta:
         model = Group
-        fields = '__all__'
+        fields = ['name']
+        extra_kwargs = {
+            'name': {'validators': []},
+        }
+    def get_name(self, obj):
+        return [group.name for group in obj.objects.all()]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    groups = ListField(required=False, default=[], write_only=True)
+    assigned_roles = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = User
+        fields = ["email", "username", "name", "password", "groups", "assigned_roles"]
         depth = 2
+    
+    def get_assigned_roles(self, obj):
+        return [group.name for group in obj.groups.all()]
+
+    def create(self, validated_data):
+        roles_to_assign = validated_data.pop("groups")
+        user = User.objects.create(**validated_data)
+
+        if roles_to_assign:
+            for role in roles_to_assign:
+                assign_role(user, role)
+        return user
+    
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email', instance.email)
+        instance.usernmae = validated_data.get('username', instance.username)
+        instance.name = validated_data.get('name', instance.name)
+        roles_to_assign = validated_data.get("groups", [group.name for group in instance.groups.all()])
+        
+        instance.groups.clear()
+        for role in roles_to_assign:
+            assign_role(instance, role)
+        
+        instance.save()
+        return instance
