@@ -7,4 +7,4 @@ class BeneficiaryConfig(AppConfig):
     verbose_name = _("Beneficiary")
 
     def ready(self):
-        import beneficiary.signals
+        from itez.beneficiary import signals
