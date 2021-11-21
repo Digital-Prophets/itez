@@ -13,7 +13,7 @@ def set_beneficiary_ID(instance, sender, **kwargs):
     the database. If instance.id is None, it means the object is being updated
     hence no need to generate a new ID.
     """
-    if instance.id is None:
+    if not instance.id:
         instance.beneficiary_ID = generate_uuid()[0]
     else:
         pass
@@ -26,7 +26,7 @@ def set_agent_ID(instance, sender, **kwargs):
     the database. If instance.id is None, it means the object is being updated
     hence no need to generate a new ID.
     """
-    if instance.id is None:
+    if not instance.id:
         instance.agent_ID = generate_uuid()[1]
     else:
         pass
