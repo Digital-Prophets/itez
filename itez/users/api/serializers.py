@@ -76,8 +76,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["email", "username", "name", "password", "roles", "assigned_roles"]
         depth = 2
     
-    def get_assigned_roles(self, obj):
-        return [group.name for group in obj.groups.all()]
+    def get_assigned_roles(self, user):
+        return [group.name for group in user.groups.all()]
 
     def create(self, validated_data):
         password = validated_data.pop('password')

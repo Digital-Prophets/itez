@@ -28,16 +28,15 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateMo
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    lookup_field = "username"
+    lookup_field = "id"
 
     def list(self, request):
         queryset = User.objects.all()
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, username=None):
-        queryset = User.objects.all()
-        user = get_object_or_404(queryset, username=username)
+    def retrieve(self, request, id=None):
+        user = get_object_or_404(User, id=id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
@@ -63,4 +62,3 @@ class RoleAPIView(ViewSet):
     def list(self, request):
         roles = RolesManager.get_roles_names()
         return Response({"roles": roles})
-
