@@ -14,7 +14,7 @@ def set_beneficiary_ID(instance, sender, **kwargs):
     hence no need to generate a new ID.
     """
     if not instance.id:
-        instance.beneficiary_ID = generate_uuid()[0]
+        instance.beneficiary_id = generate_uuid()[0]
     else:
         pass
 
@@ -27,6 +27,6 @@ def set_agent_ID(instance, sender, **kwargs):
     hence no need to generate a new ID.
     """
     if not instance.id:
-        instance.agent_ID = generate_uuid()[1]
+        instance.agent_id = generate_uuid()[1]
     else:
         pass

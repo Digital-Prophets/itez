@@ -39,7 +39,7 @@ class AgentDetail(models.Model):
         null=True,
         blank=True
     )
-    agend_ID = models.CharField(
+    agend_id = models.CharField(
         max_length=100,
         editable=False
     )
@@ -131,11 +131,11 @@ class Beneficiary(models.Model):
         null=True,
         blank=True
     )
-    beneficiary_ID = models.CharField(
+    beneficiary_id = models.CharField(
         max_length=100,
         editable=False
     )
-    agent_ID = models.ForeignKey(
+    agent = models.ForeignKey(
         AgentDetail,
         on_delete=models.PROTECT
     )
