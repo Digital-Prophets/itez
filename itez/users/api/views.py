@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.shortcuts import get_object_or_404
+from django.views.generic.base import View
 
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.decorators import action
 from rest_framework.mixins import (
     ListModelMixin,
@@ -12,12 +13,12 @@ from rest_framework.mixins import (
     DestroyModelMixin
 )
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ViewSet
 
+from rolepermissions.roles import RolesManager
 from .serializers import (
     UserSerializer,
     ChangePasswordSerializer,
-    GroupModelSerializer
 )
 
 User = get_user_model()
@@ -29,9 +30,16 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateMo
     queryset = User.objects.all()
     lookup_field = "username"
 
-    def get_queryset(self, *args, **kwargs):
-        assert isinstance(self.request.user.id, int)
-        return self.queryset.filter(id=self.request.user.id)
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, username=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, username=username)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
     @action(detail=False, methods=["GET"])
     def me(self, request):
@@ -48,13 +56,11 @@ class ChangePasswordView(UpdateModelMixin, GenericViewSet):
     serializer_class = ChangePasswordSerializer
 
 
-class RoleAPIView(ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class RoleAPIView(ViewSet):
     """
-    API endpoint to list All available Groups and roles.
+    API endpoint to list All available and roles.
     """
-    queryset = Group.objects.all()
-    serializer_class = GroupModelSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+    def list(self, request):
+        roles = RolesManager.get_roles_names()
+        return Response({"roles": roles})
 
