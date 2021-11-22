@@ -67,28 +67,13 @@ class ChangePasswordSerializer(serializers.Serializer):
         return instance
 
 
-class GroupModelSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Django Group model.
-    """
-    name = serializers.SerializerMethodField()
-    class Meta:
-        model = Group
-        fields = ['name']
-        extra_kwargs = {
-            'name': {'validators': []},
-        }
-    def get_name(self, obj):
-        return [group.name for group in obj.objects.all()]
-
-
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    groups = ListField(required=False, default=[], write_only=True)
+    roles = ListField(required=False, default=[], write_only=True)
     assigned_roles = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ["email", "username", "name", "password", "groups", "assigned_roles"]
+        fields = ["email", "username", "name", "password", "roles", "assigned_roles"]
         depth = 2
     
     def get_assigned_roles(self, obj):
@@ -96,7 +81,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop('password')
-        roles_to_assign = validated_data.pop("groups")
+        roles_to_assign = validated_data.pop("roles")
         
         user = User(**validated_data)
         user.set_password(password)
@@ -113,7 +98,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.username = validated_data.get('username', instance.username)
         instance.name = validated_data.get('name', instance.name)
-        roles_to_assign = validated_data.get("groups", [group.name for group in instance.groups.all()])
+        roles_to_assign = validated_data.get("roles", [group.name for group in instance.groups.all()])
         
         instance.groups.clear()
         for role in roles_to_assign:
