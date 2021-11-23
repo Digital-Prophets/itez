@@ -7,6 +7,7 @@ from rest_framework.fields import ListField
 
 from rolepermissions.roles import assign_role
 
+from ..models import Profile, UserWorkDetail
 
 User = get_user_model()
 
@@ -67,42 +68,30 @@ class ChangePasswordSerializer(serializers.Serializer):
         return instance
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    profile_photo = serializers.ImageField(required=False)
+    class Meta:
+        model = Profile
+        exclude = ('user',)
+
+
+class UserWorkDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserWorkDetail
+        exclude = ('user',)
+
+
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     roles = ListField(required=False, default=[], write_only=True)
     assigned_roles = serializers.SerializerMethodField(read_only=True)
+    profile = UserProfileSerializer(required=False)
+    user_work_detail = UserWorkDetailSerializer(required=False)
     class Meta:
         model = User
-        fields = ["email", "username", "name", "password", "roles", "assigned_roles"]
+        fields = ["email", "username", "name", "password", "roles", "assigned_roles", "profile", "user_work_detail"]
         depth = 2
     
     def get_assigned_roles(self, user):
         return [group.name for group in user.groups.all()]
-
-    def create(self, validated_data):
-        password = validated_data.pop('password')
-        roles_to_assign = validated_data.pop("roles")
-        
-        user = User(**validated_data)
-        user.set_password(password)
-        user.save()
-
-        if roles_to_assign:
-            for role in roles_to_assign:
-                assign_role(user, role)
-        
-        return user
-    
-
-    def update(self, instance, validated_data):
-        instance.email = validated_data.get('email', instance.email)
-        instance.username = validated_data.get('username', instance.username)
-        instance.name = validated_data.get('name', instance.name)
-        roles_to_assign = validated_data.get("roles", [group.name for group in instance.groups.all()])
-        
-        instance.groups.clear()
-        for role in roles_to_assign:
-            assign_role(instance, role)
-        
-        instance.save()
-        return instance
