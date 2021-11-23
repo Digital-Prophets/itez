@@ -130,7 +130,9 @@ class Profile(models.Model):
     )
 
     def __str__(self):
-        return self.user.username
+        if not self.user.first_name and not self.user.last_name:
+            return f"Profile: {self.user.username}"
+        return f"Profile: {self.user.first_name} {self.user.last_name}"
 
     class Meta:
         verbose_name = "User Profile"
@@ -161,4 +163,6 @@ class UserWorkDetail(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_work_detail")
 
     def __str__(self):
-        return self.user.username
+        if not self.user.first_name and not self.user.last_name:
+            return f"Company: {self.company_name}, User: {self.user.username}"
+        return f"Company: {self.company_name}, User: {self.user.first_name} {self.user.last_name}"
