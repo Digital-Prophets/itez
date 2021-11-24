@@ -12,9 +12,10 @@ from rest_framework.mixins import (
     UpdateModelMixin,
     DestroyModelMixin
 )
+from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ViewSet
-from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser, JSONParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 
 from rolepermissions.roles import assign_role
@@ -44,21 +45,6 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateMo
         user = get_object_or_404(User, id=id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
-
-    def create(self, request, **kwargs):
-        data = request.data
-        password = data.pop('password')
-        roles_to_assign = data.pop("roles")
-
-        user = User(**data)
-        user.set_password(password)
-        user.save()
-
-        if roles_to_assign:
-            for role in roles_to_assign:
-                assign_role(user, role)
-        
-        return Response(user)
     
     def update(self, request, id=None):
         user_to_update = get_object_or_404(User, id=id)
@@ -73,7 +59,8 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, CreateModelMixin, UpdateMo
             assign_role(user_to_update, role)
         
         user_to_update.save()
-        return None
+        serializer = UserSerializer(user_to_update)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=["get", "put", "patch"])
     def profile(self, request, id=None):
