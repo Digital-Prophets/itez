@@ -235,6 +235,7 @@ class LabAPIView(APIView):
         lab.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class PrescriptionAPIView(APIView):
     """
     Retrieve, update or delete a Prescription instance.
@@ -262,6 +263,7 @@ class PrescriptionAPIView(APIView):
         prescription = self.get_object(pk)
         prescription.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class FacilityAPIView(APIView):
     """
@@ -291,6 +293,7 @@ class FacilityAPIView(APIView):
         facility.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class FacilityTypeAPIView(APIView):
     """
     Retrieve, update or delete a Facility Type instance.
@@ -313,7 +316,6 @@ class FacilityTypeAPIView(APIView):
         facility_type = self.get_object(pk)
         facility_type.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 class ImplementingPartnerAPIView(APIView):
     """
@@ -362,6 +364,7 @@ class ServiceAPIView(APIView):
         Service.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class ServiceProviderPersonelAPIView(APIView):
     """
     Retrieve, update or delete a Service Provider Personel instance.
@@ -384,6 +387,7 @@ class ServiceProviderPersonelAPIView(APIView):
         service_provider_personel = self.get_object(pk)
         service_provider_personel.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class ServiceProviderPersonelQualificationAPIView(APIView):
     """
