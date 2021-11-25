@@ -10,7 +10,8 @@ from itez.beneficiary.models import (
     Facility,
     FacilityType,
     ImplementingPartner,
-    ServiceProvider
+    ServiceProviderPersonel,
+    ServiceProviderPersonelQualification
 )
 
 
@@ -83,6 +84,12 @@ class ImplementingPartnerAdmin(admin.ModelAdmin):
         'ip_type'
     ]
 
+
+class ImplementingPartnerAdmin(admin.ModelAdmin):
+    list_display = [
+        'name'
+    ]
+
 class ServiceProviderAdmin(admin.ModelAdmin):
     list_display = [
         'first_name',
@@ -90,6 +97,11 @@ class ServiceProviderAdmin(admin.ModelAdmin):
         'qualification',
         'department',
         'facility'
+    ]
+
+class ServiceProviderPersonelQualificationAdmin(admin.ModelAdmin):
+    list_display = [
+        'name'
     ]
 
 admin.site.register(Province, ProvinceAdmin)
@@ -102,4 +114,5 @@ admin.site.register(BeneficiaryParent, BeneficiaryParentAdmin)
 admin.site.register(Facility, FacilityAdmin)
 admin.site.register(FacilityType, FacilityTypeAdmin)
 admin.site.register(ImplementingPartner, ImplementingPartnerAdmin)
-admin.site.register(ServiceProvider, ServiceProviderAdmin)
+admin.site.register(ServiceProviderPersonel, ServiceProviderAdmin)
+admin.site.register(ServiceProviderPersonelQualification, ServiceProviderPersonelQualificationAdmin)

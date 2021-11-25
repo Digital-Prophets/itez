@@ -1,5 +1,4 @@
 from django.contrib.gis.db import models
-from django.db.models.fields import CharField
 from django.utils.translation import gettext_lazy as _
 
 from imagekit.processors import ResizeToFill
@@ -174,7 +173,7 @@ class Beneficiary(models.Model):
         blank=True,
         choices=EDUCATION_LEVEL
     )
-    service_provider = models.ManyToManyField('ServiceProvider')
+    service_provider = models.ManyToManyField('ServiceProviderPersonel')
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -447,16 +446,14 @@ class Facility(models.Model):
     def __str__(self):
         return str(self.name)
 
-class ServiceProvider(models.Model):
-    QUALIFICATIONS = (
-        ("certificate", _("Certificate")),
-        ("diploma", _("Diploma")),
-        ("degree", _("Degree")),
-        ("masters", _("Masters")),
-        ("doctrate", _("Doctrate")),
-        ("phd", _("PHD")),
+class ServiceProviderPersonelQualification(models.Model):
+    name = models.CharField(
+        max_length=200
     )
+    def __str__(self):
+        return self.name
 
+class ServiceProviderPersonel(models.Model):
     first_name = models.CharField(
         _("First Name"),
         max_length=200
@@ -482,15 +479,12 @@ class ServiceProvider(models.Model):
         blank=True,
         on_delete=models.SET_NULL
     )
-    qualification = models.CharField(
-        _("Qualification"),
-        max_length=100,
-        choices=QUALIFICATIONS,
-        default=QUALIFICATIONS[1][1],
-        null=True, 
-        blank=True
+    qualification = models.ForeignKey(
+        ServiceProviderPersonelQualification,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
-    
     class Meta:
         verbose_name = _("Service Provider")
         verbose_name_plural = _("Service Providers")
