@@ -13,7 +13,8 @@ from itez.beneficiary.models import (
     Province,
     District,
     ServiceArea,
-    WorkDetail
+    WorkDetail,
+    Appointment
 )
 
 from itez.beneficiary.api.serializers import (
@@ -23,7 +24,8 @@ from itez.beneficiary.api.serializers import (
     ProvinceModelSerializer,
     DistrictModelSerializer,
     ServiceAreaModelSerializer,
-    WorkDetailModelSerializer
+    WorkDetailModelSerializer,
+    AppointmentSerializer
 )
 
 
@@ -52,6 +54,24 @@ class BeneficiaryAPIView(ListModelMixin, CreateModelMixin,
     """
     queryset = Beneficiary.objects.all()
     serializer_class = BeneficiarySerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+
+class AppointmentAPIView(ListModelMixin, CreateModelMixin,
+    GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    """
+    API end point for Appointment model list, create and update.
+    """
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

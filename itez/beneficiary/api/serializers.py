@@ -7,7 +7,8 @@ from itez.beneficiary.models import (
     Province,
     District,
     ServiceArea,
-    WorkDetail
+    WorkDetail,
+    Appointment
 )
 
 
@@ -27,6 +28,15 @@ class BeneficiarySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Beneficiary
+        fields = '__all__'
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    """
+    Appointment serializer.
+    """
+    class Meta:
+        model = Appointment
         fields = '__all__'
 
 

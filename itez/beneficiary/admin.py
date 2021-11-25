@@ -6,7 +6,8 @@ from itez.beneficiary.models import (
     WorkDetail,
     AgentDetail,
     Beneficiary,
-    BeneficiaryParent
+    BeneficiaryParent,
+    Appointment
 )
 
 
@@ -14,9 +15,22 @@ class BeneficiaryAdmin(admin.ModelAdmin):
     list_display = [
         "first_name",
         "last_name",
-        "beneficiary_id",
+        "beneficiary_ID",
         "created",
-        "parent_details"
+        "parent_details",
+        "agent_ID"
+    ]
+
+
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = [
+        "full_name",
+        "facility_name",
+        "department_name",
+        "start_time",
+        "end_time",
+        "created_at",
+        "beneficiary"
     ]
 
 
@@ -54,7 +68,6 @@ class AgentDetailAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'birthdate',
-        'agent_id',
         'gender',
         'location'
     ]
@@ -66,3 +79,4 @@ admin.site.register(AgentDetail, AgentDetailAdmin)
 admin.site.register(WorkDetail, WorkDetailAdmin)
 admin.site.register(Beneficiary, BeneficiaryAdmin)
 admin.site.register(BeneficiaryParent, BeneficiaryParentAdmin)
+admin.site.register(Appointment, AppointmentAdmin)

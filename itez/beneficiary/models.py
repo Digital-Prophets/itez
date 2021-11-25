@@ -1,8 +1,11 @@
 from django.contrib.gis.db import models
+from django.db.models.fields.related import create_many_to_many_intermediary_model
 from django.utils.translation import gettext_lazy as _
 
 from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
+
+from .utils import generate_uuid
 
 
 GENDER_CHOICES = (
@@ -10,10 +13,6 @@ GENDER_CHOICES = (
     ("Female", _("Female")),
     ("Transgender", _("Transgender")),
     ("Other", _("Other"))
-)
-SEX_CHOICES = (
-    ("Male", _("Male")),
-    ("Female", _("Female"))
 )
 
 
@@ -39,9 +38,10 @@ class AgentDetail(models.Model):
         null=True,
         blank=True
     )
-    agent_id = models.CharField(
-        max_length=100,
-        editable=False
+    agend_ID = models.CharField(
+        _("Agent Id"),
+        default=generate_uuid()[1],
+        max_length=100
     )
     gender = models.CharField(
         _("Gender"),
@@ -106,11 +106,6 @@ class Beneficiary(models.Model):
         choices=GENDER_CHOICES,
         default=GENDER_CHOICES[3][0]
     )
-    sex = models.CharField(
-        _("Sex"),
-        max_length=100,
-        choices=SEX_CHOICES
-    )
     profile_photo = ProcessedImageField(
         upload_to='profile_photo',
         processors=[ResizeToFill(512, 512)],
@@ -131,13 +126,14 @@ class Beneficiary(models.Model):
         null=True,
         blank=True
     )
-    beneficiary_id = models.CharField(
-        max_length=100,
+    beneficiary_ID = models.UUIDField(
+        default=generate_uuid()[0],
         editable=False
     )
-    agent = models.ForeignKey(
+    agent_ID = models.ForeignKey(
         AgentDetail,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        default=generate_uuid()[1]
     )
     date_of_birth = models.DateField(_("Date of Birth"))
 
@@ -182,6 +178,53 @@ class Beneficiary(models.Model):
         verbose_name = "Beneficiary"
         verbose_name_plural = "Beneficiaries"
         ordering = ["created"]
+
+
+class Appointment(models.Model):
+    """
+    Create appointment table with columns.
+    """
+    DEPARTMENT_CHOICES = (
+        ('Dentistry', "Dentistry"),
+        ('Cardiology', "Cardiology"),
+        ('ENT Specialists', "ENT Specialists"),
+        ('Astrology', 'Astrology'),
+        ('Neuroanatomy', 'Neuroanatomy'),
+        ('Blood Screening', 'Blood Screening'),
+        ('Eye Care', 'Eye Care'),
+        ('Physical Therapy', 'Physical Therapy'),
+    )
+    full_name = models.CharField(
+        _("Full Name"),
+        max_length=100,
+    )
+    facility_name = models.CharField(
+        _("Facility Name"),
+        max_length=200
+    )
+    department_name = models.CharField(
+        _("Department Name"),
+        max_length=100,
+        choices=DEPARTMENT_CHOICES,
+        default=DEPARTMENT_CHOICES[0][0]
+    )
+    start_time = models.DateTimeField(
+        _("Start Time"),
+    )
+    end_time = models.DateTimeField(
+        _("End Time"),
+    )
+    created_at = models.DateField(
+        _("Created Date"),
+        auto_now_add=True
+    )
+    beneficiary = models.ForeignKey(
+        Beneficiary,
+        on_delete=models.PROTECT
+    )
+
+    def __str__(self):
+        return self.full_name
 
 
 class BeneficiaryParent(models.Model):
@@ -331,12 +374,6 @@ class WorkDetail(models.Model):
     )
     work_address = models.TextField(
         _("Work Address"),
-        null=True,
-        blank=True
-    )
-    beneficiary = models.OneToOneField(
-        Beneficiary,
-        on_delete=models.PROTECT,
         null=True,
         blank=True
     )
