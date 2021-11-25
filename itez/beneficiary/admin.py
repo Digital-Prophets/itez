@@ -6,7 +6,11 @@ from itez.beneficiary.models import (
     WorkDetail,
     AgentDetail,
     Beneficiary,
-    BeneficiaryParent
+    BeneficiaryParent,
+    Facility,
+    FacilityType,
+    ImplementingPartner,
+    ServiceProvider
 )
 
 
@@ -59,6 +63,35 @@ class AgentDetailAdmin(admin.ModelAdmin):
         'location'
     ]
 
+
+class FacilityTypeAdmin(admin.ModelAdmin):
+    list_display = [
+        'name'
+    ]
+
+class FacilityAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'facility_type',
+        'implementing_partner'
+    ]
+
+
+class ImplementingPartnerAdmin(admin.ModelAdmin):
+    list_display = [
+        'name',
+        'ip_type'
+    ]
+
+class ServiceProviderAdmin(admin.ModelAdmin):
+    list_display = [
+        'first_name',
+        'last_name',
+        'qualification',
+        'department',
+        'facility'
+    ]
+
 admin.site.register(Province, ProvinceAdmin)
 admin.site.register(District, DistrictAdmin)
 admin.site.register(ServiceArea, ServiceAreaAdmin)
@@ -66,3 +99,7 @@ admin.site.register(AgentDetail, AgentDetailAdmin)
 admin.site.register(WorkDetail, WorkDetailAdmin)
 admin.site.register(Beneficiary, BeneficiaryAdmin)
 admin.site.register(BeneficiaryParent, BeneficiaryParentAdmin)
+admin.site.register(Facility, FacilityAdmin)
+admin.site.register(FacilityType, FacilityTypeAdmin)
+admin.site.register(ImplementingPartner, ImplementingPartnerAdmin)
+admin.site.register(ServiceProvider, ServiceProviderAdmin)
