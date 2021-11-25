@@ -83,13 +83,6 @@ class ImplementingPartnerAdmin(admin.ModelAdmin):
         'name',
         'ip_type'
     ]
-
-
-class ImplementingPartnerAdmin(admin.ModelAdmin):
-    list_display = [
-        'name'
-    ]
-
 class ServiceProviderAdmin(admin.ModelAdmin):
     list_display = [
         'first_name',
