@@ -21,7 +21,6 @@ from itez.beneficiary.models import (
 )
 
 
-
 class DrugSerializer(serializers.ModelSerializer):
     """
     Drug serializer.
