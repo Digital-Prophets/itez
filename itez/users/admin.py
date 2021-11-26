@@ -9,32 +9,5 @@ from .models import Profile, UserWorkDetail
 
 User = get_user_model()
 
-
-# @admin.register(User)
-# class UserAdmin(admin.ModelAdmin):
-
-    # form = UserChangeForm
-    # add_form = UserCreationForm
-    # fieldsets = [
-    #     [None, {"fields": ("username", "password")}],
-    #     [_("Personal info"), {"fields": ("email")}],
-    #     [
-    #         _("Permissions"),
-    #         {
-    #             "fields": (
-    #                 "is_active",
-    #                 "is_staff",
-    #                 "is_superuser",
-    #                 "groups",
-    #                 "user_permissions",
-    #             ),
-    #         },
-    #     ],
-    #     [_("Important dates"), {"fields": ("last_login", "date_joined")}],
-    # # ]
-    # list_display = ["username", "email"]
-    # search_fields = ["username"]
-
-
 admin.site.register(Profile)
 admin.site.register(UserWorkDetail)
