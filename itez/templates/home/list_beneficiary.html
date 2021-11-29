@@ -109,7 +109,13 @@
                                   </td>
                                   <td>
                                     <div class="d-flex ">
+                                      {% if beneficiary.profile_photo %}
+                                        <img src="{{ beneficiary.profile_photo.url }}">
+                                      {% elif beneficiary.sex == "Male" %}
                                         <img src="/static/assets/images/faces/male.jpeg" alt="">
+                                      {% else %}
+                                        <img src="/static/assets/images/faces/female.jpeg" alt="">
+                                      {% endif %}
                                         <!-- <img src="/static/assets/images/faces/face1.jpg" alt=""> -->
                                         <div>
                                           <a href="#">
