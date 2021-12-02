@@ -18,6 +18,7 @@ def index(request):
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 
+
 @login_required(login_url="/login/")
 def list_beneficiary(request):
     beneficiaries = Beneficiary.objects.all()
@@ -28,6 +29,7 @@ def list_beneficiary(request):
     html_template = loader.get_template('home/list_beneficiary.html')
     return HttpResponse(html_template.render(context, request))
 
+
 @login_required(login_url="/login/")
 def user_events(request):
 
@@ -36,13 +38,28 @@ def user_events(request):
     html_template = loader.get_template('home/events.html')
     return HttpResponse(html_template.render(context, request))
 
+
 @login_required(login_url="/login/")
 def beneficiary_report(request):
 
-    context = {"data": []}
+    male = Beneficiary.objects.filter(gender='Male').count()
+    female = Beneficiary.objects.filter(gender='Female').count()
+    transgender = Beneficiary.objects.filter(gender='Transgender').count
+    other = Beneficiary.objects.filter(gender='Other').count()
+    malesex = Beneficiary.objects.filter(sex='Male').count
+    femalesex = Beneficiary.objects.filter(sex='Female')
+
+    beneficiarybyyear = Beneficiary.objects.filter(created=["2017-01-01", "2021-12-31"])
+
+    # beneFbyYr = Beneficiary.objects.order_by('date_of_birth')
+    # print('-------------------------------------------------------> :',)
+
+    context = {'segment': 'reports', "male": male, "female": female,
+               "transgender": transgender, "other": other, "m": malesex, "f": femalesex, "beneficiarybyyear":  beneficiarybyyear}
 
     html_template = loader.get_template('home/reports.html')
     return HttpResponse(html_template.render(context, request))
+
 
 @login_required(login_url="/login/")
 def pages(request):

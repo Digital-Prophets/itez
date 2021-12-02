@@ -22,77 +22,86 @@ from itez.beneficiary.models import (
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
+
 class LabResource(resources.ModelResource):
     class Meta:
         model = Lab
+
 
 @admin.register(Lab)
 class LabAdmin(ImportExportModelAdmin):
     resource_class = LabResource
 
     list_display = (
-        'title', 
+        'title',
         'date'
-        )
+    )
 
     search_fields = (
-        'title', 
-        'facility__name', 
-        'beneficiary__beneficiary_id', 
-        )
+        'title',
+        'facility__name',
+        'beneficiary__beneficiary_id',
+    )
+
 
 class DrugResource(resources.ModelResource):
     class Meta:
         model = Drug
+
 
 @admin.register(Drug)
 class DrugAdmin(ImportExportModelAdmin):
     resource_class = DrugResource
 
     list_display = (
-        'name', 
-        'manufacturer', 
+        'name',
+        'manufacturer',
         'expiry_date'
-        )
+    )
 
     search_fields = (
-        'name', 
-        'beneficiary__beneficiary_id', 
-        )
+        'name',
+        'beneficiary__beneficiary_id',
+    )
+
 
 class PrescriptionResource(resources.ModelResource):
     class Meta:
         model = Prescription
 
+
 @admin.register(Prescription)
 class PrescriptionAdmin(ImportExportModelAdmin):
     resource_class = PrescriptionResource
     list_display = (
-        'title', 
+        'title',
         'date'
-        )
+    )
 
     search_fields = (
-        'title', 
-        'beneficiary__beneficiary_id', 
-        'service_provider__first_name', 
+        'title',
+        'beneficiary__beneficiary_id',
+        'service_provider__first_name',
         'facility__name'
-        )
+    )
+
 
 class ServiceResource(resources.ModelResource):
     class Meta:
         model = Service
+
 
 @admin.register(Service)
 class ServiceAdmin(ImportExportModelAdmin):
     resource_class = ServiceResource
 
     list_display = (
-        'title', 
-        'client_type', 
-        'service_type', 
+        'title',
+        'client_type',
+        'service_type',
         'datetime'
-        )
+    )
+
 
 class FacilityResource(resources.ModelResource):
 
@@ -104,6 +113,7 @@ class BeneficiaryResource(resources.ModelResource):
     class Meta:
         model = Beneficiary
 
+
 @admin.register(Beneficiary)
 class BeneficiaryAdmin(ImportExportModelAdmin):
     resource_class = BeneficiaryResource
@@ -112,12 +122,13 @@ class BeneficiaryAdmin(ImportExportModelAdmin):
         "beneficiary_id",
         "first_name",
         "last_name",
-        "gender", 
+        "gender",
         "sex",
         "phone_number",
         "email",
         "date_of_birth",
         "education_level",
+        "created"
     ]
     search_fields = [
         "sex",
@@ -128,17 +139,20 @@ class BeneficiaryAdmin(ImportExportModelAdmin):
         "last_name",
     ]
 
+
 class BeneficiaryResource(resources.ModelResource):
     class Meta:
         model = Beneficiary
+
 
 class BeneficiaryParentAdmin(admin.ModelAdmin):
     list_display = [
         "father_first_name",
         "father_last_name",
-        "mother_first_name", 
+        "mother_first_name",
         "mother_last_name"
     ]
+
 
 class ProvinceAdmin(admin.ModelAdmin):
     list_display = ["name", "created"]
@@ -177,6 +191,7 @@ class FacilityTypeAdmin(admin.ModelAdmin):
         'name'
     ]
 
+
 @admin.register(Facility)
 class FacilityAdmin(ImportExportModelAdmin):
     resource_class = FacilityResource
@@ -194,6 +209,8 @@ class ImplementingPartnerAdmin(admin.ModelAdmin):
         'name',
         'ip_type'
     ]
+
+
 class ServiceProviderAdmin(admin.ModelAdmin):
     list_display = [
         'first_name',
@@ -202,6 +219,7 @@ class ServiceProviderAdmin(admin.ModelAdmin):
         'department',
         'facility'
     ]
+
 
 class ServiceProviderPersonelQualificationAdmin(admin.ModelAdmin):
     list_display = [
