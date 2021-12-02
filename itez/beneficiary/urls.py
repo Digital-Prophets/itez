@@ -11,6 +11,8 @@ urlpatterns = [
     path("", views.index, name='home'),
     path("events", views.user_events, name='user_events'),
     path("uielements", views.uielements, name='uielements'),
+    path("user-profile/<int:id>/", views.user_profile, name="user_profile"),
+    path("update-profile/<int:id>/", views.user_profile_update, name="update_profile"),
     
     # Beneficiary
     path("report", views.beneficiary_report, name='report'),

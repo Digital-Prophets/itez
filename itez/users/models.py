@@ -133,7 +133,7 @@ class Profile(models.Model):
     ("Female", _("Female")),
     ("Transgender", _("Transgender")),
     ("Other", _("Other"))
-)
+    )
     SEX_CHOICES = (
         ("Male", _("Male")),
         ("Female", _("Female"))
@@ -162,6 +162,7 @@ class Profile(models.Model):
         null=True,
         blank=True
     )
+    
     about_me = models.CharField(
         _("About Me"), 
         max_length=300, 
