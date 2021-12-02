@@ -5,7 +5,6 @@ from django.contrib.gis.db.models import fields
 from django.views.generic import CreateView, FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -111,7 +110,7 @@ def user_profile_update(request):
     context = {"user": user_profile_detail}
     return render(request, "includes/update-user-profile.html", context)
 
-
+  
 @login_required(login_url="/login/")
 def uielements(request):
     context = {"title": "UI Elements"}
@@ -266,7 +265,11 @@ def beneficiary_report(request):
         "hts": hts,
         "vl": vl,
         "art": art,
+<<<<<<< user_profile_info
         "lab": labs,
+=======
+        "labs": labs,
+>>>>>>> main
         "pharmacy": pharmacy,
     }
 
