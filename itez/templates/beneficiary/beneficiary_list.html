@@ -6,11 +6,13 @@
 {% block css_plugins %}
 
   <link rel="stylesheet" href="/static/assets/js/select.dataTables.min.css">
+  <link rel="stylesheet" href="/static/assets/css/modal.css">
 
 {% endblock css_plugins %}
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -46,10 +48,11 @@
               <div class="btn-wrapper">
                 <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
                 <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
-                <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+                <a id="modal-btn" class="btn btn-primary text-white me-0">Export</a>
               </div>
             </div>
           </div>
+
           <div class="tab-content tab-content-basic">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
               
@@ -62,6 +65,7 @@
                         <div class="card-body">
                           <div class="d-sm-flex justify-content-between align-items-start">
                             <div>
+                              {% include 'includes/modal.html' %}
                               <h4 class="card-title card-title-dash">All Beneficiaries</h4>
                               <p class="card-subtitle card-subtitle-dash">50+ new beneficicary registrations today</p>
                             </div>
@@ -219,5 +223,5 @@
 
   <script src="/static/assets/js/dashboard.js"></script>
   <script src="/static/assets/js/Chart.roundedBarCharts.js"></script>
-
+  <script src="/static/assets/js/modal.js"></script>
 {% endblock javascripts %}
