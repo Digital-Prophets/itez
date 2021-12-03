@@ -20,6 +20,11 @@ urlpatterns = [
         name="detail",
     ),
     path(
+        "beneficiary/export_beneficiary_data",
+        views.export_beneficiary_data,
+        name="export_beneficiary_data",
+    ),
+    path(
         "benefficiary/<int:pk>/medical_record_list",
         views.MedicalRecordListView.as_view(),
         name="medical_record_list",
