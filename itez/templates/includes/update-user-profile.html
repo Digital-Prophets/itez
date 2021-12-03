@@ -37,9 +37,6 @@
                                     </div>
                                     </div> 
                                     <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-                                          <div class="col-sm-8">
-                                          <input name="profile-photo" type="file" class="form-control">
-                                        </div>
                                         <select name="sex" class="form-select mt-2 mb-2">
                                             <option selected class="text-muted" required disabled>Select Sex</option>
                                             <option value="Male">Male</option>
@@ -86,13 +83,16 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-2 mb-2">
+                                          <input name="username" type="text" class="form-control" placeholder="Username" value="{{user.user.username}}">
+                                        </div>
+                                        <div class="col-12 mt-2 mb-2">
                                           <input name="email" type="email" class="form-control" placeholder="Email Address" value="{{user.user.email}}">
                                         </div>
                                         <div class="col-12 mt-2 mb-2">
                                             <input name="address" type="text" class="form-control" placeholder="Address" value="{{user.address}}">
                                         </div>
                                         <div class="col-12 mt-2 mb-2">
-                                            <input name="birth-date" type="date" class="form-control" placeholder="Birth Date" value="{{user.birth_date}}">
+                                            <input name="birth-date" type="date" class="form-control" placeholder="Birth Date" value="12-11-2000">
                                         </div>
                                         <div class="col-12 mt-2 mb-2">
                                             <textarea name="about" class="form-control mb-2 mt-2" placeholder="About you">{{user.about_me}}</textarea>
@@ -107,7 +107,13 @@
                                             <option value="masters">Masters</option>
                                             <option value="doctrate">Doctrate</option>
                                         </select>
-                                        <button type="submit" class="btn btn-secondary mt-3">Update</button>
+                                      <button type="submit" onMouseOver="this.style.color='lime'"
+                                          onMouseOut="this.style.color='white'" class="align-self-end btn btn-lg btn-block mt-2" 
+                                          style="background: rgba(34,20,60,.6); color: white; width: 100% margin-top: auto;">update</button>
+                                      <a type="submit" onMouseOver="this.style.color='lime'"
+                                        {% comment %} {% url 'user_profile' %} {% endcomment %}
+                                          onMouseOut="this.style.color='white'" href="#" class="align-self-end btn btn-lg btn-block mt-2" 
+                                          style="background: rgba(30,25,80,.6); color: white; width: 100% margin-top: auto;">back</a>
                                     </form>
                                 </div>
                             </div>

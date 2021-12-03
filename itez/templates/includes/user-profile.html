@@ -35,118 +35,112 @@
                                         <div class="col-lg-12">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                             <div>
-                                                <h4 class="card-title card-title-dash">Beneficiary Detail*</h4>
+                                                <h4 class="card-title card-title-dash">User Profile Detail*</h4>
                                             </div>
                                             </div>
                                             <div class="mt-3">
-                                            {% if request.user %}
-                                                {% if beneficiaries %}
-                                                    {%for user in beneficiaries %}
-                                                        <div style="background: rgba(20,20,22,0.04);">
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.education_level}}</p>
-                                                                    <small class="text-muted mb-0">Education Level</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.agent.first_name}} {{user.agent.last_name}}</p>
-                                                                    <small class="text-muted mb-0">Agent</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.email}}</p>
-                                                                    <small class="text-muted mb-0">Email</small>
-                                                                </div>
-                                                                </div>
-                                                            </div> 
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.date_of_birth}}</p>
-                                                                    <small class="text-muted mb-0">Birth Date</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.sex}}</p>
-                                                                    <small class="text-muted mb-0">Sex</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.gender}}</p>
-                                                                    <small class="text-muted mb-0">Gender</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.name_of_spouse}}</p>
-                                                                    <small class="text-muted mb-0">Name of spouse</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.number_of_children}}</p>
-                                                                    <small class="text-muted mb-0">Number of children</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.number_of_siblings}}</p>
-                                                                    <small class="text-muted mb-0">Number Of siblings</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.first_name}} {{user.last_name}}</p>
-                                                                    <small class="text-muted mb-0">Service Provider</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.marital_status}}</p>
-                                                                    <small class="text-muted mb-0">Marital Status</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                                <div class="d-flex">
-                                                                <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{user.created}}</p>
-                                                                    <small class="text-muted mb-0 mt-3">Date</small>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <hr />
-                                                    {% endfor %}
-                                                {% else %}
-                                                    <p>No Details available yet</p>
-                                                {% endif %}
-                                            {% else %}
-                                            {% endif %}
+                                            <div style="background: rgba(20,20,22,0.04);">
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Education Level: </small> {{user.education_level}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">First Name: </small> {{user.user.first_name}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Last Name: </small>{{user.user.last_name}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Username: </small>{{user.user.username}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Birth Date: </small> {{user.birth_date}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Postal Code: </small> {{user.postal_code}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">City: </small> {{user.city}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Address: </small> {{user.address}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Email: </small> {{user.user.email}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Sex: </small> {{user.sex}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Gender: </small> {{user.gender}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Phone Number: </small> {{user.phone_number}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Other phone number: </small> {{user.phone_number_2}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Created: </small>{{user.user.date}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
 
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <div>
@@ -160,32 +154,28 @@
                                                             <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                                 <div class="d-flex">
                                                                 <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{data.title}}</p>
-                                                                    <small class="text-muted mb-0">Title</small>
+                                                                    <small class="text-muted mb-0">Title: </small> {{data.title}}
                                                                 </div>
                                                                 </div>
                                                             </div>
                                                             <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                                 <div class="d-flex">
                                                                 <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{data.service_provider.first_name}} {{data.service_provider.last_name}}</p>
-                                                                    <small class="text-muted mb-0">Service Provider</small>
+                                                                    <small class="text-muted mb-0">Service Provider: </small> {{data.service_provider.first_name}} {{data.service_provider.last_name}}
                                                                 </div>
                                                                 </div>
                                                             </div>
                                                             <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                                 <div class="d-flex">
                                                                 <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{data.facility}}</p>
-                                                                    <small class="text-muted mb-0">Facility</small>
+                                                                    <small class="text-muted mb-0">Facility: </small> {{data.facility}}
                                                                 </div>
                                                                 </div>
                                                             </div>
                                                             <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                                 <div class="d-flex">
                                                                 <div class="wrapper ms-3">
-                                                                    <p class="ms-1 mb-1 fw-bold">{{data.date}}</p>
-                                                                    <small class="text-muted mb-0 mt-3">Date</small>
+                                                                    <small class="text-muted mb-0 mt-3">Date: </small> {{data.date}}
                                                                 </div>
                                                                 </div>
                                                             </div>
@@ -208,40 +198,36 @@
                                                         <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                             <div class="d-flex">
                                                             <div class="wrapper ms-3">
-                                                                <p class="ms-1 mb-1 fw-bold">{{drug.beneficiary}}</p>
-                                                                <small class="text-muted mb-0">Beneficiary</small>
+                                                                <p class="ms-1 mb-1 fw-bold"></p>
+                                                                <small class="text-muted mb-0">Beneficiary: </small> {{drug.beneficiary}}
                                                             </div>
                                                             </div>
                                                         </div>
                                                         <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                             <div class="d-flex">
                                                             <div class="wrapper ms-3">
-                                                                <p class="ms-1 mb-1 fw-bold">{{drug.name}}</p>
-                                                                <small class="text-muted mb-0">Drug Name</small>
+                                                                <small class="text-muted mb-0">Drug Name:</small> {{drug.name}}
                                                             </div>
                                                             </div>
                                                         </div> 
                                                         <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                             <div class="d-flex">
                                                             <div class="wrapper ms-3">
-                                                                <p class="ms-1 mb-1 fw-bold">{{drug.manufacturer}}</p>
-                                                                <small class="text-muted mb-0">Manufacturer</small>
+                                                                <small class="text-muted mb-0">Manufacturer:</small> {{drug.manufacturer}}
                                                             </div>
                                                             </div>
                                                         </div>
                                                         <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                             <div class="d-flex">
                                                             <div class="wrapper ms-3">
-                                                                <p class="ms-1 mb-1 fw-bold">{{drug.expiry_date}}</p>
-                                                                <small class="text-muted mb-0">Expiry Date</small>
+                                                                <small class="text-muted mb-0">Expiry Date:</small> {{drug.expiry_date}}
                                                             </div>
                                                             </div>
                                                         </div>
                                                         <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
                                                             <div class="d-flex">
                                                             <div class="wrapper ms-3">
-                                                                <p class="ms-1 mb-1 fw-bold">{{drug.created}}</p>
-                                                                <small class="text-muted mb-0 mt-3">Created Date</small>
+                                                                <small class="text-muted mb-0 mt-3">Created Date: </small> {{drug.created}}
                                                             </div>
                                                             </div>
                                                         </div>
@@ -263,9 +249,6 @@
                                 <div class="row">
                                     <div class="card card-rounded">
                                         <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <h4 class="card-title card-title-dash">Profile Photo</h4>
-                                        </div>
                                         {% if request.user.profile.profile_photo.url %}
                                             <img width="100" height="100" style="margin-right: 1em;" class="img-md rounded-circle" src="{{request.user.profile.profile_photo.url}}" alt="Profile image">
                                         {% elif not request.user.profile_photo.url and request.user.gender == 'Male' %}
@@ -274,121 +257,111 @@
                                             <img class="img-xs rounded-circle" src="/static/assets/images/faces/female.jpeg" alt="Profile image">
                                         {% else %}
                                             <img class="img-xs rounded-circle" src="/static/assets/images/faces/male.jpeg" alt="Profile image">
-                                        {% endif %} 
+                                        {% endif %}
+                                        <style style="text/stylesheet">
+                                            .noselect {
+                                                -webkit-touch-callout: none;
+                                                  -webkit-user-select: none;
+                                                   -khtml-user-select: none;
+                                                     -moz-user-select: none;
+                                                      -ms-user-select: none;
+                                                          user-select: none;
+                                                      -webkit-tap-highlight-color: transparent;
+                                              }
+                                              
+                                            .noselect {
+                                                width: 150px;
+                                                height: 50px;
+                                                cursor: pointer;
+                                                background: #6dd6d8;
+                                                border: none;
+                                                border-radius: 10px;
+                                                box-shadow: 0px 4px 10px #57aba7, 0px -3px 13px #a6fffa, inset 0px -5px 10px #57aba7, inset 0px 5px 10px #a6fffa;
+                                                font-family: 'Damion', cursive;
+                                                color: white;
+                                                font-size: 20px;
+                                                transition: 500ms;
+                                                padding: 1em;
+                                                text-decoration: none;
+                                            }
+                                            
+                                            .noselect:hover {
+                                                    border: 2px solid #6dd6d1;
+                                                animation: hueRotation 2s linear infinite;
+                                            }
+                                            
+                                            @keyframes hueRotation {
+                                                to {filter: hue-rotate(360deg);}
+                                            }
+                                            
+                                            .noselect:focus {
+                                                outline: none;
+                                            }
+                                        </style>
+                                        {% comment %} {% url 'profile_photo_update' %} {% endcomment %}
+                                        <a class="noselect"href="#">update</a>
                                     </div>
                                 </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <div class="card card-rounded">
+                                    <div class="card card-rounded"  style="border-bottom-left-radius: 0em; border-bottom-right-radius: 0em;">
                                         <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <h4 class="card-title card-title-dash">User Profile Details</h4>
-                                        </div>
-                                        
-                                        <div class="list align-items-center pt-3">
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.user.first_name|title}}</p>
-                                                    <small class="text-muted mb-0">First Name</small>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <h4 class="card-title card-title-dash">User Profile Detail*</h4>
+                                            </div>
+                                            
+                                            <div class="list align-items-center pt-3">
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">First Name: </small> {{user.user.first_name|title}}
+                                                    </div>
+                                                    </div>
                                                 </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <p class="ms-1 mb-1 fw-bold"></p>
+                                                        <small class="text-muted mb-0">Last Name: </small> {{user.user.last_name|title}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                        <div class="wrapper ms-3">
+                                                            <small class="text-muted mb-0">Username: </small> {{user.user.username}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Birth Date: </small> {{user.birth_date}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">Postal Code: </small> {{user.postal_code}}
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="wrapperd-flex align-items-center justify-content-between py-2 border-bottom">
+                                                    <div class="d-flex">
+                                                    <div class="wrapper ms-3">
+                                                        <small class="text-muted mb-0">More*</small>
+                                                    </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.user.last_name|title}}</p>
-                                                    <small class="text-muted mb-0">Last Name</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.birth_date}}</p>
-                                                    <small class="text-muted mb-0">Birth Date</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.user}}</p>
-                                                    <small class="text-muted mb-0">Username</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.address}}</p>
-                                                    <small class="text-muted mb-0">Address</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.phone_number}}</p>
-                                                    <small class="text-muted mb-0">Phone Number</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.phone_number_2}}</p>
-                                                    <small class="text-muted mb-0">Other Phone Number</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.gender}}</p>
-                                                    <small class="text-muted mb-0">Gender</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.postal_code}}</p>
-                                                    <small class="text-muted mb-0">Postal Code</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <p class="ms-1 mb-1 fw-bold">{{user.sex}}</p>
-                                                    <small class="text-muted mb-0">Sex</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapperd-flex align-items-center justify-content-between py-2 border-bottom">
-                                                <div class="d-flex">
-                                                <div class="wrapper ms-3">
-                                                    <small class="text-muted mb-0">More*</small>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="wrapper w-100 mt-2">
-                                            <p class="mb-0">
-                                                <a href="user/profile/update/" class="btn btn-primary">Edit Data</i></a>
-                                            </p>
-                                            </div>
-                                        </div>
                                         </div>
                                     </div>
+                                    {% comment %} {% url 'profile_update' %} {% endcomment %}
+                                    <a onMouseOver="this.style.color='lime'" onMouseOut="this.style.color='white'" href="#" class="align-self-end btn btn-lg btn-block" style="background: rgba(34,20,60,.6); color: white; width: 100% margin-top: auto;">update user</a>
                                 </div>
                             </div>
-                    
-                            {% comment %} <div class="col-md-6 col-lg-4 grid-margin grid-stretch"> 
-                                
-                            </div> {% endcomment %}
-                    </div>
+                        </div>
                 </div>
         </div>
       </div>

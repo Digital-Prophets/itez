@@ -12,6 +12,7 @@ urlpatterns = [
     path("uielements", views.uielements, name="uielements"),
     path("user/profile/", views.user_profile, name="user_profile"),
     path("user/profile/update/", views.user_profile_update, name="profile_update"),
+    path("user/profile/photo/update/", views.profile_photo_upload, name="profile_photo_update"),
     # Beneficiary
     path("report", views.beneficiary_report, name="report"),
     path("beneficiary/list", views.BenenficiaryListView.as_view(), name="list"),

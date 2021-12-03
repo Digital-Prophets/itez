@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
@@ -68,9 +68,22 @@ def user_profile(request):
         "drugs": drugs,
         "labs": labs,
         "prescriptions": prescriptions,
-        "beneficiaries": beneficiaries,
     }
     return render(request, "includes/user-profile.html", context)
+
+
+@login_required(login_url="/login/")
+def profile_photo_upload(request):
+    user_profile_detail = Profile.objects.get(id=request.user.id)
+    if request.method == "POST":
+        profile_photo = request.FILES.get(
+            "profile-photo", user_profile_detail.profile_photo
+        )
+        user_profile_detail.profile_photo = profile_photo
+        user_profile_detail.save()
+        return redirect("user/profile/")
+    context = {"user": user_profile_detail}
+    return render(request, "includes/profile-photo-update.html", context)
 
 
 @login_required(login_url="/login/")
@@ -81,6 +94,7 @@ def user_profile_update(request):
         phone_no_2 = request.POST.get("phone-no-2", user_profile_detail.phone_number_2)
         first_name = request.POST.get("first-name", user_profile_detail.user.first_name)
         last_name = request.POST.get("last-name", user_profile_detail.user.last_name)
+        username = request.POST.get("username", user_profile_detail.username)
         address = request.POST.get("address", user_profile_detail.address)
         postal_code = request.POST.get("postal-code", user_profile_detail.postal_code)
         city = request.POST.get("city", user_profile_detail.city)
@@ -89,14 +103,12 @@ def user_profile_update(request):
         sex = request.POST.get("sex", user_profile_detail.sex)
         about = request.POST.get("about", user_profile_detail.about_me)
         birth_date = request.POST.get("birth-date", user_profile_detail.about_me)
-        profile_photo = request.FILES.get(
-            "profile-photo", user_profile_detail.profile_photo
-        )
 
         user_profile_detail.phone_number = phone_no_1
         user_profile_detail.phone_number_2 = phone_no_2
         user_profile_detail.user.first_name = first_name
         user_profile_detail.user.last_name = last_name
+        user_profile_detail.user.username = username
         user_profile_detail.address = address
         user_profile_detail.user.city = city
         user_profile_detail.postal_code = postal_code
@@ -105,7 +117,6 @@ def user_profile_update(request):
         user_profile_detail.sex = sex
         user_profile_detail.about_me = about
         user_profile_detail.birth_date = birth_date
-        user_profile_detail.profile_photo = profile_photo
         user_profile_detail.save()
         return redirect("user/profile/")
     context = {"user": user_profile_detail}
