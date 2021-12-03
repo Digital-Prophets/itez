@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
@@ -18,6 +18,8 @@ from django.core.paginator import Paginator
 
 from itez.beneficiary.models import Beneficiary, BeneficiaryParent, MedicalRecord
 from itez.beneficiary.models import Service
+
+from .resources import BeneficiaryResource
 
 from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm
 from itez.users.models import User
@@ -55,9 +57,32 @@ def index(request):
 
 
 @login_required(login_url="/login/")
+def export_beneficiary_data(request):
+    if request.method == 'POST':
+        print("data recieved", )
+        file_format = request.POST['file-format']
+        beneficiary_resource = BeneficiaryResource()
+        dataset = beneficiary_resource.export()
+        if file_format == 'CSV':
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
+            return response        
+        elif file_format == 'JSON':
+            response = HttpResponse(dataset.json, content_type='application/json')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+            return response
+        elif file_format == 'XLS (Excel)':
+            response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.xls"'
+            return response   
+
+    return redirect("beneficiary:list")
+
+
+@login_required(login_url="/login/")
 def uielements(request):
     context = {"title": "UI Elements"}
-    html_template = loader.get_template("home/basic-table.html")
+    html_template = loader.get_template("home/basic_elements.html")
     return HttpResponse(html_template.render(context, request))
 
 
