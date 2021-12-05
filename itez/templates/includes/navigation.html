@@ -132,7 +132,7 @@
                 <p class="mb-1 mt-3 font-weight-semibold">{{ request.user.first_name|title }} {{ request.user.last_name|title }}</p>
                 <p class="fw-light text-muted mb-0">{{request.user.username}}</p>
               </div>
-              <a class="dropdown-item" href="/user/profile/"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+              <a class="dropdown-item" href="{% url 'user:profile' %}"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile</a>
               <a href="{% url 'logout' %}" class="dropdown-item">
                 <i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
             </div>
