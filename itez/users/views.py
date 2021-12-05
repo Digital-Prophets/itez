@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from itez.users.models import User as user_model
 from itez.users.models import Profile
 from itez.beneficiary.models import District, Province
+from itez.users.models import EDUCATION_LEVEL, GENDER_CHOICES, SEX_CHOICES
 
 User = get_user_model()
 
@@ -18,6 +19,7 @@ class UserCreateView(LoginRequiredMixin, CreateView):
     model = User
     slug_field = "username"
     slug_url_kwarg = "username"
+
 
 class UserDetailView(LoginRequiredMixin, DetailView):
 
@@ -28,64 +30,69 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 user_detail_view = UserDetailView.as_view()
 
+
 @login_required(login_url="/login/")
 def user_profile(request):
-    user_profile_detail = Profile.objects.get(id=request.user.id)
-    user_table = user_model.objects.get(id=request.user.id)
-    district_table = District.objects.get(id=request.user.id)
-    province_table = Province.objects.get(id=request.user.id)
+    user_profile = Profile.objects.get(id=request.user.id)
+    current_user = user_model.objects.get(id=request.user.id)
+    user_district = District.objects.get(id=request.user.id)
+    user_province = Province.objects.get(id=request.user.id)
     if request.method == "POST":
-        phone_no_1 = request.POST.get("phone-no-1", user_profile_detail.phone_number)
-        phone_no_2 = request.POST.get("phone-no-2", user_profile_detail.phone_number_2)
-        first_name = request.POST.get("first-name", user_profile_detail.user.first_name)
-        last_name = request.POST.get("last-name", user_profile_detail.user.last_name)
-        username = request.POST.get("username", user_profile_detail.user.username)
-        address = request.POST.get("address", user_profile_detail.address)
-        postal_code = request.POST.get("postal-code", user_profile_detail.postal_code)
-        province = request.POST.get("province", province_table.name)
-        district = request.POST.get("district", district_table.name)
-        email = request.POST.get("email", user_profile_detail.user.email)
-        gender = request.POST.get("gender", user_profile_detail.gender)
-        sex = request.POST.get("sex", user_profile_detail.sex)
-        profile_photo = request.FILES.get("profile-photo", user_profile_detail.profile_photo)
-        education_level = request.POST.get("education-level", user_profile_detail.education_level)
-        about = request.POST.get("about", user_profile_detail.about_me)
-        birth_date = request.POST.get("birth-date", user_profile_detail.birth_date)
+        phone_no_1 = request.POST.get("phone-no-1", user_profile.phone_number)
+        phone_no_2 = request.POST.get("phone-no-2", user_profile.phone_number_2)
+        first_name = request.POST.get("first-name", user_profile.user.first_name)
+        last_name = request.POST.get("last-name", user_profile.user.last_name)
+        username = request.POST.get("username", user_profile.user.username)
+        address = request.POST.get("address", user_profile.address)
+        postal_code = request.POST.get("postal-code", user_profile.postal_code)
+        province = request.POST.get("province", user_province.name)
+        district = request.POST.get("district", user_district.name)
+        email = request.POST.get("email", user_profile.user.email)
+        gender = request.POST.get("gender", user_profile.gender)
+        sex = request.POST.get("sex", user_profile.sex)
+        profile_photo = request.FILES.get("profile-photo", user_profile.profile_photo)
+        education_level = request.POST.get(
+            "education-level", user_profile.education_level
+        )
+        about = request.POST.get("about", user_profile.about_me)
+        birth_date = request.POST.get("birth-date", user_profile.birth_date)
         if birth_date:
-            user_profile_detail.birth_date = birth_date
+            user_profile.birth_date = birth_date
 
-        user_profile_detail.phone_number = phone_no_1
-        user_profile_detail.phone_number_2 = phone_no_2
-        user_profile_detail.address = address
-        user_profile_detail.postal_code = postal_code
-        user_profile_detail.gender = gender
-        user_profile_detail.sex = sex
-        user_profile_detail.education_level = education_level.title()
-        user_profile_detail.about_me = about
-        user_profile_detail.profile_photo = profile_photo
-        user_profile_detail.save()
-        
-        user_table.first_name = first_name
-        user_table.last_name = last_name
-        user_table.email = email
-        user_table.username = username 
-        user_table.save()
+        user_profile.phone_number = phone_no_1
+        user_profile.phone_number_2 = phone_no_2
+        user_profile.address = address
+        user_profile.postal_code = postal_code
+        user_profile.gender = gender
+        user_profile.sex = sex
+        user_profile.education_level = education_level.title()
+        user_profile.about_me = about
+        user_profile.profile_photo = profile_photo
+        user_profile.save()
 
-        district_table.name = district
-        district_table.save()
+        current_user.first_name = first_name
+        current_user.last_name = last_name
+        current_user.email = email
+        current_user.username = username
+        current_user.save()
 
-        province_table.name = province
-        province_table.save()
+        user_district.name = district
+        user_district.save()
+
+        user_province.name = province
+        user_province.save()
         return redirect("/user/profile")
-    education_levels = [level.lower() for level in ["None","Primary","Basic","Secondary O'Level","Certificate","Diploma","Degree","Masters","Doctrate","PHD"]]
-    sex_array = ["Male", "Female"]
-    gender_array = ["Male", "Female", "Transgender", "Other"]
+
+    education_levels = [level[1] for level in EDUCATION_LEVELS]
+    sex_array = [sex[1] for sex in SEX_CHOICES]
+    gender_array = [gender[1] for gender in GENDER_CHOICES]
+    
     context = {
-        "province": province_table,
-        "user": user_profile_detail,
+        "province": user_province,
+        "user": user_profile,
         "education_levels": education_levels,
         "gender_array": gender_array,
-        "sex_array": sex_array
+        "sex_array": sex_array,
     }
     return render(request, "includes/user_profile.html", context)
 
