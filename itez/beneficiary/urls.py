@@ -11,8 +11,6 @@ urlpatterns = [
     path("events", views.user_events, name="user_events"),
     path("uielements", views.uielements, name="uielements"),
     path("user/profile/", views.user_profile, name="user_profile"),
-    path("user/profile/update/", views.user_profile_update, name="profile_update"),
-    # Beneficiary
     path("report", views.beneficiary_report, name="report"),
     path("beneficiary/list", views.BenenficiaryListView.as_view(), name="list"),
     path("beneficiary/create", views.BeneficiaryCreateView.as_view(), name="create"),
