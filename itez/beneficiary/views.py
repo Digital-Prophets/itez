@@ -11,6 +11,10 @@ from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect
 
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+import json
+
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,6 +26,8 @@ from itez.beneficiary.models import Service
 from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm
 from itez.users.models import User, Profile
 from itez.beneficiary.models import Drug, Prescription, Lab, District, Province
+
+from .resources import BeneficiaryResource
 
 
 @login_required(login_url="/login/")
@@ -143,11 +149,16 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     template_name = "beneficiary/beneficiary_list.html"
 
+    # print("------------------------------>", context["qs_json"])
+
     def get_queryset(self):
         return Beneficiary.objects.filter(alive=True)
 
     def get_context_data(self, **kwargs):
         context = super(BenenficiaryListView, self).get_context_data(**kwargs)
+        beneficiary_resource = BeneficiaryResource()
+        export_data = beneficiary_resource.export()
+        export_type = export_data.json
 
         beneficiaries = Beneficiary.objects.all()
         context["opd"] = Service.objects.filter(client_type="OPD").count()
@@ -157,6 +168,9 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         context["labs"] = Service.objects.filter(service_type="LAB").count()
         context["pharmacy"] = Service.objects.filter(service_type="PHARMACY").count()
         context["title"] = "Beneficiaries"
+
+        context["qs_json"] = export_type  # [value for value in Beneficiary.objects.values()]
+
         return context
 
 
@@ -180,7 +194,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-@login_required(login_url="/login/")
+@ login_required(login_url="/login/")
 def user_events(request):
     users = User.objects.all()
     # users_list = [user for user in users]
@@ -194,7 +208,7 @@ def user_events(request):
     return HttpResponse(html_template.render(context, request))
 
 
-@login_required(login_url="/login/")
+@ login_required(login_url="/login/")
 def beneficiary_report(request):
     opd = Service.objects.filter(client_type="OPD").count()
     hts = Service.objects.filter(service_type="HTS").count()
@@ -217,7 +231,7 @@ def beneficiary_report(request):
     return HttpResponse(html_template.render(context, request))
 
 
-@login_required(login_url="/login/")
+@ login_required(login_url="/login/")
 def pages(request):
     context = {}
     # All resource paths end in .html.
