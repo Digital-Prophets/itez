@@ -22,7 +22,8 @@ from itez.beneficiary.models import Service
 from .resources import BeneficiaryResource
 
 from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm
-from itez.users.models import User
+from itez.users.models import User, Profile
+from itez.beneficiary.models import Drug, Prescription, Lab, District, Province
 
 
 @login_required(login_url="/login/")

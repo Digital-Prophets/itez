@@ -1,32 +1,28 @@
-// Get DOM Elements
-console.log("something");
-const modal = document.querySelector("#my-modal");
-const modalContent = document.querySelector(".modal-content");
-const modalBtn = document.querySelector("#modal-btn");
-const closeBtn = document.querySelector(".close");
-const exportButton = document.querySelector(".export-button");
+const openEls = document.querySelectorAll("[data-open]");
+const closeEls = document.querySelectorAll("[data-close]");
+const isVisible = "is-visible";
 
-// Events
-modalBtn.addEventListener("click", openModal);
-closeBtn.addEventListener("click", closeModal);
-window.addEventListener("click", outsideClick);
-// exportButton.addEventListener("click", (e) => e.preventDefault());
-
-console.log(modal, modalBtn, closeBtn);
-// Open
-function openModal() {
-  modal.style.display = "block";
-  modalContent.style.width = "30%";
+for (const el of openEls) {
+    el.addEventListener("click", function() {
+        const modalId = this.dataset.open;
+        document.getElementById(modalId).classList.add(isVisible);
+    });
 }
 
-// Close
-function closeModal() {
-  modal.style.display = "none";
+for (const el of closeEls) {
+    el.addEventListener("click", function() {
+        this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+    });
 }
 
-// Close If Outside Click
-function outsideClick(e) {
-  if (e.target == modal) {
-    modal.style.display = "none";
-  }
-}
+document.addEventListener("click", e => {
+    if (e.target == document.querySelector(".modal.is-visible")) {
+        document.querySelector(".modal.is-visible").classList.remove(isVisible);
+    }
+});
+
+document.addEventListener("keyup", e => {
+    if (e.key == "Escape" && document.querySelector(".modal.is-visible")) {
+        document.querySelector(".modal.is-visible").classList.remove(isVisible);
+    }
+});
