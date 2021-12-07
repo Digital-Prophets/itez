@@ -1,25 +1,29 @@
 # -*- encoding: utf-8 -*-
-
 from django import template
 from django.contrib.gis.db.models import fields
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
+from django.views.generic import base
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.conf import settings
 
-from itez.beneficiary.models import Beneficiary, BeneficiaryParent, MedicalRecord
+from celery.result import AsyncResult
+
+from itez.beneficiary.models import Beneficiary, MedicalRecord
 from itez.beneficiary.models import Service
 
-from .resources import BeneficiaryResource
+from .tasks import generate_export_file
 
 from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm
 from itez.users.models import User, Profile
@@ -53,37 +57,52 @@ def index(request):
         "other": other,
     }
 
+    print("REGISTERED TODAY", Beneficiary.total_registered_today())
     html_template = loader.get_template("home/index.html")
     return HttpResponse(html_template.render(context, request))
 
 
 @login_required(login_url="/login/")
 def export_beneficiary_data(request):
-    if request.method == 'POST':
-        print("data recieved", )
-        file_format = request.POST['file-format']
-        beneficiary_resource = BeneficiaryResource()
-        dataset = beneficiary_resource.export()
-        if file_format == 'CSV':
-            response = HttpResponse(dataset.csv, content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
-            return response        
-        elif file_format == 'JSON':
-            response = HttpResponse(dataset.json, content_type='application/json')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
-            return response
-        elif file_format == 'XLS (Excel)':
-            response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.xls"'
-            return response   
+    """
+    This view handles the request for exporting Beneficiary data. The task is
+    call to generate a export file, the task returns an ID which is used by 
+    the client to poll the status of the task.
+    """
+    task = generate_export_file.delay()
 
-    return redirect("beneficiary:list")
+    # returns the task_id with the response
+    response = {"task_id": task.task_id}
+    return JsonResponse(response)
+
+
+@login_required(login_url="/login/")
+def poll_async_resullt(request, task_id):
+    """
+    This view handles the polling of state of the task the generates
+    the export file. If the task is finnished, the appropriate response
+    returned, which includes the download url for the file.
+    """
+    task = AsyncResult(task_id)
+
+    media_url = settings.MEDIA_URL
+    
+    if task.state == "SUCCESS":
+        download_url = f"{media_url}exports/{task.result}"
+        body = {"state": task.state, "location": download_url}
+        return JsonResponse(body, status=201)
+    
+    elif task.state == "PENDING":
+        body = {"state": task.state}
+        return JsonResponse(body, status=200)
+    else:
+        return JsonResponse({"error": f"No task with id {task_id}"}, status=400)
 
 
 @login_required(login_url="/login/")
 def uielements(request):
     context = {"title": "UI Elements"}
-    html_template = loader.get_template("home/basic_elements.html")
+    html_template = loader.get_template("home/icons-mdi.html")
     return HttpResponse(html_template.render(context, request))
 
 
@@ -174,7 +193,7 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(BenenficiaryListView, self).get_context_data(**kwargs)
 
-        beneficiaries = Beneficiary.objects.all()
+        # beneficiaries = Beneficiary.objects.all()
         context["opd"] = Service.objects.filter(client_type="OPD").count()
         context["hts"] = Service.objects.filter(service_type="HTS").count()
         context["vl"] = Service.objects.filter(service_type="VL").count()
@@ -271,3 +290,4 @@ def pages(request):
 def doughnutChart(request):
     femaleSex = Beneficiary.objects.filter(sex="Female")
     maleSex = Beneficiary.objects.filter(sex="Male")
+
