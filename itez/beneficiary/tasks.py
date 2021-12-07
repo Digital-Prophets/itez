@@ -20,8 +20,7 @@ def generate_export_file(self):
     """
     beneficiary_resource = BeneficiaryResource()
     dataset = beneficiary_resource.export()
-
-    filename = save_exported_data(data=dataset.csv, file_ext='.csv')
+    filename = save_exported_data(data=dataset.xlsx, file_ext='.xlsx')
     return filename
 
 
@@ -34,6 +33,6 @@ def save_exported_data(data=None, file_ext=None):
     if not os.path.exists(file_export_path):
         os.mkdir(file_export_path)
 
-    with open(f"{file_export_path}/{filename}", "w+") as f:
+    with open(f"{file_export_path}/{filename}", "wb") as f:
         f.write(data)
         return filename
