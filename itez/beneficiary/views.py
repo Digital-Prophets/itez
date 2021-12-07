@@ -57,7 +57,6 @@ def index(request):
         "other": other,
     }
 
-    print("REGISTERED TODAY", Beneficiary.total_registered_today())
     html_template = loader.get_template("home/index.html")
     return HttpResponse(html_template.render(context, request))
 
@@ -192,14 +191,13 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(BenenficiaryListView, self).get_context_data(**kwargs)
-
-        # beneficiaries = Beneficiary.objects.all()
         context["opd"] = Service.objects.filter(client_type="OPD").count()
         context["hts"] = Service.objects.filter(service_type="HTS").count()
         context["vl"] = Service.objects.filter(service_type="VL").count()
         context["art"] = Service.objects.filter(client_type="ART").count()
         context["labs"] = Service.objects.filter(service_type="LAB").count()
         context["pharmacy"] = Service.objects.filter(service_type="PHARMACY").count()
+        context["registered_today"] = Beneficiary.total_registered_today()
         context["title"] = "Beneficiaries"
         return context
 
