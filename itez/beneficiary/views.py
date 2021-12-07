@@ -152,32 +152,27 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     template_name = "beneficiary/beneficiary_list.html"
 
-    # print("------------------------------>", context["qs_json"])
-
     def get_queryset(self):
 
-        if 'q' in self.request.GET:
-            q = self.request.GET['q']
-            beneficiary = Beneficiary.objects.filter(Q(first_name__contains=q) | Q(
-                last_name__contains=q) | Q(beneficiary_id__contains=q))
+        if "q" in self.request.GET:
+            q = self.request.GET["q"]
+            beneficiary = Beneficiary.objects.filter(
+                alive=True and
+                Q(first_name__contains=q)
+                | Q(last_name__contains=q)
+                | Q(beneficiary_id__contains=q)
+            )
 
         else:
             beneficiary = Beneficiary.objects.filter(alive=True)
         return beneficiary
 
     def get_context_data(self, **kwargs):
-        context = super(BenenficiaryListView, self).get_context_data(**kwargs)
         beneficiary_resource = BeneficiaryResource()
         export_data = beneficiary_resource.export()
         export_type = export_data.json
 
-        # fn = u.all
-        # s = r.post[]
-        # for i in fn
-        #     if i.startswith(s)
-
-        filter_backend = (SearchFilter, OrderingFilter)
-        search_fields = ('first_name', 'last_name', 'beneficiary_id')
+        context = super(BenenficiaryListView, self).get_context_data(**kwargs)
 
         context["opd"] = Service.objects.filter(client_type="OPD").count()
         context["hts"] = Service.objects.filter(service_type="HTS").count()
@@ -186,19 +181,11 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         context["labs"] = Service.objects.filter(service_type="LAB").count()
         context["pharmacy"] = Service.objects.filter(service_type="PHARMACY").count()
         context["title"] = "Beneficiaries"
-
-        # beneficiary = Beneficiary.objects.get.all(beneficiary_id=pk_test)
-
-        # beneficiaries = beneficiary_filter.qs
-
-        context["qs_json"] = export_type  # [value for value in Beneficiary.objects.values()]
+        context[
+            "search_json_qs"
+        ] = export_type
 
         return context
-
-    def search(sleft, request, args, **kwargs):
-        beneficiaries = Beneficiary.objects.all()
-        beneficiary_filter = BeneficiaryFilter(request.GET, queryset=beneficiaries)
-        return render(request, {'filter': beneficiary_filter})
 
 
 class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
@@ -221,7 +208,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-@ login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def user_events(request):
     users = User.objects.all()
     # users_list = [user for user in users]
@@ -235,7 +222,7 @@ def user_events(request):
     return HttpResponse(html_template.render(context, request))
 
 
-@ login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def beneficiary_report(request):
     opd = Service.objects.filter(client_type="OPD").count()
     hts = Service.objects.filter(service_type="HTS").count()
@@ -258,7 +245,7 @@ def beneficiary_report(request):
     return HttpResponse(html_template.render(context, request))
 
 
-@ login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def pages(request):
     context = {}
     # All resource paths end in .html.

@@ -65,21 +65,24 @@
                               <h4 class="card-title card-title-dash">All Beneficiaries</h4>
                               <p class="card-subtitle card-subtitle-dash">50+ new beneficicary registrations today</p>
                             </div>
-                            <div class="form-group">
-                              <form class="search-form" action="#">
+                            <div class="form-group inline ">
+                            <div><form class="search-form flex-column " autocomplete='off' action="#">
                                 
-                                <input type="search" class="form-control" name="q" placeholder="Search beneficiary here" title="Search here" id="search_here">
-                                <!-- <i class="icon-search"></i> -->
-                                <button class="btn btn-primary" type="submit">Search</button>
-                              </form>
-                              <div id="box">
+                              <input type="search" class="form-control" name="q" placeholder="Search beneficiary here" title="Search here" id="search_here" style="width: 250px;">
+                              <!-- <i class="icon-search"></i> -->
+                              <div id="box" class="shadow-sm p-2  bg-white  position-fixed "style="width: 250px;" >
                                 {% for item in object_list %}   
                                   <!-- <b>{{item}}</b> <br> -->
                                 {% endfor %}
 
                                 </div>
+                              </div>  
+                                
+                              </form>
+                              
 
-                                <div></div>
+                                
+                                <!-- <button class="btn btn-primary btn-lg text-white ml-1 " type="submit">Search</button> -->
                             </div>
                             <div>
                               <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">
@@ -231,7 +234,7 @@
   <script src="/static/assets/js/Chart.roundedBarCharts.js"></script>
 
   <script>
-    const data = '{{qs_json}}'
+    const data = '{{search_json_qs}}'
     console.log('search results :', data)
 
     const rdata = JSON.parse(data.replace(/&quot;/g,'"'))
@@ -249,15 +252,15 @@
 
       if(filterredArr.length > 0){
         filterredArr.map(info=>{
-          box.innerHTML += `<b> ${info['first_name']}  ${info['last_name']}</b><br>`
+          box.innerHTML += `<p> ${info['first_name']}  ${info['last_name']} ${info['beneficiary_id']}</p>`
         })
       }
-      else if (filterredArr.length <= 0) {
-        box.innerHTML =""
+      else if (filterredArr.length = 0) {
+        box.innerHTML = ""
         
       }
       else{
-        box.innerHTML = "<b> No results found....</b>"
+        box.innerHTML = "<p> No results found....</p>"
       }
     })
 
