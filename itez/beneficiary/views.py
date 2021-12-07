@@ -2,11 +2,13 @@
 
 from django import template
 from django.contrib.gis.db.models import fields
+from django.db.models import query
+from django.db.models import Q
 from django.views.generic import CreateView, FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, request
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect
@@ -28,6 +30,7 @@ from itez.users.models import User, Profile
 from itez.beneficiary.models import Drug, Prescription, Lab, District, Province
 
 from .resources import BeneficiaryResource
+from .filters import BeneficiaryFilter
 
 
 @login_required(login_url="/login/")
@@ -152,7 +155,15 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
     # print("------------------------------>", context["qs_json"])
 
     def get_queryset(self):
-        return Beneficiary.objects.filter(alive=True)
+
+        if 'q' in self.request.GET:
+            q = self.request.GET['q']
+            beneficiary = Beneficiary.objects.filter(Q(first_name__contains=q) | Q(
+                last_name__contains=q) | Q(beneficiary_id__contains=q))
+
+        else:
+            beneficiary = Beneficiary.objects.filter(alive=True)
+        return beneficiary
 
     def get_context_data(self, **kwargs):
         context = super(BenenficiaryListView, self).get_context_data(**kwargs)
@@ -160,7 +171,14 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         export_data = beneficiary_resource.export()
         export_type = export_data.json
 
-        beneficiaries = Beneficiary.objects.all()
+        # fn = u.all
+        # s = r.post[]
+        # for i in fn
+        #     if i.startswith(s)
+
+        filter_backend = (SearchFilter, OrderingFilter)
+        search_fields = ('first_name', 'last_name', 'beneficiary_id')
+
         context["opd"] = Service.objects.filter(client_type="OPD").count()
         context["hts"] = Service.objects.filter(service_type="HTS").count()
         context["vl"] = Service.objects.filter(service_type="VL").count()
@@ -169,9 +187,18 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         context["pharmacy"] = Service.objects.filter(service_type="PHARMACY").count()
         context["title"] = "Beneficiaries"
 
+        # beneficiary = Beneficiary.objects.get.all(beneficiary_id=pk_test)
+
+        # beneficiaries = beneficiary_filter.qs
+
         context["qs_json"] = export_type  # [value for value in Beneficiary.objects.values()]
 
         return context
+
+    def search(sleft, request, args, **kwargs):
+        beneficiaries = Beneficiary.objects.all()
+        beneficiary_filter = BeneficiaryFilter(request.GET, queryset=beneficiaries)
+        return render(request, {'filter': beneficiary_filter})
 
 
 class BeneficiaryDetailView(LoginRequiredMixin, DetailView):

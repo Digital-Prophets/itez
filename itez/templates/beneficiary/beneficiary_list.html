@@ -67,16 +67,19 @@
                             </div>
                             <div class="form-group">
                               <form class="search-form" action="#">
-                                <input type="search" class="form-control" placeholder="Search beneficiary here" title="Search here" id="search_here">
+                                
+                                <input type="search" class="form-control" name="q" placeholder="Search beneficiary here" title="Search here" id="search_here">
                                 <!-- <i class="icon-search"></i> -->
-                               
+                                <button class="btn btn-primary" type="submit">Search</button>
                               </form>
                               <div id="box">
                                 {% for item in object_list %}   
-                                    {{item}}<br>
+                                  <!-- <b>{{item}}</b> <br> -->
                                 {% endfor %}
 
                                 </div>
+
+                                <div></div>
                             </div>
                             <div>
                               <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">
@@ -233,6 +236,31 @@
 
     const rdata = JSON.parse(data.replace(/&quot;/g,'"'))
     console.log('rdata :', rdata)
+
+    const input = document.getElementById('search_here')
+    console.log(input)
+
+    let filterredArr = []
+
+    input.addEventListener('keyup', (e)=>{
+      box.innerHTML = ""
+      filterredArr = rdata.filter(info=>info['first_name'].includes(e.target.value) )
+      console.log("filted-array :",filterredArr)
+
+      if(filterredArr.length > 0){
+        filterredArr.map(info=>{
+          box.innerHTML += `<b> ${info['first_name']}  ${info['last_name']}</b><br>`
+        })
+      }
+      else if (filterredArr.length <= 0) {
+        box.innerHTML =""
+        
+      }
+      else{
+        box.innerHTML = "<b> No results found....</b>"
+      }
+    })
+
   </script>
 
 {% endblock javascripts %}
