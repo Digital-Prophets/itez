@@ -112,7 +112,6 @@ class BeneficiaryAdmin(ImportExportModelAdmin):
         "hiv_status",
         "last_vl",
         "registered_facility",
-        "service_facility",
         "phone_number",
         "email",
         "date_of_birth",
@@ -222,6 +221,7 @@ class MedicalRecordAdmin(admin.ModelAdmin):
         "service",
         "prescription",
         "lab",
+        "service_facility",
     ]
 
     list_filter = [
