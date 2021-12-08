@@ -371,11 +371,8 @@ def beneficiary_report(request):
 
         province_label_json_list = json.dumps(province_labels)
 
-    # Service Counts by Month
-
     # Number of total interactions
     total_interactions = MedicalRecord.objects.all().count()
-
     # Dashboar Cards Stats
     opd = Service.objects.filter(client_type="OPD").count()
     hts = Service.objects.filter(service_type="HTS").count()
