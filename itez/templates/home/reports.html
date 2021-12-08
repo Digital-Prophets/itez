@@ -191,24 +191,6 @@
   $(function () {
     /* ChartJS
      * -------
-<<<<<<< HEAD
-     * Data and config for chartjs
-     */
-    "use strict";
-    var data = {
-      labels: [
-        "Southern Province",
-        "Northern Province",
-        "Eastern Province",
-        "Western Province",
-        "Lusaka Province",
-        "Central Province",
-      ],
-      datasets: [
-        {
-          label: "# of Votes",
-          data: [10, 19, 3, 5, 2, 3],
-=======
      * Data and config for chartjs     */
 
     var json_li = "{{province_label_json_list}}";
@@ -223,7 +205,6 @@
         {
           label: "# of beneficiaries",
           data: parsed_data,
->>>>>>> 0d6ba9f3033a4da25e750072d8c1f8c6ed913a48
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(54, 162, 235, 0.2)",
@@ -296,14 +277,11 @@
       var a = "{{male}}";
       var b = "{{female}}";
       var c = "{{other}}";
-<<<<<<< HEAD
-=======
       var year1 = "{{year1}}";
       var year2 = "{{year2}}";
       var year3 = "{{year3}}";
       var year4 = "{{year4}}";
       var year5 = "{{year5}}";
->>>>>>> 0d6ba9f3033a4da25e750072d8c1f8c6ed913a48
 
       var doughnutPieData = {
         datasets: [
@@ -344,11 +322,7 @@
       datasets: [
         {
           label: "Total Beneficiaries",
-<<<<<<< HEAD
-          data: [12, 19, 3, 5, 2, 3],
-=======
           data: [year1, year2, year3, year4, year5, 3],
->>>>>>> 0d6ba9f3033a4da25e750072d8c1f8c6ed913a48
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
             "rgba(54, 162, 235, 0.2)",
@@ -453,13 +427,8 @@
 
     if ($("#scatterChart").length) {
       var doughnutChartCanvas = $("#scatterChart").get(0).getContext("2d");
-<<<<<<< HEAD
-      var m = "{{m}}";
-      var f = "{{f}}";
-=======
       var m = "{{male_sex}}";
       var f = "{{female_sex}}";
->>>>>>> 0d6ba9f3033a4da25e750072d8c1f8c6ed913a48
 
       var scatterChartData = {
         datasets: [
