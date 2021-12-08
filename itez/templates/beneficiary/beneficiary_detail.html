@@ -20,7 +20,7 @@
             <fieldset class="border p-2">
               {% if beneficiary.profile_photo.url %}
                 <img height="70" width="70" style="border-radius: 6em;"  class="img-md zoom rounded-square" src="{{beneficiary.profile_photo.url}}" alt="Profile image">
-              
+               
               {% elif not request.user.profile_photo.url and request.user.gender == 'Male' %}
                 <img style="border-radius: 0.6em; border-radius: 6em;" class="img-xs rounded-square  mt-4" src="/static/assets/images/faces/male.jpeg" alt="Profile image">
               
