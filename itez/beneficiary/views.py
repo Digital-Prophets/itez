@@ -29,7 +29,12 @@ from django.conf import settings
 
 from celery.result import AsyncResult
 
-from itez.beneficiary.models import Beneficiary, BeneficiaryParent, MedicalRecord, Province
+from itez.beneficiary.models import (
+    Beneficiary,
+    BeneficiaryParent,
+    MedicalRecord,
+    Province,
+)
 from itez.beneficiary.models import Service
 from django.db.models import Count
 from django.db.models.functions import ExtractYear, ExtractWeek, ExtractMonth
@@ -338,11 +343,21 @@ def user_events(request):
 def beneficiary_report(request):
     # Graphs
     # Number of beneficiaries by year
-    year1 = Beneficiary.objects.filter(created__year=2017).values("created__year").count()
-    year2 = Beneficiary.objects.filter(created__year=2018).values("created__year").count()
-    year3 = Beneficiary.objects.filter(created__year=2019).values("created__year").count()
-    year4 = Beneficiary.objects.filter(created__year=2020).values("created__year").count()
-    year5 = Beneficiary.objects.filter(created__year=2021).values("created__year").count()
+    year1 = (
+        Beneficiary.objects.filter(created__year=2017).values("created__year").count()
+    )
+    year2 = (
+        Beneficiary.objects.filter(created__year=2018).values("created__year").count()
+    )
+    year3 = (
+        Beneficiary.objects.filter(created__year=2019).values("created__year").count()
+    )
+    year4 = (
+        Beneficiary.objects.filter(created__year=2020).values("created__year").count()
+    )
+    year5 = (
+        Beneficiary.objects.filter(created__year=2021).values("created__year").count()
+    )
 
     # Number of beneficiaries by province
     count_records = {}
@@ -352,16 +367,15 @@ def beneficiary_report(request):
 
     for province in Province.objects.all():
         total_province_beneficiaries = Beneficiary.objects.filter(
-            registered_facility__province__name=province.name).count()
-        total_province_services = MedicalRecord.objects.filter(service_facility__province__name=province.name).count()
+            registered_facility__province__name=province.name
+        ).count()
+        total_province_services = MedicalRecord.objects.filter(
+            service_facility__province__name=province.name
+        ).count()
 
-        province_data = {
-            province.name: total_province_beneficiaries
-        }
+        province_data = {province.name: total_province_beneficiaries}
 
-        service_data = {
-            province.name: total_province_services
-        }
+        service_data = {province.name: total_province_services}
 
         count_records.update(province_data)
         count_services.update(service_data)
@@ -380,12 +394,12 @@ def beneficiary_report(request):
     art = Service.objects.filter(client_type="ART").count()
     labs = Service.objects.filter(service_type="LAB").count()
     pharmacy = Service.objects.filter(service_type="PHARMACY").count()
-    male = Beneficiary.objects.filter(gender='Male').count()
-    female = Beneficiary.objects.filter(gender='Female').count()
-    transgender = Beneficiary.objects.filter(gender='Transgender').count()
-    other = Beneficiary.objects.filter(gender='Other').count()
-    male_sex = Beneficiary.objects.filter(sex='Male').count()
-    female_sex = Beneficiary.objects.filter(sex='Female').count()
+    male = Beneficiary.objects.filter(gender="Male").count()
+    female = Beneficiary.objects.filter(gender="Female").count()
+    transgender = Beneficiary.objects.filter(gender="Transgender").count()
+    other = Beneficiary.objects.filter(gender="Other").count()
+    male_sex = Beneficiary.objects.filter(sex="Male").count()
+    female_sex = Beneficiary.objects.filter(sex="Female").count()
 
     context = {
         "data": [],
@@ -408,8 +422,7 @@ def beneficiary_report(request):
         "year5": year5,
         "total_interactions": total_interactions,
         "province_label_json_list": province_label_json_list,
-        "beneficiary_count_data": beneficiary_count_data
-
+        "beneficiary_count_data": beneficiary_count_data,
     }
 
     html_template = loader.get_template("home/reports.html")
