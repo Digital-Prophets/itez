@@ -60,8 +60,7 @@
               " aria-labelledby="countDropdown">
 
                 <div class=" d-flex justify-content-center align-items-center " style="height: 3em;">
-                  <a href=" #"><i class=""></i></a>
-                  <!-- <i class="fas fa-link"></i> -->
+                  <i class="icon-link" style="cursor: pointer;" onclick="getCurrentUrl()"></i>
                 </div>
 
               </div>
@@ -503,9 +502,23 @@
     }
   });
 
+  // Print report charts 
   function printContent(el) {
     window.print();
   }
+
+  // Get the current url 
+  function getCurrentUrl() {
+    var inputc = document.body.appendChild(document.createElement("input"));
+    inputc.value = window.location.href;
+    inputc.focus();
+    inputc.select();
+    document.execCommand('copy');
+    inputc.parentNode.removeChild(inputc);
+    alert("URL Copied.")
+
+  }
+
 </script>
 
 {% endblock javascripts %}
