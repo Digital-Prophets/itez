@@ -6,7 +6,7 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %} {% block content %}
 
-<div class="content-wrapper">
+<div class="content-wrapper" id="print">
   <div class="row">
     <div class="col-sm-12">
       <div class="home-tab">
@@ -103,8 +103,11 @@
               <a href="#" class="btn btn-otline-dark align-items-center"
                 ><i class="icon-share"></i> Share</a
               >
-              <a href="#" class="btn btn-otline-dark"
-                ><i class="icon-printer" onclick="window.print()"></i> Print</a
+              <a
+                href="#"
+                class="btn btn-otline-dark"
+                onclick="printContent('overview')"
+                ><i class="icon-printer"></i> Print</a
               >
               <a href="#" class="btn btn-primary text-white me-0"
                 ><i class="icon-download"></i> Export {{beneficiary_by_year}}</a
@@ -546,6 +549,14 @@
       });
     }
   });
+
+  function printContent(el) {
+    // var restorepage = document.body.innerHTML;
+    // var printcontent = document.getElementById(el).innerHTML;
+    // document.body.innerHTML = printcontent;
+    window.print();
+    // window.body.innerHTML = restorepage;
+  }
 </script>
 
 {% endblock javascripts %}
