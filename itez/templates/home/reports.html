@@ -48,22 +48,19 @@
           </ul>
           <div>
             <div class="btn-wrapper">
-              <a href="#" class="btn btn-otline-dark align-items-center" data-bs-toggle="dropdown"
-                aria-expanded="false"><i class="icon-share"></i> Share
+              <a href="#" class="btn btn-otline-dark align-items-center" data-bs-toggle="dropdown" aria-expanded="false"
+                onclick="prompt('Press Ctrl + C, then Enter to copy to clipboard',window.location.href)"><i
+                  class="icon-share"></i> Share
                 <span class="count"></span></a>
 
-              <div class="
-                dropdown-menu dropdown-menu-right
-                navbar-dropdown
-                preview-list
-                pb-0
-              " aria-labelledby="countDropdown">
+              <button onclick=" prompt('Press Ctrl + C, then Enter to copy to clipboard',window.location.href)">Copy
+                Link</button>
 
-                <div class=" d-flex justify-content-center align-items-center " style="height: 3em;">
-                  <i class="icon-link" style="cursor: pointer;" onclick="getCurrentUrl()"></i>
-                </div>
-
-              </div>
+              <a class="btn-default btn-mini tooltip-toggle" data-title="Get Permalink"
+                onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}{{ request.path }}#{{ entry.slug }}')">
+                copy
+                <span class="glyphicon glyphicon-link"></span>
+              </a>
 
               <a href="#" class="btn btn-otline-dark" onclick="printContent('overview')"><i class="icon-printer"></i>
                 Print</a>
