@@ -26,244 +26,112 @@
           class="tab-content tab-content-basic d-flex justify-content-center"
         >
           <div class="rows">
-            <div class="col-md-8">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <div class="pull-right">
-                    <div class="btn-group dropdown" uib-dropdown="dropdown">
-                      <ul
-                        class="
-                          dropdown-menu dropdown-menu-right
-                          animated
-                          fadeInLeft
-                        "
-                        role="menu"
-                      >
-                        <li>
-                          <a href=""><span>Send by message</span></a>
-                        </li>
-                        <li>
-                          <a href=""><span>Share contact</span></a>
-                        </li>
-                        <li>
-                          <a href=""><span>Block contact</span></a>
-                        </li>
-                        <li>
-                          <a href=""
-                            ><span class="text-warning">Delete contact</span></a
-                          >
-                        </li>
-                      </ul>
-                    </div>
+
+            <div class="container rounded bg-white mt-5 mb-5">
+              <div class="row">
+                  <div class="col-md-3 border-right">
+                      <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        {% if agent.user.profile.profile_photo %}
+                            <img class="rounded-circle mt-5" src="{{ agent.user.profile.profile_photo.url }}" height="150" width="150">
+                        {% elif not agent.user.profile.profile_photo.url and agent.user.profile.gender == 'Male' %}
+                            <img class="rounded-circle mt-5" src="/static/assets/images/faces/male.jpeg" alt="Profile image" height="150" width="150">
+                        {% elif not agent.user.profile.profile_photo.url and agent.user.profile.gender == 'Female' %}
+                            <img class="rounded-circle mt-5" src="/static/assets/images/faces/female.jpeg" alt="Profile image" height="150" width="150">
+                        {% else %}
+                            <img class="rounded-circle mt-5" src="/static/assets/images/faces/male.jpeg" alt="Profile image" height="150" width="150">
+                        {% endif %}
+                        <span class="font-weight-bold">{{ agent.agent_id }}</span>
+                        <span class="text-black-50">{{ agent.user.email }}
+
+                        </span><span> </span></div>
                   </div>
-                  <div class="h4 text-center fw-bolder">Agent Details</div>
-                  <div class="row pv-lg">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-8">
-                      <form class="form-horizontal ng-pristine ng-valid">
-                        <div class="form-group d-flex">
-                          <label
-                            class="col-sm-2 control-label fw-bolder"
-                            for="inputContact1"
-                            >First Name
-                            </label>
-                          <div class="col-sm-10">
-                            <input
-                              class="form-control"
-                              id="inputContact1"
-                              type="text"
-                              placeholder=""
-                              value="{{agent.first_name}}"
-                            />
+                  <div class="col-md-5 border-right">
+                      <div class="p-3 py-5">
+                          <div class="d-flex justify-content-between align-items-center mb-3">
+                              <h4 class="text-right">Agent User Details</h4>
                           </div>
-                        </div>
-                        <div class="form-group d-flex">
-                          <label
-                            class="col-sm-2 control-label fw-bolder"
-                            for="inputContact2"
-                            >Last Name</label
-                          >
-                          <div class="col-sm-10">
-                            <input
-                              class="form-control"
-                              id="inputContact2"
-                              type="text"
-                              value="{{agent.last_name}}"
-                            />
+                          <div class="row mt-2">
+                              <div class="col-md-6"><label class="labels">Agent ID</label><input type="text" class="form-control" placeholder="first name" value="{{ agent.agent_id }}"></div>
+                              <div class="col-md-6"><label class="labels">Full Name</label><input type="text" class="form-control" value="{{ agent.first_name|title }} {{ agent.last_name|title }}" placeholder="Full Name"></div>
                           </div>
-                        </div>
-                        <div class="form-group d-flex">
-                          <label
-                            class="col-sm-2 control-label fw-bolder"
-                            for="inputContact3"
-                            >Gender</label
-                          >
-                          <div class="col-sm-10">
-                            <input
-                              class="form-control"
-                              id="inputContact3"
-                              type="text"
-                              value="{{agent.gender}}"
-                            />
+                          <div class="row mt-3">
+                              <div class="col-md-12"><label class="labels">Related User</label><input type="text" class="form-control" placeholder="enter phone number" value="{% if agent.user.first_name and agent.user.last_name %} {{ agent.user.first_name|title }} {{ agent.user.last_name|title }} {% else %} {{ agent.user.username }} {% endif %}"></div>
+                              <div class="col-md-12"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="enter address" value="{{ agent.gender }}"></div>
+                              <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value="{{ agent.user.email }}"></div>
+                              <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value="{{ agent.user.profile.education_level }}"></div>
                           </div>
-                        </div>
-                        <div class="form-group d-flex">
-                          <label
-                            class="col-sm-2 control-label fw-bolder"
-                            for="inputContact4"
-                            >Date of Birth</label
-                          >
-                          <div class="col-sm-10">
-                            <input
-                              class="form-control"
-                              id="inputContact4"
-                              type="text"
-                              value="{{agent.birthdate}}"
-                            />
+                          <div class="row mt-3">
+                              <div class="col-md-6"><label class="labels">Location (District) </label><input type="text" class="form-control" placeholder="country" value="{{ agent.user.profile.city }}"></div>
+                              <div class="col-md-6"><label class="labels">Phone Number</label><input type="text" class="form-control" value="{{ agent.user.profile.phone_number }}" placeholder="Phone"></div>
                           </div>
-                        </div>
-                        <div class="form-group d-flex">
-                          <label
-                            class="col-sm-2 control-label fw-bolder"
-                            for="inputContact5"
-                            >Location</label
-                          >
-                          <div class="col-sm-10">
-                            <input
-                              class="form-control"
-                              id="inputContact5"
-                              type="text"
-                              value="{{agent.location}}"
-                            />
+                          <div class="mt-5 text-center">
+                            <button type="submit" class="btn btn-primary me-2"><span style="color: #fff;">Update Agent Details</span></button>
                           </div>
-                        </div>
-                        <div class="form-group d-flex">
-                          <label
-                            class="col-sm-2 control-label fw-bolder"
-                            for="inputContact5"
-                            >Location</label
-                          >
-                          <div class="col-sm-10">
-                            <input
-                              class="form-control"
-                              id="inputContact5"
-                              type="text"
-                              value="{{agent.location}}"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group d-flex fw-bolder">
-                          <label
-                            class="col-sm-2 control-label"
-                            for="inputContact5"
-                            >Role</label
-                          >
-                          <div class="col-sm-10">
-                            <input
-                              class="form-control"
-                              id="inputContact5"
-                              type="text"
-                              value="{{agent.role}}"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group ">
-                          <div class="col-sm-offset-2 col-sm-10 d-flex justify-content-center">
-                            <button class="btn btn-info" type="submit">
-                              Update
-                            </button>
-                             <div>
-                                <button class="btn btn-info2" type="close">
-                                  Close
-                                  </button>
-                             </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
+                      </div>
                   </div>
-                </div>
+                  <div class="col-md-4">
+                      <div class="p-3 py-5">
+                          <div class="d-flex justify-content-between align-items-center experience"><span>Roles</span></div><br>
+                          <div class="col-md-12"><label class="labels">Assigned Roles</label><input type="text" class="form-control" placeholder="experience" value="{{ agent.user.groups.all.0 }}"></div> <br>
+                          <div class="col-md-12"><label class="labels"><h4>Is Active </h4></label>
+                            {% if agent.user.is_active %}
+                            <span style="padding-left: 10em;">
+                              <button type="button" class="btn btn-success btn-rounded btn-icon">
+                                <i class="mdi mdi-account-check"></i>
+                              </button>
+                            </span>
+                            {% else %}
+                            <span>
+                              <button type="button" class="btn btn-danger btn-rounded btn-icon">
+                                <i class="mdi mdi-delete-forever"></i>
+                              </button>
+                            </span>
+                            {% endif %}
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
-            <!-- <div class="row flex-grow justify-content-center">
-                            <div class="col-md-6 col-lg-8 grid-margin stretch-card">
-                                <div class="card card-rounded">
-                                    <div class="card-body">
-                                        <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div>
-                                                <h2 class="card-title card-title-dash">Agent details</h2>
-                                            </div>
-                                            </div>
-                                            <div class="mt-3">
-                                            <div style="background: rgba(20,20,22,0.04);">
-                                                
-                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                    <div class="d-flex">
-                                                    <div class="wrapper ms-3">
-                                                        <small class="text-muted mb-0">First Name: </small> 
-                                                    </div>
-                                                    </div>
-                                                    <span style="float: right; margin-right: 10px;">{{agent.first_name}}</span>
-                                                </div>
-                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                    <div class="d-flex">
-                                                    <div class="wrapper ms-3">
-                                                        <small class="text-muted mb-0">Last Name: </small>
-                                                    </div>
-                                                    </div>
-                                                    <span style="float: right; margin-right: 10px;">{{agent.last_name}}</span>
-                                                </div>
-                                                
-                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                    <div class="d-flex">
-                                                    <div class="wrapper ms-3">
-                                                        <small class="text-muted mb-0">Birth Date: </small> 
-                                                    </div>
-                                                    </div>
-                                                    <span style="float: right; margin-right: 10px;">{{agent.birthdate}}</span>
-                                                </div>
-                                                
-                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                    <div class="d-flex">
-                                                    <div class="wrapper ms-3">
-                                                        <small class="text-muted mb-0">Gender: </small> 
-                                                    </div>
-                                                    </div>
-                                                <span style="float: right; margin-right: 10px;">{{agent.gender}}</span>
-                                            </div>
-                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                    <div class="d-flex">
-                                                    <div class="wrapper ms-3">
-                                                        <small class="text-muted mb-0">User Role: </small> 
-                                                    </div>
-                                                    </div>
-                                                    <span style="float: right; margin-right: 10px;">{{user.role}}</span>
-                                                </div>
-                                               
-                                                <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                                    <div class="d-flex">
-                                                    <div class="wrapper ms-3">
-                                                        <small class="text-muted mb-0">Location: </small>
-                                                    </div>
-                                                    </div>
-                                                    <span style="float: right; margin-right: 10px;">{{agent.location}}</span>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </div> -->
+          </div>
+          </div>
+          </div>
+           
           </div>
         </div>
       </div>
     </div>
 
+    <style>
+    
+    .form-control:focus {
+        box-shadow: none;
+    }
+    
+    .profile-button {
+        box-shadow: none;
+        border: none
+    }
+    
+    .profile-button:focus {
+        box-shadow: none
+    }
+    
+    .profile-button:active {
+        box-shadow: rgb(152, 142, 154)
+    }
+    
+    .back:hover {
+        cursor: pointer
+    }
+    
+    .labels {
+        font-size: 11px
+    }
+    
+    .add-experience:hover {
+        color: #fff;
+        cursor: pointer;
+    }
+    </style>
     {% endblock content %}
 
     <!-- Specific JS Plugins goes HERE  -->

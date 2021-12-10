@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 
 from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
-from itez.users.models import User as user_model
 
 
 GENDER_CHOICES = (
@@ -22,13 +21,14 @@ SEX_CHOICES = (
 )
 
 
-class AgentDetail(models.Model):
+class Agent(models.Model):
     """
     Create agent detail table with its attributes or columns.
     """
-    user = models.ForeignKey(
-        User_model, 
-        on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        'users.User', 
+        on_delete=models.CASCADE
+        )
 
     first_name = models.CharField(
         _("First Name"),
@@ -37,7 +37,7 @@ class AgentDetail(models.Model):
         blank=True
     )
     last_name = models.CharField(
-        _("Second Name"),
+        _("Last Name"),
         max_length=200,
         null=False
     )
@@ -87,6 +87,12 @@ class Beneficiary(models.Model):
         ("seperated", _("Seperated")),
         ("divorced", _("Divorced")),
         ("widowed", _("Widowed")),
+    )
+
+    HIV_STATUS = (
+        ("positive", _("Positive")),
+        ("negative", _("Negative")),
+        ("unkown", _("Uknown")),
     )
 
     EDUCATION_LEVEL = (
@@ -163,14 +169,15 @@ class Beneficiary(models.Model):
         null=True,
         blank=True
     )
-    hiv_status = models.BooleanField(
+    hiv_status = models.CharField(
         _("HIV Status"),
-        default=False,
+        choices=HIV_STATUS,
+        max_length=100,
         null=True,
         blank=True
     )
     agent = models.ForeignKey(
-        AgentDetail,
+        Agent,
         on_delete=models.PROTECT,
         null=True,
         blank=True
@@ -789,6 +796,4 @@ class MedicalRecord(models.Model):
     
     def __str__(self):
         return f"Medical Record for: {self.beneficiary}, service: {self.service}"
-    
-    def  get_absolute_url(self):
-        return reverse('beneficiary:medical_record_list', kwargs={'pk': self.pk})
+ 

@@ -21,11 +21,8 @@ from itez.beneficiary.models import Beneficiary, BeneficiaryParent, MedicalRecor
 from itez.beneficiary.models import Service
 
 from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm, AgentForm
-from itez.beneficiary.models import AgentDetail
-from itez.users.models import User, Profile
-from itez.users.models import Profile as agent_profile_model
-
-from itez.beneficiary.models import Drug, Prescription, Lab, District, Province
+from itez.beneficiary.models import Agent
+from itez.users.models import User
 
 
 @login_required(login_url="/login/")
@@ -114,8 +111,6 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super(MedicalRecordCreateView, self).form_valid(form)
 
-
-    
 class BeneficiaryCreateView(LoginRequiredMixin, CreateView):
     """
     Create a new Beneficiary object.
@@ -169,14 +164,10 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
       Create an agent object.
     """
 
-    model = AgentDetail
+    model = Agent
     form_class = AgentForm
     template_name = "agent/agent_create.html"
    
-
-    def get_queryset(self):
-        return Beneficiary.objects.filter(alive=True)
-    
     def get_success_url(self):
         return reverse("beneficiary:agent_list")
 
@@ -196,19 +187,17 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
 
 class AgentListView(LoginRequiredMixin, ListView):
     """
-    List all agents.
+    List all agent users.
     """
 
-    model = AgentDetail
+    model = Agent
     context_object_name = "agents"
     template_name = "agent/agent_list.html"
     paginate_by = 10
     
-
     def get_context_data(self, **kwargs):
         context = super(AgentListView, self).get_context_data(**kwargs)
         context["title"] = "list all agents"
-        
         return context
     
  
@@ -218,12 +207,12 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
     """
 
     context_object_name = "agent"
-    model = AgentDetail
+    model = Agent
     template_name = "agent/agent_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super(AgentDetailView, self).get_context_data(**kwargs)
-        context["title"] = "Agent Details"
+        context["title"] = "Agent User Details"
 
         return context
 

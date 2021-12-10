@@ -62,7 +62,7 @@
                         <div class="card-body">
                           <div class="d-sm-flex justify-content-between align-items-start">
                             <div>
-                              <h4 class="card-title card-title-dash">All Agents</h4>
+                              <h4 class="card-title card-title-dash">All Agent Users</h4>
                             </div>
                             <div class="form-group">
                               <form class="search-form" action="#">
@@ -74,11 +74,12 @@
                               <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">
                                 
                                 <a href="{% url 'beneficiary:agent_create' %}" class="text-white" style="text-decoration: none;">
-                                <i class="mdi mdi-account-plus"></i>Add new Agent</button>
+                                <i class="mdi mdi-account-plus"></i>Add new Agent User</button>
                                 </a>
                                 
                             </div>
                           </div>
+                          
                           <div class="table-responsive  mt-1">
                             <table class="table select-table">
                               <thead>
@@ -89,9 +90,9 @@
                                         <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
                                     </div>
                                   </th>
-                                  <th>Agent  ID</th>
-                                  <th>First Name</th>
-                                  <th>Last Name</th>
+                                  <th>Agent ID</th>
+                                  <th>Full Name</th>
+                                  <th>Related User</th>
                                   <th>Date of Birth</th>
                                   <th>Role</th>
                                   <th>Gender</th>
@@ -110,9 +111,9 @@
                                     </div>
                                   </td>
                                   <td>
-                                    {% if agent.profile_photo %}
-                                        <img src="{{ agent.profile_photo.url }}">
-                                      {% elif agent.gender == "Male" %}
+                                    {% if agent.user.profile.profile_photo %}
+                                        <img src="{{ agent.user.profile.profile_photo.url }}">
+                                      {% elif not agent.user.profile.profile_photo and agent.gender == "Male" %}
                                         <img src="/static/assets/images/faces/male.jpeg" alt="">
                                       {% else %}
                                         <img src="/static/assets/images/faces/female.jpeg" alt="">
@@ -120,22 +121,26 @@
                                     <a style="text-decoration: none;" href="{{ agent.get_absolute_url }}">{{ agent.agent_id }}</a>
                                   </td>
                                   <td>
-                                    <h6>{{ agent.first_name }}</h6>
+                                    <h6>{{ agent.first_name|title }} {{ agent.last_name|title }}</h6>
                                   </td>
                                   <td>
-                                    <h6>{{ agent.last_name }}</h6>
+                                    {% if agent.user.first_name and agent.user.last_name %}
+                                      <h6>{{ agent.user.first_name }} {{ agent.user.last_name }}</h6>
+                                    {% else %}
+                                      <h6>{{ agent.user.username }}</h6>
+                                    {% endif%}
                                   </td>
                                   <td>
-                                    <h6>{{ agent.birthdate}}</h6>
+                                    <h6>{{ agent.birthdate }}</h6>
                                   </td>
                                     <td>
                                     <h6>{{ agent.user.group.all }}</h6>
                                   </td>
                                   <td>
-                                    <h6>{{ agent.gender}}</h6>
+                                    <h6>{{ agent.gender }}</h6>
                                   </td>
                                   <td>
-                                    <h6>{{ agent.Location}}</h6>
+                                    <h6>{{ agent.Location }}</h6>
                                   </td>
                                   <td>
                                     <div class="badge badge-opacity-danger">
@@ -147,11 +152,12 @@
                                 </tr>
                                 {% endfor %}
                                 {% else %}
-                                <h3>No Agents Available</h3>
+                                <h3>No Agent Users Available</h3>
                                 {% endif %}
                               </tbody>
                             </table>
                           </div>
+
                           <div class="m-3">
 
                             {% if is_paginated %}
