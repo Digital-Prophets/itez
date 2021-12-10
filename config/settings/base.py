@@ -88,6 +88,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "import_export",
     "mapwidgets",
+    "django_celery_results",
 ]
 
 LOCAL_APPS = [

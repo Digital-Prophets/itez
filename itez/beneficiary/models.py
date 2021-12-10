@@ -1,5 +1,7 @@
-from datetime import date
-from  django.urls import reverse
+import datetime
+
+from django.urls import reverse
+from django.utils import timezone
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models import fields
 from django.db.models.deletion import SET, SET_NULL
@@ -76,9 +78,14 @@ class Beneficiary(models.Model):
     """
     Implements the Beneficiary properties and required methods.
     """
-    ART_STATUS = (
-        ("enrolled", _("Enrolled")),
-        ("not_enrolled", _("Not Enrolled")),
+    ART_STATUS_CHOICES = (
+        ("Enrolled", _("Enrolled")),
+        ("Not Enrolled", _("Not Enrolled")),
+    )
+    
+    HIV_STATUS_CHOICES = (
+        ("Positive", _("Positive")),
+        ("Negative", _("Negative")),
     )
 
     MARITAL_STATUS = (
@@ -160,9 +167,9 @@ class Beneficiary(models.Model):
     art_status = models.CharField(
         _("ART Status"),
         max_length=100,
+        choices=ART_STATUS_CHOICES,
         null=True,
-        blank=True,
-        choices=ART_STATUS
+        blank=True
     )
     last_vl = models.IntegerField(
         _("Last Viral Load"),
@@ -171,10 +178,15 @@ class Beneficiary(models.Model):
     )
     hiv_status = models.CharField(
         _("HIV Status"),
+<<<<<<< HEAD
         choices=HIV_STATUS,
         max_length=100,
+=======
+        max_length=10,
+        choices=HIV_STATUS_CHOICES,
+>>>>>>> main
         null=True,
-        blank=True
+        blank=True,
     )
     agent = models.ForeignKey(
         Agent,
@@ -188,12 +200,6 @@ class Beneficiary(models.Model):
         null=True,
         blank=True,
         related_name="registerd_facility"
-    )
-    service_facility = models.ForeignKey(
-        'Facility',
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True
     )
     date_of_birth = models.DateField(_("Date of Birth"))
     marital_status = models.CharField(
@@ -253,12 +259,20 @@ class Beneficiary(models.Model):
         Calculates the Beneficiaries age from birth date.
         """
         days_in_year = 365.2425   
-        age = int((date.today() - self.date_of_birth).days / days_in_year)
+        age = int((datetime.date.today() - self.date_of_birth).days / days_in_year)
         return age
+
+    @classmethod
+    def total_registered_today(cls):
+        """
+        Gets the total number of Beneficiaries registed in a day(24 hours).
+        """
+        time_diff = datetime.datetime.now(timezone.utc) - datetime.timedelta(hours=1)
+        return Beneficiary.objects.filter(created__gt=time_diff).count()
 
 
     def  get_absolute_url(self):
-        return reverse('beneficiary:detail', kwargs={'pk': self.pk})
+        return reverse('beneficiary:details', kwargs={'pk': self.pk})
  
 
 
@@ -555,12 +569,6 @@ class ServiceProviderPersonel(models.Model):
         null=True,
         blank=True
     )
-    facility = models.ForeignKey(
-        Facility,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL
-    )
     qualification = models.ForeignKey(
         ServiceProviderPersonelQualification,
         null=True,
@@ -675,17 +683,14 @@ class Lab(models.Model):
     def __str__(self):
         return f"Lab: {self.title}"
 
-# HTS = 1
-# LAB = 2
-# PHARMACY = 3
+
 SERVICE_TYPES =  (
     ("HTS", _('HTS (HIV Testing Services)')),
     ("LAB", _('LAB')),
     ("PHARMACY", _('PHARMACY')),
 )
 
-# OPD = 1
-# ART = 2
+
 CLIENT_TYPES =  (
     ("OPD", _('OPD (Outpatient Departments )')),
     ("ART", _('ART (Antiretroviral Therapy)')),
@@ -754,6 +759,12 @@ class MedicalRecord(models.Model):
     service = models.ForeignKey(
         Service,
         on_delete=models.CASCADE,
+    )    
+    service_facility = models.ForeignKey(
+        'Facility',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
     )
     provider_comments = models.TextField(
         _("Extra Details/Comment"),
@@ -796,4 +807,10 @@ class MedicalRecord(models.Model):
     
     def __str__(self):
         return f"Medical Record for: {self.beneficiary}, service: {self.service}"
+<<<<<<< HEAD
  
+=======
+    
+    def  get_absolute_url(self):
+        return reverse('beneficiary:detail', kwargs={'pk': self.beneficiary.pk})
+>>>>>>> main

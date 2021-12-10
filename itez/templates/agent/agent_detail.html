@@ -72,7 +72,7 @@
                   <div class="col-md-4">
                       <div class="p-3 py-5">
                           <div class="d-flex justify-content-between align-items-center experience"><span>Roles</span></div><br>
-                          <div class="col-md-12"><label class="labels">Assigned Roles</label><input type="text" class="form-control" placeholder="experience" value="{{ agent.user.groups.all.0 }}"></div> <br>
+                          <div class="col-md-12"><label class="labels">Assigned Roles</label><input type="text" class="form-control" placeholder="experience" value="{{ agent.user.groups.all.0.name }}"></div> <br>
                           <div class="col-md-12"><label class="labels"><h4>Is Active </h4></label>
                             {% if agent.user.is_active %}
                             <span style="padding-left: 10em;">

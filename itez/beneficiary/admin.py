@@ -115,11 +115,11 @@ class BeneficiaryAdmin(ImportExportModelAdmin):
         "hiv_status",
         "last_vl",
         "registered_facility",
-        "service_facility",
         "phone_number",
         "email",
         "date_of_birth",
         "education_level",
+        "created"
     ]
     search_fields = [
         "sex",
@@ -217,6 +217,8 @@ class ServiceProviderPersonelQualificationAdmin(admin.ModelAdmin):
 
 
 # register MedicalRecord class
+
+
 @admin.register(MedicalRecord)
 class MedicalRecordAdmin(admin.ModelAdmin):
     list_display = [
@@ -224,6 +226,7 @@ class MedicalRecordAdmin(admin.ModelAdmin):
         "service",
         "prescription",
         "lab",
+        "service_facility",
     ]
 
     list_filter = [
