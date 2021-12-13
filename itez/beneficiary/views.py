@@ -16,9 +16,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-
+from itez.beneficiary.models import GENDER_CHOICES, SEX_CHOICES
 from rest_framework.filters import SearchFilter, OrderingFilter
-
 import json
 
 from django.views.generic import TemplateView
@@ -88,7 +87,8 @@ def index(request):
             "key": f"{user_role}",\
             "value": f"{cleaned_user_role}"
         })
-        
+    gender_list = [gender[0] or gender[1] for gender in GENDER_CHOICES]
+    sex_list = [sex[0] or sex[1] for sex in SEX_CHOICES]
     context = {
         "segment": "index",
         "opd": opd,
@@ -109,8 +109,11 @@ def index(request):
         "friday": fri_day,
         "saturday": sat_day,
         "user_roles": cleaned_user_roles,
+        "gender_list": gender_list,
+        "sex_list": sex_list,
+        
     }
-    print(cleaned_user_roles)
+    
     html_template = loader.get_template("home/index.html")
     return HttpResponse(html_template.render(context, request))
 
