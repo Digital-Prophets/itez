@@ -21,7 +21,6 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 import json
 
-
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic import base
@@ -111,6 +110,7 @@ def index(request):
         "saturday": sat_day,
         "user_roles": cleaned_user_roles,
     }
+    print(cleaned_user_roles)
     html_template = loader.get_template("home/index.html")
     return HttpResponse(html_template.render(context, request))
 
