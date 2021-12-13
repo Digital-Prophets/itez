@@ -1,12 +1,5 @@
-{% extends "layouts/base.html" %} 
-{% load crispy_forms_tags %}
-
-
-{% block title %} 
-
-  {{ title|title }} 
-
-{% endblock title %}
+{% extends "layouts/base.html" %} {% load crispy_forms_tags %} {% block title %}
+{{ title|title }} {% endblock title %}
 
 <!-- Specific CSS Plugins goes HERE  -->
 {% block css_plugins %}
@@ -32,7 +25,7 @@
         <div class="card-body">
           <h4 class="card-title">{{ title|title }}</h4>
 
-          <form class="form-sample" action="/medical_record/create" method="post">
+          <form class="form-sample" method="post">
             {% csrf_token %} 
             {% crispy form form.helper %}
           </form>

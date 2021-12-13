@@ -20,38 +20,32 @@
   }
   
   body {
-      height: 100vh;
-      /* font: 16px/1.5 sans-serif; */
+      height: 90vh;
   }
   
   .open-modal {
       font-weight: bold;
       background: var(--white);
-      /* color: var(--white); */
-      padding: 0.75rem 1.75rem;
-      margin-bottom: 1rem;
-      border-radius: 5px;
+      padding: 0.25rem 1.25rem;
+      border-radius: 0px;
   }
-  /* MODAL
-                                          –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  /* MODAL  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   
   .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
       background: var(--black);
       cursor: pointer;
       visibility: hidden;
-      opacity: 0;
       transition: all 0.35s ease-in;
+      background: linear-gradient(
+        0deg,
+        rgba(43, 110, 116, 1) 0%,
+        rgba(210, 234, 236, 1) 100%
+      );
+      flood-opacity: unset;
   }
-  
   .modal.is-visible {
       visibility: visible;
       opacity: 1;
@@ -59,33 +53,23 @@
   
   .modal-dialog {
       position: relative;
-      max-width: 800px;
+      max-width: 600px;
       max-height: 80vh;
-      border-radius: 5px;
       background: var(--white);
       overflow: auto;
       cursor: default;
-      width:100%;
+      width:70%;
   }
   
   .modal-dialog>* {
-      padding: 1rem;
+      margin-bottom: 0em;
     
   }
   
   .modal-header,
   .modal-footer {
+    margin-bottom: 2em;         
       background: var(--lightgray);
-  }
-  
-  .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-  }
-  
-  .modal-header .close-modal {
-      font-size: 1.5rem;
   }
   
   .modal p+p {

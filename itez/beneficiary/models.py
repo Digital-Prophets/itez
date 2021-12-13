@@ -82,7 +82,6 @@ class Beneficiary(models.Model):
         ("Enrolled", _("Enrolled")),
         ("Not Enrolled", _("Not Enrolled")),
     )
-
     HIV_STATUS_CHOICES = (
         ("Positive", _("Positive")),
         ("Negative", _("Negative")),
@@ -702,7 +701,6 @@ CLIENT_TYPES = (
     ("ART", _('ART (Antiretroviral Therapy)')),
 )
 
-
 class Service(models.Model):
     """
     Service provision to Beneficiary.
@@ -767,6 +765,12 @@ class MedicalRecord(models.Model):
     service = models.ForeignKey(
         Service,
         on_delete=models.CASCADE,
+    )    
+    service_facility = models.ForeignKey(
+        'Facility',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
     )
     service_facility = models.ForeignKey(
         'Facility',
@@ -815,6 +819,6 @@ class MedicalRecord(models.Model):
 
     def __str__(self):
         return f"Medical Record for: {self.beneficiary}, service: {self.service}"
-
-    def get_absolute_url(self):
-        return reverse('beneficiary:detail', kwargs={'pk': self.beneficiary.pk})
+    
+    def  get_absolute_url(self):
+        return reverse('beneficiary:details', kwargs={'pk': self.beneficiary.pk})
