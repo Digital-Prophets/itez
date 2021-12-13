@@ -243,7 +243,7 @@ class Beneficiary(models.Model):
     class Meta:
         verbose_name = "Beneficiary"
         verbose_name_plural = "Beneficiaries"
-        ordering = ["created"]
+        ordering = ["-created"]
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
