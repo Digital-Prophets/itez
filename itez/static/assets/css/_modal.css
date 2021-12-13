@@ -7,7 +7,6 @@
 }
 
 a {
-    color: inherit;
     text-decoration: none;
 }
 
@@ -29,8 +28,7 @@ body {
     padding: 0.25rem 1.25rem;
     border-radius: 0px;
 }
-/* MODAL
-                                        –––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* MODAL ––––––––––––––––––––––––––––––––––––––––––––––––––  */
 
 .modal {
     display: flex;
@@ -40,11 +38,7 @@ body {
     cursor: pointer;
     visibility: hidden;
     transition: all 0.35s ease-in;
-    background: linear-gradient(
-      0deg,
-      rgba(43, 110, 116, 1) 0%,
-      rgba(210, 234, 236, 1) 100%
-    );
+
     flood-opacity: unset;
 }
 .modal.is-visible {
@@ -73,20 +67,10 @@ body {
     background: var(--lightgray);
 }
 
-/* .modal-header {
-  background: url('https://assets-eaglenews.s3.ap-northeast-1.amazonaws.com/2020/12/unnamed.jpg');
-  height: 300px;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-} */
-
 .modal p+p {
     margin-top: 1rem;
 }
-/* ANIMATIONS
-                                        –––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* ANIMATIONS –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 [data-animation] .modal-dialog {
     opacity: 0;
