@@ -26,7 +26,7 @@
             justify-content-between
             border-bottom
           ">
-          Beneficiaries
+          <h2>Beneficiaries</h2>
         </div>
         <div class="tab-content tab-content-basic">
           <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
@@ -146,26 +146,26 @@
                                       <div class="progress-bar bg-warning" role="progressbar" style="width: 85%"
                                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                  </div>
                                 </td>
-                                <td>{{ beneficiary.province}}</td>
+                                <td>{{ beneficiary.province }}</td>
                                 <td>
                                   <div class="badge badge-opacity-info">OPD</div>
                                 </td>
                                 <td>
                                   <div class="badge badge-opacity-danger">
-                                    <a href="{% url 'beneficiary:medical_record_create' %}">
+                                    <a href="{% url 'beneficiary:medical_record_create' beneficiary.pk %}"
+                                      data-toggle="tooltip" title="Add Medical Record">
                                       <i class="menu-icon mdi mdi-file"></i>
                                     </a>
                                   </div>
                                   <div class="badge badge-opacity-danger">
-                                    <a href="#">
-                                      <i class="menu-icon mdi mdi-pencil"></i>
+                                    <a href="#" data-toggle="tooltip" title="Edit">
+                                      <i class="menu-icon mdi mdi-pencil" class="tooltiptext"></i>
                                     </a>
                                   </div>
 
                                   <div class="badge badge-opacity-danger">
-                                    <a href="#">
+                                    <a href="#" data-toggle="tooltip" title="Delete">
                                       <i class="menu-icon mdi mdi-delete-forever"></i>
                                     </a>
                                   </div>
@@ -260,47 +260,14 @@
             if (asyncData.state === "SUCCESS") {
               // stop making get requests to pollAsyncResults
               clearTimeout(pollAsyncResults);
-              $('#download-report-button').removeClass('buttonload disabled').text('Download');
-              // to download - create an anchor element and
-              // simulate a click
-              const a = document.createElement('a');
-              document.body.appendChild(a);
-              a.style = 'display: none';
-              a.href = asyncData.location;
-              a.download = asyncData.filename;
-              a.click();
-              // change the button back to normal and hide the     
-              // overlay
-              $('#download-reports-button').text('Download Report(CSV)')
-            }
-            // async task still processing
-            else if (asyncData.state === "PENDING") {
-              // Call the function pollAsyncResults again after 
-              // waiting 0.5 seconds.
-              setTimeout(function () { pollAsyncResults(data) }, 2000);
-            }
-            else {
-              clearTimeout(pollAsyncResults);
 
-            }
-          })
-          // see PollAsyncResultsView in View Setup. If the celery 
-          // task fails, and returns a JSON blob with status_code 
-          // 500, PollAsyncResultsView returns a 500 response, 
-          // which would indicate that the task failed
-          .fail(function (xhr, status, error) {
-            // stop making get requests to pollAsyncResults
-            $.notifyBar({ cssClass: "error", html: "An error occured while processing your request", delay: 5000 });
-
-            clearTimeout(pollAsyncResults);
-
-            $('#download-report-button').removeClass('buttonload disabled');
-            $('#download-icon').removeClass('fa fa-circle-o-notch fa-spin px-2').addClass('mdi mdi-download');
-            // add a message, modal, or something to show the user 
-            // that there was an error the error in this case 
-            // would be related to the asynchronous task's
-            // error message
-          })
+              $('#download-report-button').removeClass('buttonload disabled');
+              $('#download-icon').removeClass('fa fa-circle-o-notch fa-spin px-2').addClass('mdi mdi-download');
+              // add a message, modal, or something to show the user 
+              // that there was an error the error in this case 
+              // would be related to the asynchronous task's
+              // error message
+            })
       })
       .fail(function (xhr, status, error) {
         // add a message, modal, or something to show the user 
@@ -309,27 +276,26 @@
         // function that makes a request to start the async task
       })
   })
+</script>
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
 
-
-
-  var benData = '{{beneficiary}}'
-  console.log(benData)
-
+<script>
   $(document).ready(function () {
     $('#table_id').DataTable({
 
       dom: 'B<"clear">lfrtip',
-      buttons: {
-        name: 'primary',
-        buttons: ['copy', 'csv', 'excel', 'pdf']
+      // buttons: {
+      //   name: 'primary',
+      //   // buttons: ['copy', 'csv', 'excel', 'pdf']
 
-      }
+      // }
     }
     );
   });
-
 </script>
-
-
 
 {% endblock javascripts %}
