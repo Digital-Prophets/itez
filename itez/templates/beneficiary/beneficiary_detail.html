@@ -16,6 +16,11 @@
     <div class="col-md-4 grid-margin">
       <div class="card">
         <div class="card-body">
+          <button id="download-medical-report-button" type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0">
+            {% comment %} <i class="fa fa-circle-o-notch fa-spin px-2"></i> {% endcomment %}
+            <i id="download-icon" class="mdi mdi-download"></i>                                                    
+            Download
+          </button>
           <div style="float: right; margin-top: -0.5em" class="wrapper d-flex">
             <fieldset class="border p-2">
               {% if beneficiary.profile_photo.url %}
@@ -399,5 +404,7 @@
 
 <script src="/static/assets/js/dashboard.js"></script>
 <script src="/static/assets/js/Chart.roundedBarCharts.js"></script>
+<script src="/static/assets/js/medical_report_download.js">
+</script>
 
 {% endblock javascripts %}
