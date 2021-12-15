@@ -204,7 +204,7 @@ class Beneficiary(models.Model):
         blank=True
     )
     name_of_spouse = models.CharField(
-        _("Phone Number"),
+        _("Name of Spouse"),
         max_length=200,
         null=True,
         blank=True
