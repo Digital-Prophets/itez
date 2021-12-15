@@ -39,11 +39,10 @@ from itez.beneficiary.models import (
 )
 from itez.beneficiary.models import Service
 from django.db.models import Count
-from django.db.models.functions import ExtractYear,ExtractWeek,ExtractMonth
 
 from django.core.paginator import Paginator
 from django.core.paginator import Paginator
-from .tasks import generate_export_file
+from .tasks import generate_export_file, generate_medical_report
 
 from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm, AgentForm
 from itez.beneficiary.models import Agent
@@ -115,7 +114,22 @@ def export_beneficiary_data(request):
 
 
 @login_required(login_url="/login/")
-def poll_async_resullt(request, task_id):
+def medical_record_pdf(request, id):
+    """
+    This view handles the request for downloading Beneficiary medical record. The task is
+    call to generate a export file, the task returns an ID which is used by
+    the client to poll the status of the task.
+    """
+    task = generate_medical_report.delay(id)
+
+    # returns the task_id with the response
+    response = {"task_id": task.task_id}
+    return JsonResponse(response)
+
+
+
+@login_required(login_url="/login/")
+def poll_report_async_resullt(request, task_id):
     """
     This view handles the polling of state of the task the generates
     the export file. If the task is finnished, the appropriate response
@@ -126,13 +140,21 @@ def poll_async_resullt(request, task_id):
     media_url = settings.MEDIA_URL
 
     if task.state == "SUCCESS":
-        download_url = f"{media_url}exports/{task.result}"
+        download_url = ""
+        
+        if task.result["TASK_TYPE"] == "EXPORT_BENEFICIARY_DATA":
+            download_url = f"{media_url}exports/{task.result['RESULT']}"
+
+        elif task.result["TASK_TYPE"] == "GENERATE_MEDICAL_REPORT":
+            download_url = f"{media_url}beneficiary_report/{task.result['RESULT']}"
+
         body = {"state": task.state, "location": download_url}
         return JsonResponse(body, status=201)
 
     elif task.state == "PENDING":
         body = {"state": task.state}
         return JsonResponse(body, status=200)
+
     else:
         return JsonResponse({"error": f"No task with id {task_id}"}, status=400)
 
