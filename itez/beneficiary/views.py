@@ -10,13 +10,21 @@ from django.views.generic import CreateView, FormView
 from django.views.generic.detail import DetailView
 from rolepermissions.roles import assign_role
 from rolepermissions.roles import RolesManager
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-from itez.beneficiary.models import GENDER_CHOICES, SEX_CHOICES
+from itez.beneficiary.forms import BeneficiaryForm
+from itez.beneficiary.models import (
+    GENDER_CHOICES, 
+    SEX_CHOICES, 
+    EDUCATION_LEVEL,
+    HIV_STATUS_CHOICES,
+    MARITAL_STATUS,
+    ART_STATUS_CHOICES,
+)
 from rest_framework.filters import SearchFilter, OrderingFilter
 import json
 
@@ -41,7 +49,6 @@ from itez.beneficiary.models import Service
 from django.db.models import Count
 from django.db.models.functions import ExtractYear,ExtractWeek,ExtractMonth
 
-from django.core.paginator import Paginator
 from django.core.paginator import Paginator
 from .tasks import generate_export_file
 
@@ -226,14 +233,53 @@ class BeneficiaryCreateView(LoginRequiredMixin, CreateView):
     template_name = "beneficiary/beneficiary_create.html"
 
     def get_success_url(self):
-        return reverse("beneficiary:details")
+        beneficiary_id = self.kwargs.get("pk")
+        return redirect("beneficiary/list/")
 
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryCreateView, self).get_context_data(**kwargs)
         context["title"] = "create new beneficiary"
         return context
 
+class BeneficiaryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Beneficiary
+    template_name = "beneficiary/beneficiary_update.html"
+    success_url = "/beneficiary/list"
+    fields = [
+        "first_name",
+        "last_name",
+        "other_name",
+        "gender",
+        "sex",
+        "number_of_children",
+        "profile_photo",
+        "phone_number",
+        "email",
+        "date_of_birth",
+        "art_status",
+        "last_vl",
+        "number_of_children",
+        "number_of_siblings",
+        "hiv_status",
+        "name_of_spouse",
+    ]
 
+    def get_context_data(self, **kwargs):
+        context = super(BeneficiaryUpdateView, self).get_context_data(**kwargs)
+        beneficiary_id = self.kwargs.get("pk")  
+        beneficiary = Beneficiary.objects.get(id=beneficiary_id)
+        form = BeneficiaryForm(instance=beneficiary)
+        context["title"] = "update beneficiary"
+        context["form"] = form
+        return context
+
+
+@login_required(login_url="/login/")
+def beneficiary_delete_view(request, pk):
+    beneficiary = Beneficiary.objects.get(id=pk)
+    beneficiary.delete()
+    return redirect(reverse("beneficiary:list"))
+  
 class BenenficiaryListView(LoginRequiredMixin, ListView):
     """
     Beneficiary  List View.
@@ -263,7 +309,6 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         beneficiary_resource = BeneficiaryResource()
         export_data = beneficiary_resource.export()
         export_type = export_data.json
-
         context = super(BenenficiaryListView, self).get_context_data(**kwargs)
         context["opd"] = Service.objects.filter(client_type="OPD").count()
         context["hts"] = Service.objects.filter(service_type="HTS").count()

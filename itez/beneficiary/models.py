@@ -21,8 +21,41 @@ SEX_CHOICES = (
     ("Male", _("Male")),
     ("Female", _("Female"))
 )
+EDUCATION_LEVEL = (
+    ("none", _("None")),
+    ("primary", _("Primary")),
+    ("basic", _("Basic")),
+    ("secondary", _("Secondary O'Level")),
+    ("certificate", _("Certificate")),
+    ("diploma", _("Diploma")),
+    ("degree", _("Degree")),
+    ("masters", _("Masters")),
+    ("doctrate", _("Doctrate")),
+    ("phd", _("PHD")),
+)
 
+ART_STATUS_CHOICES = (
+    ("Enrolled", _("Enrolled")),
+    ("Not Enrolled", _("Not Enrolled")),
+)
+HIV_STATUS_CHOICES = (
+    ("Positive", _("Positive")),
+    ("Negative", _("Negative")),
+)
 
+MARITAL_STATUS = (
+    ("single", _("Single")),
+    ("married", _("Married")),
+    ("seperated", _("Seperated")),
+    ("divorced", _("Divorced")),
+    ("widowed", _("Widowed")),
+)
+
+HIV_STATUS = (
+    ("positive", _("Positive")),
+    ("negative", _("Negative")),
+    ("unkown", _("Uknown")),
+)
 class Agent(models.Model):
     """
     Create agent detail table with its attributes or columns.

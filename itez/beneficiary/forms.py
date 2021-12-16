@@ -13,7 +13,6 @@ from itez.beneficiary.models import Beneficiary, MedicalRecord
 from itez.beneficiary.models import Agent
 
 
-
 class MedicalRecordForm(ModelForm):
     class Meta:
 

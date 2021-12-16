@@ -39,6 +39,16 @@ urlpatterns = [
         views.MedicalRecordListView.as_view(),
         name="medical_record_list",
     ),
+    path(
+        "beneficiary/<int:pk>/delete",
+        views.beneficiary_delete_view,
+        name="delete",
+    ),
+    path(
+        "beneficiary/<int:pk>/update",
+        views.BeneficiaryUpdateView.as_view(),
+        name="update",
+    ),
     # Medical Record `beneficiary:medical_record_list`
     path(
         "medical_record/list",
