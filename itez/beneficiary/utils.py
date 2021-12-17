@@ -168,6 +168,9 @@ class GenerateMedicalReport(BaseDocTemplate):
         canvas.restoreState()
 
     def _get_font(self):
+        """
+        Set the fonts for the document.
+        """
         try:
             font_folder = os.path.join(self.static_root, "assets/fonts", "Roboto")
             bold_ttf_file = os.path.join(font_folder, "Roboto-Bold.ttf")
@@ -178,6 +181,9 @@ class GenerateMedicalReport(BaseDocTemplate):
             pass
 
     def _draw_beneficiary_info(self, canvas, doc):
+        """
+        Draws all the beneficiary meta data on the document.
+        """
         canvas.setFillColorRGB(0, 0, 0)
         canvas.setFont("Roboto-Regular", 12)
 
@@ -195,12 +201,21 @@ class GenerateMedicalReport(BaseDocTemplate):
             height_count += 20
 
     def _draw_string(self, canvas, x=0, y=0, text=""):
+        """
+        Draws text on the document.
+        """
         canvas.drawString(x, y, text)
 
     def _draw_line(self, canvas, x1=0, y1=0, x2=0, y2=0):
+        """
+        Draws a line on the document.
+        """
         canvas.line(x1, y1, x2, y2)
 
     def _draw_photo(self, canvas, photo_path, x=0, y=0, width=0, height=0):
+        """
+        Draws an image on the document.
+        """
         canvas.drawImage(
             photo_path,
             x,
@@ -213,6 +228,10 @@ class GenerateMedicalReport(BaseDocTemplate):
         )
 
     def _create_table(self):
+        """
+        Creates and updates the service record table with dynamic data from
+        the 'medical_record' model instance.
+        """
         table = [
             ["Service Name", "Provider Personnel", "Comments", "Facility"],
         ]
@@ -234,6 +253,11 @@ class GenerateMedicalReport(BaseDocTemplate):
         return table
 
     def _beneficiary_obj_to_dict(self):
+        """
+        Converts the beneficary model object into a dict and returns a dict containing only
+        the required fields and thier corresponsing values. This allows the data to be easily
+        iterated over and rendered dynamically.
+        """
         exclude = ["id", "profile_photo", "agent", "parent_details"]
 
         data = model_to_dict(self.beneficiary_obj)
