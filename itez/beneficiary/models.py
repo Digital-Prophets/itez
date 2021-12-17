@@ -51,11 +51,6 @@ MARITAL_STATUS = (
     ("widowed", _("Widowed")),
 )
 
-HIV_STATUS = (
-    ("positive", _("Positive")),
-    ("negative", _("Negative")),
-    ("unkown", _("Uknown")),
-)
 class Agent(models.Model):
     """
     Create agent detail table with its attributes or columns.

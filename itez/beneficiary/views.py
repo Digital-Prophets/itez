@@ -245,25 +245,8 @@ class BeneficiaryUpdateView(LoginRequiredMixin, UpdateView):
     model = Beneficiary
     template_name = "beneficiary/beneficiary_update.html"
     success_url = "/beneficiary/list"
-    fields = [
-        "first_name",
-        "last_name",
-        "other_name",
-        "gender",
-        "sex",
-        "number_of_children",
-        "profile_photo",
-        "phone_number",
-        "email",
-        "date_of_birth",
-        "art_status",
-        "last_vl",
-        "number_of_children",
-        "number_of_siblings",
-        "hiv_status",
-        "name_of_spouse",
-    ]
-
+    form_class = BeneficiaryForm
+    
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryUpdateView, self).get_context_data(**kwargs)
         beneficiary_id = self.kwargs.get("pk")  
