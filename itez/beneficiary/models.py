@@ -21,7 +21,35 @@ SEX_CHOICES = (
     ("Male", _("Male")),
     ("Female", _("Female"))
 )
+EDUCATION_LEVEL = (
+    ("none", _("None")),
+    ("primary", _("Primary")),
+    ("basic", _("Basic")),
+    ("secondary", _("Secondary O'Level")),
+    ("certificate", _("Certificate")),
+    ("diploma", _("Diploma")),
+    ("degree", _("Degree")),
+    ("masters", _("Masters")),
+    ("doctrate", _("Doctrate")),
+    ("phd", _("PHD")),
+)
 
+ART_STATUS_CHOICES = (
+    ("Enrolled", _("Enrolled")),
+    ("Not Enrolled", _("Not Enrolled")),
+)
+HIV_STATUS_CHOICES = (
+    ("Positive", _("Positive")),
+    ("Negative", _("Negative")),
+)
+
+MARITAL_STATUS = (
+    ("single", _("Single")),
+    ("married", _("Married")),
+    ("seperated", _("Seperated")),
+    ("divorced", _("Divorced")),
+    ("widowed", _("Widowed")),
+)
 
 class Agent(models.Model):
     """
@@ -638,7 +666,7 @@ class Prescription(models.Model):
         _("Extra Details/Comment"),
         null=True,
         blank=True
-    )
+    ) 
 
     class Meta:
         verbose_name = _("Prescription")
@@ -678,7 +706,8 @@ class Lab(models.Model):
         _("Extra Details/Comment"),
         null=True,
         blank=True
-    )
+    )   
+    
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -765,12 +794,6 @@ class MedicalRecord(models.Model):
     service = models.ForeignKey(
         Service,
         on_delete=models.CASCADE,
-    )    
-    service_facility = models.ForeignKey(
-        'Facility',
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True
     )
     service_facility = models.ForeignKey(
         'Facility',
@@ -779,7 +802,7 @@ class MedicalRecord(models.Model):
         blank=True
     )
     provider_comments = models.TextField(
-        _("Extra Details/Comment"),
+        _("Provider Comments"),
         null=True,
         blank=True
     )
@@ -811,11 +834,18 @@ class MedicalRecord(models.Model):
         blank=True,
         on_delete=models.CASCADE
     )
+    document = models.FileField(
+        _("Supporting Documents"),
+        null=True,
+        blank=True,
+        upload_to="supporting_documents/%Y/%m/%d/"
+    )
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _("Medical Record")
         verbose_name_plural = _("Medical Records")
+        ordering = ['-created']
 
     def __str__(self):
         return f"Medical Record for: {self.beneficiary}, service: {self.service}"
