@@ -15,18 +15,18 @@
 {% endblock stylesheets %}
 
 {% block content %}
-
-<div class="content-wrapper">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="home-tab">
-        <div class="
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div
+          class="
             d-sm-flex
             align-items-center
             justify-content-between
             border-bottom
           ">
-          <h2>Beneficiaries</h2>
+          <h2>Beneficiaries</h2> 
         </div>
         <div class="tab-content tab-content-basic">
           <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
@@ -48,35 +48,30 @@
 
                           <div class="form-group inline ">
                             <div class="search">
-                              <form class="search-form flex-column search" autocomplete='off' action="#" id="search">
-                                <input type="search" class="form-control search " name="q" id="q"
-                                  placeholder="Search beneficiary here" title="Search here" id="search_here">
+                              <form class="search-form flex-column search" autocomplete='off' action="#">
+                                <input type="search" class="form-control search " name="q" data-toggle="tooltip" title="Search"
+                                  placeholder="Search beneficiary" title="Search here" id="search_here"
+                                  >
                                 <div>
                                   <svg>
                                     <i class="icon-search"></i>
                                   </svg>
                                 </div>
                               </form>
-                            </div>
+                            </div></div>
+
+                            <div>
+                            	<button id="download-report-button" type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0" data-toggle="tooltip" title="Download Records">
+									{% comment %} <i class="fa fa-circle-o-notch fa-spin px-2"></i> {% endcomment %}
+									<i id="download-icon" class="mdi mdi-download"></i>
+                            	</button>
+                            	<button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">                             
+                                	<a href="{% url 'beneficiary:create' %}" class="text-white" style="text-decoration: none;" data-toggle="tooltip" title="Add Beneficiary">
+									<i class="mdi mdi-account-plus"></i >
+									</a>
+								</button>
                           </div>
 
-                          <div>
-                            <button id="download-report-button" type="button"
-                              class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0">
-                              {% comment %} <i class="fa fa-circle-o-notch fa-spin px-2"></i> {% endcomment %}
-                              <i id="download-icon" class="mdi mdi-download"></i>
-                              Download
-                            </button>
-                            <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">
-
-
-                              <a href="{% url 'beneficiary:create' %}" class="text-white"
-                                style="text-decoration: none;">
-                                <i class="mdi mdi-account-plus"></i>Add new Beneficiary</button>
-                            </a>
-
-
-                          </div>
                         </div>
                         <div class="table-responsive  mt-1">
                           <table class="table select-table" id="table_id">
@@ -188,27 +183,26 @@
                         <div class="m-3">
 
                           {% if is_paginated %}
-
-                          {% if page_obj.has_previous %}
-                          <a class="btn btn-primary btn-lg text-white mb-0 me-0" href="?page=1">First</a>
-                          <a class="btn btn-primary btn-lg text-white mb-0 me-0"
-                            href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                          {% endif %}
-
-                          {% for num in page_obj.paginator.page_range %}
-                          {% if page_obj.number == num %}
-                          <a class="btn btn-lg mb-0 me-0" href="?page={{ num }}">{{ num }}</a>
-                          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
-                            class="btn btn-primary btn-lg text-white mb-0 me-0" href="?page={{ num }}">{{ num }}</a>
+                            {% if page_obj.has_previous %}
+                              <a class="btn btn-primary btn-lg text-white mb-0 me-0" href="?page=1">First</a>
+                              <a class="btn btn-primary btn-lg text-white mb-0 me-0"
+                                href="?page={{ page_obj.previous_page_number }}">Previous</a>
                             {% endif %}
-                            {% endfor %}
 
-                            {% if page_obj.has_next %}
-                            <a class="btn btn-primary btn-lg text-white mb-0 me-0"
-                              href="?page={{ page_obj.next_page_number }}">Next</a>
-                            <a class="btn btn-primary btn-lg text-white mb-0 me-0"
-                              href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                              {% if page_obj.number == num %}
+                                <a class="btn btn-lg mb-0 me-0" href="?page={{ num }}">{{ num }}</a>
+                              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
+                                class="btn btn-primary btn-lg text-white mb-0 me-0" href="?page={{ num }}">{{ num }}</a>
+                              {% endif %}
+                             {% endfor %}
+
+                              {% if page_obj.has_next %}
+                                <a class="btn btn-primary btn-lg text-white mb-0 me-0"
+                                  href="?page={{ page_obj.next_page_number }}">Next</a>
+                                <a class="btn btn-primary btn-lg text-white mb-0 me-0"
+                                  href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                              {% endif %}
                             {% endif %}
                         </div>
                       </div>
@@ -232,6 +226,8 @@
 <script src="/static/assets/vendors/chart.js/Chart.min.js"></script>
 <script src="/static/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <script src="/static/assets/vendors/progressbar.js/progressbar.min.js"></script>
+
+
 
 
 {% endblock js_plugins %}
@@ -268,71 +264,28 @@
             if (asyncData.state === "SUCCESS") {
               // stop making get requests to pollAsyncResults
               clearTimeout(pollAsyncResults);
-              $('#download-report-button').removeClass('buttonload disabled').text('Download');
-              // to download - create an anchor element and
-              // simulate a click
-              const a = document.createElement('a');
-              document.body.appendChild(a);
-              a.style = 'display: none';
-              a.href = asyncData.location;
-              a.download = asyncData.filename;
-              a.click();
-              // change the button back to normal and hide the     
-              // overlay
-              $('#download-reports-button').text('Download Report(CSV)')
-            }
-            // async task still processing
-            else if (asyncData.state === "PENDING") {
-              // Call the function pollAsyncResults again after 
-              // waiting 0.5 seconds.
-              setTimeout(function () { pollAsyncResults(data) }, 2000);
-            }
-            else {
-              clearTimeout(pollAsyncResults);
-
-            }
-          })
-          // see PollAsyncResultsView in View Setup. If the celery 
-          // task fails, and returns a JSON blob with status_code 
-          // 500, PollAsyncResultsView returns a 500 response, 
-          // which would indicate that the task failed
-          .fail(function (xhr, status, error) {
-            // stop making get requests to pollAsyncResults
-            $.notifyBar({ cssClass: "error", html: "An error occured while processing your request", delay: 5000 });
-
-            clearTimeout(pollAsyncResults);
-
-            $('#download-report-button').removeClass('buttonload disabled');
-            $('#download-icon').removeClass('fa fa-circle-o-notch fa-spin px-2').addClass('mdi mdi-download');
-            // add a message, modal, or something to show the user 
-            // that there was an error the error in this case 
-            // would be related to the asynchronous task's
-            // error message
-          })
-      })
-      .fail(function (xhr, status, error) {
-        // add a message, modal, or something to show the user 
-        // that there was an error
-        // The error in this case would be related to the main 
-        // function that makes a request to start the async task
-      })
-  })
-</script>
-<script>
-  $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-</script>
-
-<script>
-  $(document).ready(function () {
-    var table = $('#table_id').DataTable({
-      "dom": '<"top"i>rt<"bottom"><"clear">'
+              $('#download-report-button').removeClass('buttonload disabled');
+              $('#download-icon').removeClass('fa fa-circle-o-notch fa-spin px-2').addClass('mdi mdi-download');
+              // add a message, modal, or something to show the user 
+              // that there was an error the error in this case 
+              // would be related to the asynchronous task's
+              // error message
+            })
+        })
+        .fail(function(xhr, status, error) {
+          // add a message, modal, or something to show the user 
+          // that there was an error
+          // The error in this case would be related to the main 
+          // function that makes a request to start the async task
+        })
+    })
+  </script>
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
     });
-    $('#q').on('keyup', function () {
-      table.search($('#q').val()).draw();
-    });
-  });
-</script>
+    </script>
+
+	
 
 {% endblock javascripts %}
