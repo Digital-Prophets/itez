@@ -13,24 +13,26 @@
 <div class="content-wrapper">
   <div class="row">
     <div class="col-md-4 grid-margin">
-      <div class="card">
-        <div class="card-body">
-          <button id="download-medical-report-button" type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0">
+
+		<!-- Personal Info -->
+		<div class="card" style="margin-bottom: 10px;">
+			<div class="card-body" >
+        <button id="download-medical-report-button" type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0">
             {% comment %} <i class="fa fa-circle-o-notch fa-spin px-2"></i> {% endcomment %}
             <i id="download-icon" class="mdi mdi-download"></i>                                                    
             Download
           </button>
-          <div style="float: right; margin-top: -0.5em" class="wrapper d-flex">
-            <fieldset class="border p-2">
-              {% if beneficiary.profile_photo.url %}
-              <img
-                height="70"
-                width="70"
-                style="border-radius: 6em"
-                class="img-md zoom rounded-square"
-                src="{{beneficiary.profile_photo.url}}"
-                alt="Profile image"
-              />
+				<div style="margin-top: -0.5em; justify-content: center;" class="wrapper d-flex">
+					<fieldset style="align-items: center;">
+					{% if beneficiary.profile_photo %}
+					<img
+						height="70"
+						width="70"
+						style="border-radius: 6em;"
+						class="img-md zoom rounded-square"
+						src="{{beneficiary.profile_photo.url}}"
+						alt="Profile image"
+					/>
 
 					{% elif beneficiary.profile_photo and beneficiary.gender == 'Male' %}
 					<img
@@ -47,7 +49,6 @@
 						src="/static/assets/images/faces/female.jpeg"
 						alt="Profile image"
 					/>
-
 					{% else %}
 					<img
 						style="border-radius: 0.6em; border-radius: 6em"
