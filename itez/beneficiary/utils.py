@@ -26,10 +26,6 @@ from reportlab.lib import colors
 from .resources import BeneficiaryResource
 
 
-beneficiary_resource = BeneficiaryResource()
-dataset = beneficiary_resource.export()
-
-
 def generate_uuid():
     """
     Generates a seven digit agent ID and a unique ID.
