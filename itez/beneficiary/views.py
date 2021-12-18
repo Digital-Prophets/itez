@@ -257,11 +257,42 @@ class BeneficiaryUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
+class AgentUpdateView(LoginRequiredMixin, UpdateView):
+    model = Agent
+    template_name = "agent/agent_update.html"
+    success_url = "/agent/list"
+    # form_class = AgentForm
+    fields = [
+        'first_name',
+        'last_name',
+        'location',
+        'birthdate',
+        'gender'
+    ]
+    
+    def get_context_data(self, **kwargs):
+        context = super(AgentUpdateView, self).get_context_data(**kwargs)
+        agent_id = self.kwargs.get("pk")  
+        agent = Agent.objects.get(id=agent_id)
+        form = AgentForm(instance=agent)
+        if form.is_valid():
+            form.save()
+        context["title"] = "update agent"
+        context["form"] = form
+        return context
+
+
 @login_required(login_url="/login/")
 def beneficiary_delete_view(request, pk):
     beneficiary = Beneficiary.objects.get(id=pk)
     beneficiary.delete()
     return redirect(reverse("beneficiary:list"))
+
+@login_required(login_url="/login/")
+def agent_delete_view(request, pk):
+    agent = Agent.objects.get(id=pk)
+    agent.delete()
+    return redirect(reverse("beneficiary:agent_list"))
   
 class BenenficiaryListView(LoginRequiredMixin, ListView):
     """
