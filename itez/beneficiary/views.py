@@ -246,7 +246,6 @@ class AgentUpdateView(LoginRequiredMixin, UpdateView):
     model = Agent
     template_name = "agent/agent_update.html"
     success_url = "/agent/list"
-    # form_class = AgentForm
     fields = [
         'first_name',
         'last_name',
@@ -255,13 +254,16 @@ class AgentUpdateView(LoginRequiredMixin, UpdateView):
         'gender'
     ]
     
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("beneficiary:agent_list"))
+    
     def get_context_data(self, **kwargs):
         context = super(AgentUpdateView, self).get_context_data(**kwargs)
         agent_id = self.kwargs.get("pk")  
         agent = Agent.objects.get(id=agent_id)
         form = AgentForm(instance=agent)
-        if form.is_valid():
-            form.save()
         context["title"] = "update agent"
         context["form"] = form
         return context
