@@ -53,14 +53,14 @@
                               </form>
                             </div>
                           </div>
+                          
                           <div>
                             <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">
-
+                              
                               <a href="{% url 'beneficiary:agent_create' %}" class="text-white"
-                                style="text-decoration: none;">
-                                <i class="mdi mdi-account-plus"></i>Add new Agent User</button>
+                              style="text-decoration: none;">
+                              <i class="mdi mdi-account-plus"></i>Add new Agent User</button>
                             </a>
-
                           </div>
                         </div>
 
@@ -71,30 +71,51 @@
                                 <th>
                                   <div class="form-check form-check-flat mt-0">
                                     <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input" aria-checked="false"><i
+                                      <input type="checkbox" class="form-check-input main-checkbox" aria-checked="false"><i
                                         class="input-helper"></i></label>
-                                  </div>
+                                      </div>
                                 </th>
+                                
                                 <th>Agent ID</th>
                                 <th>Full Name</th>
                                 <th>Related User</th>
                                 <th>Date of Birth</th>
-                                <!-- <th>Role</th> -->
                                 <th>Gender</th>
-                                <!-- <th>Location</th> -->
                                 <th>Action</th>
                               </tr>
                             </thead>
                             <tbody>
+                              <form method="post" action="agent/multiple/delete/">
                               {% if agents %}
                               {% for agent in agents %}
                               <tr>
                                 <td>
                                   <div class="form-check form-check-flat mt-0">
                                     <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input" aria-checked="false"><i
-                                        class="input-helper"></i></label>
+                                      <input id="{{ agent.agent_id }}" type="checkbox" name="{{ agent.agent_id }}" class="input-helper"></i></label>
                                   </div>
+                                  <script>
+                                    
+                                    var unique_list = [];
+                                    var unique_id = document.getElementById("{{ agent.agent_id }}");
+                                    
+                                    if("{{ agent.agent_id }}" === "{{ agent.agent_id }}"){
+                                      unique_id.addEventListener("click", ()=>{
+                                        for(let i = 0; i < unique_list.length; i++){
+                                          try{
+                                            if(unique_list[i] === "{{ agent.agent_id }}"){
+                                              unique_list.push("{{ agent.agent_id }}");
+                                            }else{
+                                              
+                                            }
+                                          }catch(error){
+                                            console.log("An error occured")
+                                          }
+                                        }
+                                        console.log(unique_list);
+                                      });
+                                    ;}
+                                  </script>
                                 </td>
                                 <td>
                                   {% if agent.user.profile.profile_photo %}
@@ -166,6 +187,7 @@
                               {% else %}
                               <h3>No Agent Users Available</h3>
                               {% endif %}
+                              </form>
                             </tbody>
                           </table>
                         </div>

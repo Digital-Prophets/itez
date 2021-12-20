@@ -276,6 +276,16 @@ def beneficiary_delete_view(request, pk):
     return redirect(reverse("beneficiary:list"))
 
 @login_required(login_url="/login/")
+def multiple_agent_delete_view(request):
+    if request.method == 'POST':
+        selected_values = request.POST.getlist('checked-box')
+        return HttpResponse(f"{selected_values}")
+    return HttpResponse("not method post")
+    # beneficiary = Agent.objects.get(id=pk)
+    # beneficiary.delete()
+    # return redirect(reverse("beneficiary:list"))
+
+@login_required(login_url="/login/")
 def agent_delete_view(request, pk):
     agent = Agent.objects.get(id=pk)
     agent.delete()

@@ -24,6 +24,12 @@ urlpatterns = [
         views.agent_delete_view,
         name="agent_delete",
     ),
+    path(
+        "agent/multiple/delete",
+        views.multiple_agent_delete_view,
+        name="multiple_agent_delete",
+    ),
+    
      path(
         "agent/<int:pk>/update",
         views.AgentUpdateView.as_view(),
