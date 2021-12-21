@@ -15,103 +15,95 @@
 
 {% block content %}
 
-  <div class="content-wrapper">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="home-tab">
-          <div
-          class="
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="home-tab">
+        <div class="
             d-sm-flex
             align-items-center
             justify-content-between
             border-bottom
-          "
-        >
+          ">
           <h2>Agents</h2>
         </div>
-          <div class="tab-content tab-content-basic">
-            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
-              
-              <div class="row">
-                <div class="col-lg-12 d-flex flex-column">
-                  <div class="row flex-grow">
-                    <div class="col-12 grid-margin stretch-card">
-                      <div class="card card-rounded">
-                        <div class="card-body">
-                          <div class="d-sm-flex justify-content-between align-items-start">
-                            <div>
-                              <h4 class="card-title card-title-dash">All Agent Users</h4>
-                            </div>
-                            <div class="form-group">
-                              <form class="search-form" action="#">
-                                <input type="search" class="form-control" placeholder="Search agents here..." title="Search here">
-                                <!-- <i class="icon-search"></i> -->
+        <div class="tab-content tab-content-basic">
+          <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+
+            <div class="row">
+              <div class="col-lg-12 d-flex flex-column">
+                <div class="row flex-grow">
+                  <div class="col-12 grid-margin stretch-card">
+                    <div class="card card-rounded">
+                      <div class="card-body">
+                        <div class="d-sm-flex justify-content-between align-items-start">
+                          <div>
+                            <h4 class="card-title card-title-dash">All Agent Users</h4>
+                          </div>
+                          <div class="form-group inline ">
+                            <div class="search">
+                              <form class="search-form flex-column search" autocomplete='off' action="#" id="search">
+                                <input type="search" class="form-control search " name="q" id="q"
+                                  placeholder="Search beneficiary here" title="Search here" id="search_here">
+                                <div>
+                                  <svg>
+                                    <i class="icon-search"></i>
+                                  </svg>
+                                </div>
                               </form>
                             </div>
                           </div>
-                          
                           <div>
                             <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">
-                              
                               <a href="{% url 'beneficiary:agent_create' %}" class="text-white"
-                              style="text-decoration: none;">
-                              <i class="mdi mdi-account-plus"></i>Add new Agent User</button>
+                                style="text-decoration: none;">
+                                <i class="mdi mdi-account-plus"></i>Add new Agent User</button>
                             </a>
                           </div>
                         </div>
 
                         <div class="table-responsive  mt-1">
+                          <form class="form-delete" method="post" action="{% url 'beneficiary:multiple_agent_delete' %}">{% csrf_token %}
+                           <select id="agent-selector" name="agent-action-select">
+                             <option>----------------------</option>
+                             <option>delete selected</option>
+                           </select>
+                           <button id="agent-select-button" type="submit">Go</button>
+                           <script>
+                             var agentSelector = document.getElementById("#agent-selector");
+                             var goButton = document.getElementById("#agent-select-button");
+                             var agentActionForm = document.querySelector(".form-delete");
+                           </script>
                           <table class="table select-table" id="table_id">
                             <thead>
                               <tr>
                                 <th>
                                   <div class="form-check form-check-flat mt-0">
                                     <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input main-checkbox" aria-checked="false"><i
+                                      <input type="checkbox" class="form-check-input" aria-checked="false"><i
                                         class="input-helper"></i></label>
-                                      </div>
+                                  </div>
                                 </th>
-                                
                                 <th>Agent ID</th>
                                 <th>Full Name</th>
                                 <th>Related User</th>
                                 <th>Date of Birth</th>
+                                <!-- <th>Role</th> -->
                                 <th>Gender</th>
+                                <!-- <th>Location</th> -->
                                 <th>Action</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <form method="post" action="agent/multiple/delete/">
                               {% if agents %}
                               {% for agent in agents %}
                               <tr>
                                 <td>
                                   <div class="form-check form-check-flat mt-0">
                                     <label class="form-check-label">
-                                      <input id="{{ agent.agent_id }}" type="checkbox" name="{{ agent.agent_id }}" class="input-helper"></i></label>
+                                      <input name="agent-ids" value="{{ agent.agent_id }}" type="checkbox" class="form-check-input" aria-checked="false"><i
+                                        class="input-helper"></i></label>
                                   </div>
-                                  <script>
-                                    
-                                    var unique_list = [];
-                                    var unique_id = document.getElementById("{{ agent.agent_id }}");
-                                    
-                                    if("{{ agent.agent_id }}" === "{{ agent.agent_id }}"){
-                                      unique_id.addEventListener("click", ()=>{
-                                        for(let i = 0; i < unique_list.length; i++){
-                                          try{
-                                            if(unique_list[i] === "{{ agent.agent_id }}"){
-                                              unique_list.push("{{ agent.agent_id }}");
-                                            }else{
-                                              
-                                            }
-                                          }catch(error){
-                                            console.log("An error occured")
-                                          }
-                                        }
-                                        console.log(unique_list);
-                                      });
-                                    ;}
-                                  </script>
                                 </td>
                                 <td>
                                   {% if agent.user.profile.profile_photo %}
@@ -183,9 +175,9 @@
                               {% else %}
                               <h3>No Agent Users Available</h3>
                               {% endif %}
-                              </form>
                             </tbody>
                           </table>
+                          </form>
                         </div>
 
                         <div class="m-3">

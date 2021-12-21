@@ -25,11 +25,15 @@ urlpatterns = [
         name="agent_delete",
     ),
     path(
-        "agent/multiple/delete",
+        "multiple/agent/delete",
         views.multiple_agent_delete_view,
         name="multiple_agent_delete",
     ),
-    
+    path(
+        "multiple/beneficiary/delete",
+        views.multiple_beneficiary_delete_view,
+        name="multiple_beneficiary_delete",
+    ),
      path(
         "agent/<int:pk>/update",
         views.AgentUpdateView.as_view(),

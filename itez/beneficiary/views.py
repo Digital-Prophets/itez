@@ -393,14 +393,30 @@ def beneficiary_delete_view(request, pk):
     return redirect(reverse("beneficiary:list"))
 
 @login_required(login_url="/login/")
+def multiple_beneficiary_delete_view(request):
+    if request.method == 'POST':
+        beneficiary_action = request.POST.get("beneficiary-action-select")
+        if not '--' in beneficiary_action:
+            beneficiary_id_list = request.POST.getlist('beneficiary-ids', [])
+            for beneficiary_id in beneficiary_id_list:
+                beneficiary = Beneficiary.objects.get(beneficiary_id=beneficiary_id)
+                beneficiary.delete()
+            return redirect(reverse("beneficiary:list"))
+    return redirect(reverse("beneficiary:list"))
+
+
+@login_required(login_url="/login/")
 def multiple_agent_delete_view(request):
     if request.method == 'POST':
-        selected_values = request.POST.getlist('checked-box')
-        return HttpResponse(f"{selected_values}")
-    return HttpResponse("not method post")
-    # beneficiary = Agent.objects.get(id=pk)
-    # beneficiary.delete()
-    # return redirect(reverse("beneficiary:list"))
+        agent_action = request.POST.get("agent-action-select")
+        if not '--' in agent_action:
+            agent_id_list = request.POST.getlist('agent-ids', [])
+            for agent_id in agent_id_list:
+                agent = Agent.objects.get(agent_id=agent_id)
+                agent.delete()
+            return redirect(reverse("beneficiary:agent_list"))
+    return redirect(reverse("beneficiary:agent_list"))
+
 
 @login_required(login_url="/login/")
 def agent_delete_view(request, pk):
@@ -483,7 +499,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         )
         latest_beneficiary_service = {
             "service_name": latest_beneficiary_medical_record.service,
-            "service_facility": latest_beneficiary_medical_record.service_facility,
+            "service_facility": latest_beneficiary_medical_record.service.service_type,
             "interaction_date": latest_beneficiary_medical_record.interaction_date,
             "service_provider": service_provider_name,
             "service_provider_comments": latest_beneficiary_medical_record.provider_comments,
@@ -503,7 +519,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             services["services"].append(
                 {
                     "service_object": medical_record.service,
-                    "service_facility": medical_record.service_facility,
+                    "service_facility": medical_record,
                     "service_provider": service_personnel_name,
                     "service_comments": medical_record.provider_comments,
                 }
@@ -553,25 +569,25 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
     Create an agent object.
     """
 
-	model = Agent
-	form_class = AgentForm
-	template_name = "agent/agent_create.html"
+    model = Agent
+    form_class = AgentForm
+    template_name = "agent/agent_create.html"
 
-	def get_success_url(self):
-		return reverse("beneficiary:agent_list")
+    def get_success_url(self):
+        return reverse("beneficiary:agent_list")
 
-	def form_valid(self, form):
-		form.instance.author = self.request.user
-		return super(AgentCreateView, self).form_valid(form)
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(AgentCreateView, self).form_valid(form)
 
-	def get_context_data(self, **kwargs):
-		context = super(AgentCreateView, self).get_context_data(**kwargs)
-		roles = RolesManager.get_roles_names()
+    def get_context_data(self, **kwargs):
+        context = super(AgentCreateView, self).get_context_data(**kwargs)
+        roles = RolesManager.get_roles_names()
 
-		context["title"] = "create agent"
-		context["roles"] = roles
+        context["title"] = "create agent"
+        context["roles"] = roles
 
-		return context
+        return context
 
 
 class AgentListView(LoginRequiredMixin, ListView):

@@ -1,5 +1,4 @@
 
-
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">{{ service_title|title }}</h4>
@@ -15,14 +14,23 @@
         </thead>
         <tbody>
           {% for service in service_paginator_list %}
+          
           <tr>
-            <td>{{ service.service_object }}</td>
+            <td>
+              <button style="background-color: inherit; color: inherit; pointer-events: none;" type="button">view
+              </button>
+              <style>
+                
+              </style>
+                {{ service.service_object }}
+            </td>
             <td>{{ service.service_provider }}</td>
             <td>{{ service.service_comments }}</td>
             <td>{{ service.service_facility }}</td>
           </tr>
           {% endfor %}
         </tbody>
+        
       </table>
     </div>
     <hr />
