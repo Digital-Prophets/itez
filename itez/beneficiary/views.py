@@ -1,6 +1,9 @@
 # -*- encoding: utf-8 -*-
 import json
+import os
+import uuid
 import datetime
+
 from django import template
 from django.contrib.gis.db.models import fields
 from django.db.models import query
@@ -9,6 +12,7 @@ from django.db.models.expressions import OrderBy
 from django.db.models.functions.datetime import TruncMonth, TruncWeek, TruncDay
 from django.views.generic import CreateView, FormView
 from django.views.generic.detail import DetailView
+from django.conf import settings
 from rolepermissions.roles import assign_role
 from rolepermissions.roles import RolesManager
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -221,6 +225,25 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
     form_class = MedicalRecordForm
     template_name = "beneficiary/medical_record_create.html"
 
+    def handle_upload(self, f, destination_directory=None):
+        fullpath = f"{settings.MEDIA_ROOT}/supporting_documents/{destination_directory}"
+        if not os.path.exists(fullpath):
+            os.makedirs(fullpath)
+
+        with open(f"{fullpath}/{f.name}", "wb+") as file:
+            for chunk in f.chunks():
+                file.write(chunk)
+
+    def generate_upload_dirname(self, beneficiary_name):
+        uuid_chars = str(uuid.uuid4())[:8]
+        directory_name = f"{beneficiary_name}_{uuid_chars}"
+        return directory_name
+
+    def create_files_dict(self, directory=None, filenames=[]):
+        d = {}
+        d[directory] = filenames
+        return d
+
     def get_success_url(self):
         return reverse("beneficiary:details", kwargs={"pk": self.object.beneficiary.pk})
 
@@ -230,9 +253,23 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        beneficiary_object_id = self.kwargs.get("beneficiary_id", None)
-        form.instance.beneficiary = Beneficiary.objects.get(id=beneficiary_object_id)
-        return super(MedicalRecordCreateView, self).form_valid(form)
+        beneficiary_id = self.kwargs.get("beneficiary_id", None)
+        beneficiary_obj = Beneficiary.objects.get(id=beneficiary_id)
+        
+        destination_dirname = self.generate_upload_dirname(
+            f"{beneficiary_obj.first_name}_{beneficiary_obj.last_name}"
+        )
+        files = form.files.getlist("documents")
+
+        d = self.create_files_dict(directory=destination_dirname, filenames=[f.name for f in files])
+        
+        for f in files:
+            self.handle_upload(f, destination_directory=destination_dirname)
+
+        form.instance.documents = json.dumps(d)
+        form.instance.beneficiary = beneficiary_obj
+        form.save()
+        return super(MedicalRecordCreateView, self).form_valid(form)        
 
       
 class BeneficiaryCreateView(LoginRequiredMixin, CreateView):
