@@ -1,5 +1,6 @@
 import uuid
 import os
+import shutil
 
 from django.conf import settings
 from django.forms.models import model_to_dict
@@ -36,6 +37,9 @@ def generate_uuid():
 
     return beneficiary_code, agent_code
 
+
+def zip_directory(archive_name=None, format=None, directory=None):
+    shutil.make_archive(archive_name, format, directory)
 
 class GenerateMedicalReport(BaseDocTemplate):
     def __init__(self, filename, beneficiary_obj, medical_records, **kwargs):
