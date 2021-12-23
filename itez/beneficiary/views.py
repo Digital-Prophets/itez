@@ -23,8 +23,8 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from itez.beneficiary.forms import BeneficiaryForm
 from itez.beneficiary.models import (
-    GENDER_CHOICES, 
-    SEX_CHOICES, 
+    GENDER_CHOICES,
+    SEX_CHOICES,
     EDUCATION_LEVEL,
     HIV_STATUS_CHOICES,
     MARITAL_STATUS,
@@ -145,7 +145,6 @@ def medical_record_pdf(request, id):
     return JsonResponse(response)
 
 
-
 @login_required(login_url="/login/")
 def poll_report_async_resullt(request, task_id):
     """
@@ -159,7 +158,7 @@ def poll_report_async_resullt(request, task_id):
 
     if task.state == "SUCCESS":
         download_url = ""
-        
+
         if task.result["TASK_TYPE"] == "EXPORT_BENEFICIARY_DATA":
             download_url = f"{media_url}exports/{task.result['RESULT']}"
 
@@ -258,17 +257,19 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
         beneficiary_obj = Beneficiary.objects.get(id=beneficiary_id)
         files = form.files.getlist("documents")
 
-        d = self.create_files_dict(directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files])
-        
+        d = self.create_files_dict(
+            directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files]
+        )
+
         for f in files:
             self.handle_upload(f, destination_directory=beneficiary_obj.beneficiary_id)
 
         form.instance.documents = json.dumps(d)
         form.instance.beneficiary = beneficiary_obj
         form.save()
-        return super(MedicalRecordCreateView, self).form_valid(form)        
+        return super(MedicalRecordCreateView, self).form_valid(form)
 
-      
+
 class BeneficiaryCreateView(LoginRequiredMixin, CreateView):
     """
     Create a new Beneficiary object.
@@ -287,37 +288,33 @@ class BeneficiaryCreateView(LoginRequiredMixin, CreateView):
         context["title"] = "create new beneficiary"
         return context
 
+
 class BeneficiaryUpdateView(LoginRequiredMixin, UpdateView):
     model = Beneficiary
     template_name = "beneficiary/beneficiary_update.html"
     success_url = "/beneficiary/list"
     form_class = BeneficiaryForm
-    
+
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryUpdateView, self).get_context_data(**kwargs)
-        beneficiary_id = self.kwargs.get("pk")  
+        beneficiary_id = self.kwargs.get("pk")
         beneficiary = Beneficiary.objects.get(id=beneficiary_id)
         form = BeneficiaryForm(instance=beneficiary)
         context["title"] = "update beneficiary"
         context["form"] = form
         return context
 
+
 class AgentUpdateView(LoginRequiredMixin, UpdateView):
     model = Agent
     template_name = "agent/agent_update.html"
     success_url = "/agent/list"
     # form_class = AgentForm
-    fields = [
-        'first_name',
-        'last_name',
-        'location',
-        'birthdate',
-        'gender'
-    ]
-    
+    fields = ["first_name", "last_name", "location", "birthdate", "gender"]
+
     def get_context_data(self, **kwargs):
         context = super(AgentUpdateView, self).get_context_data(**kwargs)
-        agent_id = self.kwargs.get("pk")  
+        agent_id = self.kwargs.get("pk")
         agent = Agent.objects.get(id=agent_id)
         form = AgentForm(instance=agent)
         if form.is_valid():
@@ -333,12 +330,14 @@ def beneficiary_delete_view(request, pk):
     beneficiary.delete()
     return redirect(reverse("beneficiary:list"))
 
+
 @login_required(login_url="/login/")
 def agent_delete_view(request, pk):
     agent = Agent.objects.get(id=pk)
     agent.delete()
     return redirect(reverse("beneficiary:agent_list"))
-  
+
+
 class BenenficiaryListView(LoginRequiredMixin, ListView):
     """
     Beneficiary  List View.
@@ -550,27 +549,37 @@ def user_events(request):
 def beneficiary_report(request):
     # Graphs
     # Number of beneficiaries by year
-    
+
     current_year = datetime.datetime.now().year
     year_one = current_year - 1
     year_two = current_year - 2
     year_three = current_year - 3
     year_four = current_year - 4
-    
+
     year1 = (
-        Beneficiary.objects.filter(created__year=year_four).values("created__year").count()
+        Beneficiary.objects.filter(created__year=year_four)
+        .values("created__year")
+        .count()
     )
     year2 = (
-        Beneficiary.objects.filter(created__year=year_three).values("created__year").count()
+        Beneficiary.objects.filter(created__year=year_three)
+        .values("created__year")
+        .count()
     )
     year3 = (
-        Beneficiary.objects.filter(created__year=year_two).values("created__year").count()
+        Beneficiary.objects.filter(created__year=year_two)
+        .values("created__year")
+        .count()
     )
     year4 = (
-        Beneficiary.objects.filter(created__year=year_one).values("created__year").count()
+        Beneficiary.objects.filter(created__year=year_one)
+        .values("created__year")
+        .count()
     )
     year5 = (
-        Beneficiary.objects.filter(created__year=current_year).values("created__year").count()
+        Beneficiary.objects.filter(created__year=current_year)
+        .values("created__year")
+        .count()
     )
 
     # Number of beneficiaries by province
