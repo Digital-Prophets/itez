@@ -59,13 +59,13 @@ from django.db.models import Count
 
 from django.core.paginator import Paginator
 from django.core.paginator import Paginator
-from .tasks import generate_export_file, generate_medical_report
+from itez.beneficiary.tasks import generate_export_file, generate_medical_report
 
 from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm, AgentForm
 from itez.users.models import User
 
-from .resources import BeneficiaryResource
-from .filters import BeneficiaryFilter
+from itez.beneficiary.resources import BeneficiaryResource
+from itez.beneficiary.filters import BeneficiaryFilter
 from itez.beneficiary.utils import create_files_dict, handle_upload
 
 

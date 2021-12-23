@@ -24,7 +24,7 @@ from reportlab.pdfbase.ttfonts import TTFont, TTFError
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 
-from .resources import BeneficiaryResource
+from itez.beneficiary.resources import BeneficiaryResource
 
 
 def generate_uuid():
