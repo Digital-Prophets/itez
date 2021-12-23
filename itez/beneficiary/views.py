@@ -25,6 +25,7 @@ from itez.beneficiary.models import (
     HIV_STATUS_CHOICES,
     MARITAL_STATUS,
     ART_STATUS_CHOICES,
+    Agent
 )
 from rest_framework.filters import SearchFilter, OrderingFilter
 import json
@@ -541,25 +542,25 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
     Create an agent object.
     """
 
-	model = Agent
-	form_class = AgentForm
-	template_name = "agent/agent_create.html"
+    model = Agent
+    form_class = AgentForm
+    template_name = "agent/agent_create.html"
 
-	def get_success_url(self):
-		return reverse("beneficiary:agent_list")
+    def get_success_url(self):
+        return reverse("beneficiary:agent_list")
 
-	def form_valid(self, form):
-		form.instance.author = self.request.user
-		return super(AgentCreateView, self).form_valid(form)
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(AgentCreateView, self).form_valid(form)
 
-	def get_context_data(self, **kwargs):
-		context = super(AgentCreateView, self).get_context_data(**kwargs)
-		roles = RolesManager.get_roles_names()
+    def get_context_data(self, **kwargs):
+        context = super(AgentCreateView, self).get_context_data(**kwargs)
+        roles = RolesManager.get_roles_names()
 
-		context["title"] = "create agent"
-		context["roles"] = roles
+        context["title"] = "create agent"
+        context["roles"] = roles
 
-		return context
+        return context
 
 
 class AgentListView(LoginRequiredMixin, ListView):
