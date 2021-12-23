@@ -65,9 +65,8 @@ from itez.beneficiary.forms import BeneficiaryForm, MedicalRecordForm, AgentForm
 from itez.users.models import User
 
 from .resources import BeneficiaryResource
-
-from .resources import BeneficiaryResource
 from .filters import BeneficiaryFilter
+from itez.beneficiary.utils import create_files_dict, handle_upload
 
 
 @login_required(login_url="/login/")
@@ -224,25 +223,6 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
     form_class = MedicalRecordForm
     template_name = "beneficiary/medical_record_create.html"
 
-    def handle_upload(self, f, destination_directory=None):
-        fullpath = f"{settings.MEDIA_ROOT}/supporting_documents/{destination_directory}"
-        if not os.path.exists(fullpath):
-            os.makedirs(fullpath)
-
-        with open(f"{fullpath}/{f.name}", "wb+") as file:
-            for chunk in f.chunks():
-                file.write(chunk)
-
-    def generate_upload_dirname(self, beneficiary_name):
-        uuid_chars = str(uuid.uuid4())[:8]
-        directory_name = f"{beneficiary_name}_{uuid_chars}"
-        return directory_name
-
-    def create_files_dict(self, directory=None, filenames=[]):
-        d = {}
-        d["directory"] = directory
-        d["filenames"] = filenames
-        return d
 
     def get_success_url(self):
         return reverse("beneficiary:details", kwargs={"pk": self.object.beneficiary.pk})
@@ -257,14 +237,14 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
         beneficiary_obj = Beneficiary.objects.get(id=beneficiary_id)
         files = form.files.getlist("documents")
 
-        d = self.create_files_dict(
+        files_dict = create_files_dict(
             directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files]
         )
 
         for f in files:
-            self.handle_upload(f, destination_directory=beneficiary_obj.beneficiary_id)
+            handle_upload(f, destination_directory=beneficiary_obj.beneficiary_id)
 
-        form.instance.documents = json.dumps(d)
+        form.instance.documents = json.dumps(files_dict)
         form.instance.beneficiary = beneficiary_obj
         form.save()
         return super(MedicalRecordCreateView, self).form_valid(form)
