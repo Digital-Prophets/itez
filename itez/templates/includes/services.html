@@ -1,4 +1,5 @@
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">{{ service_title|title }}</h4>
@@ -14,20 +15,39 @@
         </thead>
         <tbody>
           {% for service in service_paginator_list %}
-          
-          <tr>
-            <td>
-              <button style="background-color: inherit; color: inherit; pointer-events: none;" type="button">view
-              </button>
-              <style>
-                
-              </style>
+              <td>
+                <button onclick="document.getElementById('id01').style.display='block'" class="w3-button button self-align-end" style="background-color: inherit; color: black;">view</button>
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+                <div  style="border-radius: 1em;" id="id01" class="w3-modal">
+                  <div  style="margin-top: 2em;" class="w3-modal-content w3-card-4">
+                    <header style="
+                    background: linear-gradient( 
+                0deg, rgba(43, 110, 116, 1) 0%, rgba(210, 234, 236, 1) 100% );" class="w3-container w3-teal"> 
+                      <span onclick="document.getElementById('id01').style.display='none'" 
+                      class="w3-button w3-display-topright">&times;</span>
+                      <h2 style="text-align-last: center; font-family: bold 16px;"><b>All Service Details</b></h2>
+                    </header>
+                    <div class="w3-container">
+                      <div class="col-sm-18 card mb-2">
+                          <h3>Service Name: <span style="float: right;">{{ service.service_object }}</span></h3> 
+                          <h3>Provider Personnel: <span style="float: right;">{{ service.service_provider }}</span></h3> 
+                          <h3>Comments: <span style="float: right;">{{ service.service_comments }}</span></h3> 
+                          <h3>Facility: <span style="float: right;">{{ service.service_facility }}</span></h3> 
+                          <h3>Created: <span style="float: right;">{{ service.datetime }}</span></h3> 
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 {{ service.service_object }}
-            </td>
-            <td>{{ service.service_provider }}</td>
-            <td>{{ service.service_comments }}</td>
-            <td>{{ service.service_facility }}</td>
+              </td>
+              <td>{{ service.service_provider }}</td>
+              <td>{{ service.service_comments }}</td>
+              <td>{{ service.service_facility }}</td>
           </tr>
+          <script>
+          </script>
           {% endfor %}
         </tbody>
         
@@ -53,3 +73,4 @@
      </div>
   </div>
 </div>
+
