@@ -164,7 +164,7 @@ def poll_report_async_resullt(request, task_id):
             download_url = f"{media_url}exports/{task.result['RESULT']}"
 
         elif task.result["TASK_TYPE"] == "GENERATE_MEDICAL_REPORT":
-            download_url = f"{media_url}beneficiary_report/{task.result['RESULT']}"
+            download_url = f"{media_url}temp/{task.result['RESULT']}"
 
         body = {"state": task.state, "location": download_url}
         return JsonResponse(body, status=201)
@@ -241,7 +241,8 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
 
     def create_files_dict(self, directory=None, filenames=[]):
         d = {}
-        d[directory] = filenames
+        d["directory"] = directory
+        d["filenames"] = filenames
         return d
 
     def get_success_url(self):
@@ -255,16 +256,12 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         beneficiary_id = self.kwargs.get("beneficiary_id", None)
         beneficiary_obj = Beneficiary.objects.get(id=beneficiary_id)
-        
-        destination_dirname = self.generate_upload_dirname(
-            f"{beneficiary_obj.first_name}_{beneficiary_obj.last_name}"
-        )
         files = form.files.getlist("documents")
 
-        d = self.create_files_dict(directory=destination_dirname, filenames=[f.name for f in files])
+        d = self.create_files_dict(directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files])
         
         for f in files:
-            self.handle_upload(f, destination_directory=destination_dirname)
+            self.handle_upload(f, destination_directory=beneficiary_obj.beneficiary_id)
 
         form.instance.documents = json.dumps(d)
         form.instance.beneficiary = beneficiary_obj
@@ -404,9 +401,6 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         latest_beneficiary_medical_record = MedicalRecord.objects.filter(
             beneficiary__id=current_beneficiary_id
         ).latest("created")
-        print(
-            "Service Provider" + str(latest_beneficiary_medical_record.service.document)
-        )
 
         services = {"services": []}
 
@@ -421,7 +415,6 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             "interaction_date": latest_beneficiary_medical_record.interaction_date,
             "service_provider": service_provider_name,
             "service_provider_comments": latest_beneficiary_medical_record.provider_comments,
-            "supporting_documents": latest_beneficiary_medical_record.document,
             "prescription": latest_beneficiary_medical_record.prescription.title,
             "when_to_take": latest_beneficiary_medical_record.when_to_take,
         }
