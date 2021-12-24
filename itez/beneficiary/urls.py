@@ -41,7 +41,7 @@ urlpatterns = [
     ),
     path(
         "beneficiary/poll_async_results/<task_id>",
-        views.poll_report_async_resullt,
+        views.poll_async_results,
         name="poll_async_results",
     ),
     path(
