@@ -56,7 +56,11 @@ class PDF(FPDF, HTMLMixin):
     def print_beneficiary_details(self):
         self.add_page()
 
-        self.image(f"{settings.STATIC_ROOT}/assets/moh_logo.png", 170, 8, 30)
+        try:
+            self.image(f"{settings.STATIC_ROOT}/assets/moh_logo.pg", 170, 8, 30)
+        except FileNotFoundError:
+            pass
+
         self.set_font("helvetica", "B", 16)
 
         self.print_header(
@@ -106,7 +110,20 @@ class PDF(FPDF, HTMLMixin):
         self.set_y(220)
         self.set_x(45)
         self.set_font("helvetica", "", 12)
-        self.image(f"{self.beneficiary_obj.profile_photo.path}", 155, 85, 50)
+        
+        try:
+            if self.beneficiary_obj.profile_photo:
+                self.image(f"{self.beneficiary_obj.profile_photo.path}", 150, 72, 50)
+            elif self.beneficiary_obj.sex == "Male":
+                self.image(f"{settings.STATIC_ROOT}/assets/images/faces/male.jpeg", 150, 72, 50)
+            elif self.beneficiary_obj.sex == "Female":
+                self.image(f"{settings.STATIC_ROOT}/assets/images/faces/female.jpeg", 150, 72, 50)
+            else:
+                print("no image")
+                pass
+        except FileNotFoundError:
+            print("image not found")
+            pass
 
         record_approver = self.medical_records.first()
 
