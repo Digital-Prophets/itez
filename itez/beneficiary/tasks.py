@@ -8,10 +8,11 @@ from celery import shared_task
 
 from config import celery_app
 
-from .models import Beneficiary, MedicalRecord
-from .resources import BeneficiaryResource
-from .pdf_creator import create_pdf
-from .utils import zip_directory
+from itez.beneficiary.models import Beneficiary, MedicalRecord
+from itez.beneficiary.resources import BeneficiaryResource
+from itez.beneficiary.pdf_utils import create_document
+from itez.beneficiary.utils import zip_directory
+
 
 @shared_task(bind=True)
 def generate_export_file(self):
@@ -63,7 +64,7 @@ def generate_medical_report(id):
     if not os.path.exists(path_to_save_docs):
         os.mkdir(path_to_save_docs)
 
-    create_pdf(f"{path_to_save_docs}/{filename}", beneficiary_obj, medical_records)
+    create_document(f"{path_to_save_docs}/{filename}", beneficiary_obj, medical_records)
 
 
     # create a temp directory to save the zipped file
