@@ -57,7 +57,7 @@ class PDF(FPDF, HTMLMixin):
         self.add_page()
 
         try:
-            self.image(f"{settings.STATIC_ROOT}/assets/moh_logo.pg", 170, 8, 30)
+            self.image(f"{settings.STATIC_ROOT}/assets/moh_logo.png", 170, 8, 30)
         except FileNotFoundError:
             pass
 
