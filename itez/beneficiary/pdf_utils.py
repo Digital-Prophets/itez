@@ -4,7 +4,7 @@ from django.conf import settings
 
 from fpdf import FPDF, HTMLMixin
 
-date_today = datetime.date.today().strftime("%b %d %Y")
+date_today = datetime.date.today().strftime("%d %B %Y")
 
 
 class PDF(FPDF, HTMLMixin):
@@ -26,8 +26,8 @@ class PDF(FPDF, HTMLMixin):
         self.cell(0, 10, f"Page {self.page_no()}", align="C")
         self.print_footer(self.beneficiary_obj.beneficiary_id)
 
-    def print_header(self, height, title, font_size):
-        self.set_font("helvetica", "B", font_size)
+    def print_header(self, height, title, font_size, font_weight=""):
+        self.set_font("helvetica", font_weight, font_size)
 
         self.set_y(height)
         self.cell(70, 8, title, ln=1)
@@ -63,10 +63,11 @@ class PDF(FPDF, HTMLMixin):
             35,
             f"Medical Record For: {self.beneficiary_obj.first_name} {self.beneficiary_obj.last_name}",
             18,
+            font_weight="B",
         )
 
-        self.set_font("helvetica", "B", 13)
-        self.cell(70, 8, f"Date: {date_today}", ln=1)
+        self.set_font("helvetica", "", 11)
+        self.cell(70, 8, f"{date_today}", ln=1)
         self.line(10, 58, 200, 58)
 
         self.print_header(62, "Beneficiary Details", 14)
@@ -104,7 +105,7 @@ class PDF(FPDF, HTMLMixin):
 
         self.set_y(220)
         self.set_x(45)
-        self.set_font("helvetica", "B", 12)
+        self.set_font("helvetica", "", 12)
         self.image(f"{self.beneficiary_obj.profile_photo.path}", 155, 85, 50)
 
         record_approver = self.medical_records.first()
@@ -207,20 +208,66 @@ class PDF(FPDF, HTMLMixin):
             self.print_header(
                 35,
                 f"Medical Record Entry as of: {record.created.strftime('%b %d %Y')}",
-                18,
+                16,
             )
             self.line(10, 45, 200, 45)
 
             self.set_y(80)
-            self.set_font("helvetica", "B", 11)
-            self.cell(60, 8, f"Service Facility: {record.service_facility.name}", ln=1)
-            self.cell(60, 8, f"Service Name: {record.service.title}", ln=1)
-            self.set_y(79)
-            self.set_x(110)
-            self.cell(60, 8, f"Provider Personel: {service_personnel_name}", ln=1)
-            self.set_y(89)
-            self.set_x(110)
-            self.multi_cell(90, 8, f"Comments: {record.provider_comments}", ln=1)
+            self.set_font("helvetica", "", 11)
+
+            table_data = [
+                [
+                    f"Service Facility:", record.service_facility.name,
+                    f"Service Name:", record.service.title
+                ],
+                [
+                    f"Provider Personel:", service_personnel_name,
+                    f"Comments:", record.provider_comments,
+                ],
+            ]
+
+            line_height = self.font_size * 2.5
+            col_width = self.epw / 4  # distribute content evenly
+            for row in table_data:
+                for index, datum in enumerate(row):
+                    if index == 0:
+                        self.set_font("helvetica", "B", 10)
+                        self.multi_cell(
+                        col_width - 14,
+                        line_height,
+                        datum,
+                        ln=3,
+                        max_line_height=self.font_size
+                    )
+                    elif index == 2:
+                        self.set_font("helvetica", "B", 10)
+                        self.multi_cell(
+                        col_width - 20,
+                        line_height,
+                        datum,
+                        ln=3,
+                        max_line_height=self.font_size
+                    )
+                    elif index == 1:
+                        self.set_font("helvetica", "", 10)
+                        self.multi_cell(
+                        col_width - 5,
+                        line_height,
+                        datum,
+                        ln=3,
+                        max_line_height=self.font_size
+                    )
+                    else:
+                        self.set_font("helvetica", "", 10)
+                        self.multi_cell(
+                            col_width + 20,
+                            line_height,
+                            datum,
+                            ln=3,
+                            max_line_height=self.font_size
+                        )
+                self.ln(line_height)
+
 
             TABLE_HEADERS = [
                 "Interraction Date",
@@ -265,23 +312,4 @@ def create_document(filename, beneficiary_obj, medical_records):
 
     pdf.print_records()
 
-    data = (
-        ("First name", "Last name", "Age", "City"),
-        ("Jules", "Smith", "34", "San Juan"),
-        ("Mary", "Ramos", "45", "Orlando"),
-        ("Carlson", "Banks", "19", "Los Angeles"),
-        ("Lucas", "Cimon", "31", "Saint-Mahturin-sur-Loire"),
-    )
-
-    pdf.add_page()
-    pdf.set_font("Times", size=10)
-    line_height = pdf.font_size * 2.5
-    col_width = pdf.epw / 4  # distribute content evenly
-    for row in data:
-        for datum in row:
-            pdf.multi_cell(
-                col_width, line_height, datum, ln=3, max_line_height=pdf.font_size
-            )
-        pdf.ln(line_height)
-    # pdf.output('table_with_cells.pdf')
     pdf.output(filename)
