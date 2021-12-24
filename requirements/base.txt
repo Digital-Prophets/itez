@@ -42,3 +42,4 @@ djangorestframework-simplejwt==5.0.0  # https://github.com/jazzband/djangorestfr
 drf-spectacular==0.20.2     # https://drf-spectacular.readthedocs.io/en/latest/index.html
 PyJWT==2.1.0
 reportlab==3.6.3 # https://www.reportlab.com/dev/docs/
+fpdf2==2.4.6  # https://pyfpdf.github.io/fpdf2/
