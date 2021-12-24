@@ -17,11 +17,12 @@ class PDF(FPDF, HTMLMixin):
         # Set position of the footer
         self.set_y(-15)
         # set font
-        self.set_font("helvetica", "I", 8)
+        self.set_font("helvetica", "", 8)
         # Set font color grey
-        self.set_text_color(169, 169, 169)
+        # self.set_text_color(169, 169, 169)
         # Page number
         self.cell(0, 10, f"Page {self.page_no()}", align="C")
+        self.print_footer(self.beneficiary_obj.beneficiary_id)
 
 
     def print_header(self, height, title, font_size):
@@ -232,7 +233,6 @@ def create_document(filename, beneficiary_obj, medical_records):
     pdf.set_auto_page_break(auto=True, margin=15)
 
     pdf.print_beneficiary_details()
-    pdf.print_footer(beneficiary_obj.beneficiary_id)
 
     pdf.print_records()
     pdf.output(filename)
