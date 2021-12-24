@@ -5,25 +5,6 @@ import shutil
 from django.conf import settings
 from django.forms.models import model_to_dict
 
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont, TTFError
-from reportlab.lib.units import cm
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import (
-    BaseDocTemplate,
-    Frame,
-    PageTemplate,
-    NextPageTemplate,
-    Table,
-    TableStyle,
-    Paragraph,
-)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont, TTFError
-from reportlab.pdfgen import canvas
-from reportlab.lib import colors
-
 from itez.beneficiary.resources import BeneficiaryResource
 
 
