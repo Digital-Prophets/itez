@@ -766,6 +766,16 @@ class MedicalRecord(models.Model):
         editable=False,
         help_text="A jsonified object containing meta data where documents are stored."
     )
+    approved_by = models.CharField(_("Approved by"), max_length=200, help_text="Name of senior doctor or other official approving this medical record.")
+    approver_signature = ProcessedImageField(
+        upload_to='other',
+        processors=[ResizeToFill(512, 512)],
+        format='JPEG',
+        options={'quality': 100},
+        null=True,
+        blank=True,
+        help_text="An image containing the signature of the approver."
+    )
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
