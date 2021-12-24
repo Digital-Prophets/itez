@@ -22,7 +22,8 @@ $(
                 if (asyncData.state === "SUCCESS") {
                 // stop making get requests to pollAsyncResults
                 clearTimeout(pollAsyncResults);
-                $('#download-report-button').removeClass('buttonload disabled').text('Download');
+                $('#download-report-button').removeClass('buttonload disabled')
+                $('#download-report-button').addClass('mdi mdi-download').html('')
                 // to download - create an anchor element and
                 // simulate a click
                 const a = document.createElement('a');
