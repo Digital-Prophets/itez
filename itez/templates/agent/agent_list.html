@@ -135,27 +135,27 @@
                                   {% else %}
                                   <img src="/static/assets/images/faces/female.jpeg" alt="">
                                   {% endif %}
-                                  <a style="text-decoration: none;" href="{{ agent.get_absolute_url }}">
+                                  <a style="text-decoration: none; font-weight: normal;" href="{{ agent.get_absolute_url }}">
                                     {{ agent.agent_id }}</a>
                                 </td>
                                 <td>
-                                  <h6>{{ agent.first_name|title }} {{ agent.last_name|title }}</h6>
+                                  <h6 style="font-weight: normal;">{{ agent.first_name|title }} {{ agent.last_name|title }}</h6>
                                 </td>
                                 <td>
                                   {% if agent.user.first_name and agent.user.last_name %}
-                                  <h6>{{ agent.user.first_name }} {{ agent.user.last_name }}</h6>
+                                  <h6 style="font-weight: normal;">{{ agent.user.first_name }} {{ agent.user.last_name }}</h6>
                                   {% else %}
-                                  <h6>{{ agent.user.username }}</h6>
+                                  <h6 style="font-weight: normal;">{{ agent.user.username }}</h6>
                                   {% endif%}
                                 </td>
                                 <td>
-                                  <h6>{{ agent.birthdate }}</h6>
+                                  <h6 style="font-weight: normal;">{{ agent.birthdate }}</h6>
                                 </td>
                                 <!-- <td>
                                   <h6>{{ agent.user.group.all }}</h6>
                                 </td> -->
                                 <td>
-                                  <h6>{{ agent.gender }}</h6>
+                                  <h6 style="font-weight: normal;">{{ agent.gender }}</h6>
                                 </td>
                                 <!-- <td>
                                   <h6>{{ agent.Location }}</h6>
