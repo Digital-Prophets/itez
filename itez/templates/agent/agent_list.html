@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="table-responsive  mt-1">
-                          <form class="form-delete" method="post" action="{% url 'beneficiary:multiple_agent_delete' %}">{% csrf_token %}
+                          <form name="agent_form" class="form-delete">{% csrf_token %}
                            <select id="agent-selector" name="agent-action-select">
                              <option id="negative-select">----------------------</option>
                              <option id="positive-select" value="delete selected">delete selected</option>
@@ -79,7 +79,23 @@
                                       <input type="checkbox" class="form-check-input selectall" aria-checked="false"><i
                                         class="input-helper"></i></label>
                                       <script>
-                                        
+                                        var actionButton = document.getElementById("agent-select-button");
+                                        var formAction = document.getElementById("form-delete");
+                                        var selectText = document.getElementById("agent-selector");
+                                        actionButton.addEventListener("click", function(){
+                                          var value = selectText.options[selectText.selectedIndex].value;
+                                          var text = selectText.options[selectText.selectedIndex].text;
+                                          if(text == "delete selected"){
+                                            var confirmAction = confirm("Are you sure you want to delete selected agents?");
+                                            if(confirmAction){
+                                              document.agent_form.method = "post";
+                                              document.agent_form.action = "{% url 'beneficiary:multiple_agent_delete' %}";
+                                              actionButton.click
+                                            }else{
+                                              console.log("delete action for selected agents was canceled")
+                                            }
+                                          }
+                                        });
                                         $('.selectall').click(function() {
                                           if ($(this).is(':checked')) {
                                               $('input:checkbox').prop('checked', true);
@@ -95,9 +111,7 @@
                                 <th>Full Name</th>
                                 <th>Related User</th>
                                 <th>Date of Birth</th>
-                                <!-- <th>Role</th> -->
                                 <th>Gender</th>
-                                <!-- <th>Location</th> -->
                                 <th>Action</th>
                               </tr>
                             </thead>

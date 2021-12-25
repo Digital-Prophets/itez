@@ -73,12 +73,14 @@
 
                         </div>
                         <div class="table-responsive  mt-1">
-                          <form class="form-delete" method="post" action="{% url 'beneficiary:multiple_beneficiary_delete' %}">{% csrf_token %}
+                          <!-- action="" -->
+                          <!-- method="post" -->
+                          <form name="beneficiary_form" class="form-delete">{% csrf_token %}
                             <select id="beneficiary-selector" name="beneficiary-action-select">
                               <option id="negative-select">----------------------</option>
                               <option id="positive-select" value="delete selected">delete selected</option>
                             </select>
-                            <button id="agent-select-button" type="submit">Go</button>
+                            <button id="beneficiary-select-button">Go</button>
                           <table class="table select-table" id="table_id">
                             <thead>
                               <tr>
@@ -88,6 +90,23 @@
                                       <input type="checkbox" class="form-check-input selectall" aria-checked="false"><i
                                         class="input-helper"></i></label>
                                        <script>
+                                        var actionButton = document.getElementById("beneficiary-select-button");
+                                        var formAction = document.getElementById("form-delete");
+                                        var selectText = document.getElementById("beneficiary-selector");
+                                        actionButton.addEventListener("click", function(){
+                                          var value = selectText.options[selectText.selectedIndex].value;
+                                          var text = selectText.options[selectText.selectedIndex].text;
+                                          if(text == "delete selected"){
+                                            var confirmAction = confirm("Are you sure you want to delete selected beneficiaries?");
+                                            if(confirmAction){
+                                              document.beneficiary_form.method = "post";
+                                              document.beneficiary_form.action = "{% url 'beneficiary:multiple_beneficiary_delete' %}";
+                                              actionButton.click
+                                            }else{
+                                              console.log("delete action for selected beneficiaries was canceled")
+                                            }
+                                          }
+                                        });
                                          $('.selectall').click(function() {
                                             if ($(this).is(':checked')) {
                                                 $('input:checkbox').prop('checked', true);

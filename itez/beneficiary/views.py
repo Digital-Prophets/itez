@@ -25,6 +25,7 @@ from itez.beneficiary.models import (
     HIV_STATUS_CHOICES,
     MARITAL_STATUS,
     ART_STATUS_CHOICES,
+    Service,
 )
 from rest_framework.filters import SearchFilter, OrderingFilter
 import json
@@ -405,6 +406,16 @@ def multiple_beneficiary_delete_view(request):
     return redirect(reverse("beneficiary:list"))
 
 
+from django.core import serializers 
+@login_required(login_url="/login/")
+def beneficiary_service(request, pk):
+    service = Service.objects.get(id=pk)
+    jsonified_beneficiary_service = serializers.serialize('json', [service])
+    struct = json.loads(jsonified_beneficiary_service)
+    service_data = json.dumps(struct[0])
+    return HttpResponse(service_data)
+
+
 @login_required(login_url="/login/")
 def multiple_agent_delete_view(request):
     if request.method == 'POST':
@@ -519,9 +530,12 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             services["services"].append(
                 {
                     "service_object": medical_record.service,
-                    "service_facility": medical_record,
+                    "service_facility": medical_record.service.service_type,
                     "service_provider": service_personnel_name,
                     "service_comments": medical_record.provider_comments,
+                    "service_created":  medical_record.service.datetime,
+                    "client_type": medical_record.service.client_type,
+                    "service_id": medical_record.service.id,
                 }
             )
 
@@ -673,7 +687,7 @@ def beneficiary_report(request):
             registered_facility__province__name=province.name
         ).count()
         total_province_services = MedicalRecord.objects.filter(
-            service_facility__province__name=province.name
+            beneficiary__registered_facility__province__name=province.name
         ).count()
 
         province_data = {province.name: total_province_beneficiaries}
