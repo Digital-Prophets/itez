@@ -18,15 +18,15 @@
           </script>
           {% include 'beneficiary/service_detail_modal.html' %}
           {% for service in service_paginator_list %}
-          <tr class="first_td{{ service.service_id }}" onclick="document.getElementById('id01').style.display='block'">
-              <td >{{ service.service_object }} {{ service.client_type }}</td>
+          <tr class="first_td{{ service.service_id }}">
+              <td><a style="text-decoration: none; cursor: pointer; color: blue;" onclick="document.getElementById('id01').style.display='block'">{{ service.service_object }}</a></td>
               <td>{{ service.service_provider }}</td>
               <td>{{ service.service_comments }}</td>
               <td>{{ service.service_facility }}</td>
           </tr>
           <script>
-            document.querySelectorAll(".first_td{{ service.service_id }}").forEach(td=>{
-              td.addEventListener("click", ()=>{
+              var uniqueSelectorButton = document.querySelector(".first_td{{ service.service_id }}");
+              uniqueSelectorButton.addEventListener("click", () => {
                 if("{{ service.service_id }}" == "{{ service.service_id }}"){
                   document.getElementById("service-name").innerHTML = "{{ service.service_object }}";
                   document.getElementById("service-facility").innerHTML = "{{ service.service_facility }}";
@@ -36,12 +36,10 @@
                   document.getElementById("span1").innerHTML = "{{ service.service_id }}";
                 }
               })
-            })
           </script>
           {% endfor %}
         </tbody>
       </table>
-      
     </div>
 
      <div class="paginator" style="float: right;">
@@ -82,7 +80,7 @@
 </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
-  // Work in progress
+  // ajax work for data fetch 
   /* var id = document.getElementById("span1").innerText;
   $.ajax(" {% url 'beneficiary:beneficiary_service' pk=6 %} ", {
     dataType: 'json',
