@@ -60,7 +60,7 @@
                             </div></div>
 
                             <div>
-                            	<button id="download-report-button" type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0" data-toggle="tooltip" title="Download Records">
+                            	<button type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0" data-toggle="tooltip" title="Download Records">
                                 {% comment %} <i class="fa fa-circle-o-notch fa-spin px-2"></i> {% endcomment %}
                                 <i id="download-icon" class="mdi mdi-download"></i>
                                   </button>
@@ -308,10 +308,9 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-<script src="/static/assets/js/dashboard.js"></script>
-<script src="/static/assets/js/Chart.roundedBarCharts.js"></script>
-<script src="/static/assets/js/modal.js"></script>
-<script src="/static/assets/js/datatables.min.js"></script>
+  <script src="/static/assets/js/dashboard.js"></script>
+  <script src="/static/assets/js/Chart.roundedBarCharts.js"></script>
+  <script src="/static/assets/js/modal.js"></script>        
 
 
 <script>
@@ -358,7 +357,5 @@
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
     });
-    </script>
-
-	
+</script>
 {% endblock javascripts %}
