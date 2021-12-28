@@ -192,11 +192,7 @@ class MedicalRecordAdmin(admin.ModelAdmin):
         "service",
         "prescription",
         "lab",
-<<<<<<< HEAD
         # "service_facility",
-=======
-        "service"
->>>>>>> fa0ab557dce3b106b925b6047f812eb9c98dbf88
     ]
 
     list_filter = [
