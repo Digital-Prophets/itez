@@ -35,8 +35,8 @@ user_detail_view = UserDetailView.as_view()
 def user_profile(request):
     current_user = user_model.objects.get(id=request.user.id)
     user_profile = Profile.objects.get(id=current_user.id)
-    user_district = District.objects.get(id=user_profile.id)
-    user_province = Province.objects.get(id=user_profile.id)
+    # user_district = District.objects.get(id=user_profile.id)
+    # user_province = Province.objects.get(id=user_profile.id)
     
     
     if request.method == "POST":
@@ -47,8 +47,8 @@ def user_profile(request):
         username = request.POST.get("username", user_profile.user.username)
         address = request.POST.get("address", user_profile.address)
         postal_code = request.POST.get("postal-code", user_profile.postal_code)
-        province = request.POST.get("province", user_province.name)
-        district = request.POST.get("district", user_district.name)
+        # province = request.POST.get("province", user_province.name)
+        # district = request.POST.get("district", user_district.name)
         email = request.POST.get("email", user_profile.user.email)
         gender = request.POST.get("gender", user_profile.gender)
         sex = request.POST.get("sex", user_profile.sex)
@@ -78,11 +78,11 @@ def user_profile(request):
         current_user.username = username
         current_user.save()
 
-        user_district.name = district
-        user_district.save()
+        # user_district.name = district
+        # user_district.save()
 
-        user_province.name = province
-        user_province.save()
+        # user_province.name = province
+        # user_province.save()
         return redirect("/user/profile")
 
     education_levels = [level[1] for level in EDUCATION_LEVEL]
@@ -90,8 +90,8 @@ def user_profile(request):
     gender_array = [gender[1] for gender in GENDER_CHOICES]
 
     context = {
-        "user_district": user_district,
-        "user_province": user_province,
+        # "user_district": user_district,
+        # "user_province": user_province,
         "user": user_profile,
         "education_levels": education_levels,
         "gender_array": gender_array,

@@ -22,6 +22,7 @@ from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from itez.beneficiary.forms import BeneficiaryForm
+from itez.authentication.user_roles import user_roles
 from itez.beneficiary.models import (
     GENDER_CHOICES,
     SEX_CHOICES,
@@ -91,7 +92,7 @@ def index(request):
     thu_day = MedicalRecord.objects.filter(interaction_date__week_day=5).count()
     fri_day = MedicalRecord.objects.filter(interaction_date__week_day=6).count()
     sat_day = MedicalRecord.objects.filter(interaction_date__week_day=7).count()
-
+    
     context = {
         "segment": "index",
         "opd": opd,
@@ -111,6 +112,7 @@ def index(request):
         "thursday": thu_day,
         "friday": fri_day,
         "saturday": sat_day,
+        "user_roles": user_roles()
     }
 
     html_template = loader.get_template("home/index.html")
@@ -381,6 +383,7 @@ class BeneficiaryCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryCreateView, self).get_context_data(**kwargs)
         context["title"] = "create new beneficiary"
+        context["user_roles"] = user_roles()
         return context
 
 
@@ -398,6 +401,7 @@ class BeneficiaryUpdateView(LoginRequiredMixin, UpdateView):
         form = BeneficiaryForm(instance=beneficiary)
         context["title"] = "update beneficiary"
         context["form"] = form
+        context["user_roles"] = user_roles()
         return context
 
 
@@ -425,6 +429,7 @@ class AgentUpdateView(LoginRequiredMixin, UpdateView):
         form = AgentForm(instance=agent)
         context["title"] = "update agent"
         context["form"] = form
+        context["user_roles"] = user_roles()
         return context
 
 
@@ -515,6 +520,7 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         context["labs"] = Service.objects.filter(service_type="LAB").count()
         context["pharmacy"] = Service.objects.filter(service_type="PHARMACY").count()
         context["registered_today"] = Beneficiary.total_registered_today()
+        context["user_roles"] = user_roles()
         context["title"] = "Beneficiaries"
 
         return context
@@ -565,6 +571,8 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             "supporting_documents": latest_beneficiary_medical_record.document,
             "prescription": latest_beneficiary_medical_record.prescription.title,
             "when_to_take": latest_beneficiary_medical_record.when_to_take,
+            "user_roles": user_roles()
+            
         }
 
         # Get all services for the beneficiary
@@ -605,6 +613,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         context["beneficiary"] = current_beneficiary
         context["service_paginator_list"] = service_paginator_list
         context["latest_beneficiary_service"] = latest_beneficiary_service
+        context["user_roles"] = user_roles()
         return context
 
 
@@ -622,6 +631,7 @@ class BeneficiaryCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryCreateView, self).get_context_data(**kwargs)
+        context["user_roles"] = user_roles()
         context["title"] = "create new beneficiary"
         return context
 
@@ -648,6 +658,7 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
 
         context["title"] = "create agent"
         context["roles"] = roles
+        context["user_roles"] = user_roles()
 
         return context
 
@@ -665,6 +676,7 @@ class AgentListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(AgentListView, self).get_context_data(**kwargs)
         context["title"] = "list all agents"
+        context["user_roles"] = user_roles()
         return context
 
 
@@ -680,6 +692,7 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(AgentDetailView, self).get_context_data(**kwargs)
         context["title"] = "Agent User Details"
+        context["user_roles"] = user_roles()
 
         return context
 
@@ -691,7 +704,10 @@ def user_events(request):
     p = Paginator(users, 2)
 
     page_obj = p.get_page(page_num)
-    context = {"users_list": page_obj}
+    context = {
+        "users_list": page_obj,
+        "user_roles": user_roles()
+    }
 
     html_template = loader.get_template("home/events.html")
     return HttpResponse(html_template.render(context, request))
@@ -801,6 +817,8 @@ def beneficiary_report(request):
         "total_interactions": total_interactions,
         "province_label_json_list": province_label_json_list,
         "beneficiary_count_data": beneficiary_count_data,
+        "user_roles": user_roles()
+        
     }
 
     html_template = loader.get_template("home/reports.html")
