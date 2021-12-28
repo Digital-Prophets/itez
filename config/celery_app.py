@@ -16,13 +16,5 @@ app = Celery("itez")
 #   should have a `CELERY_` prefix.
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
-app.conf.beat_schedule = {
-    # Executes every Monday morning at 7:30 a.m.
-    "Delete temporary files": {
-        "task": "itez.beneficiary.tasks.delete_temporary_files",
-        "schedule": crontab(minute="0", hour="0"),
-        "args": (f"{settings.MEDIA_ROOT}/temp",),
-    },
-}
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
