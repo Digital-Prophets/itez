@@ -1,9 +1,4 @@
 {
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": false,
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#3D2732",
-        "titleBar.activeBackground": "#553746",
-        "titleBar.activeForeground": "#FCFAFB"
-    }
 }
