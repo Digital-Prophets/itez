@@ -146,6 +146,7 @@ def medical_record_pdf(request, id):
     response = {"task_id": task.task_id}
     return JsonResponse(response)
 
+
 def poll_async_results(request, task_id):
     """
     This view handles the polling of state of the task the generates
@@ -174,14 +175,6 @@ def poll_async_results(request, task_id):
 
     else:
         return JsonResponse({"error": f"No task with id {task_id}"}, status=400)
-
-
-
-@login_required(login_url="/login/")
-def uielements(request):
-    context = {"title": "UI Elements"}
-    html_template = loader.get_template("beneficiary/test_details.html")
-    return HttpResponse(html_template.render(context, request))
 
 
 class MedicalRecordListView(LoginRequiredMixin, ListView):
@@ -230,6 +223,7 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("beneficiary:details", kwargs={"pk": self.object.beneficiary.pk})
+
     def get_context_data(self, **kwargs):
         context = super(MedicalRecordCreateView, self).get_context_data(**kwargs)
         context["title"] = "add medical record"
@@ -292,6 +286,7 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         context["pharmacy"] = Service.objects.filter(service_type="PHARMACY").count()
         context["registered_today"] = Beneficiary.total_registered_today()
         context["title"] = "Beneficiaries"
+        context["user_roles"] = user_roles()
 
         return context
 
@@ -540,39 +535,42 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         context = super(BeneficiaryDetailView, self).get_context_data(**kwargs)
         current_beneficiary_id = self.kwargs.get("pk")
         current_beneficiary = Beneficiary.objects.get(id=current_beneficiary_id)
-        
-        try:
-            beneficiary_medical_records = MedicalRecord.objects.filter(
-                beneficiary__id=current_beneficiary_id
-            )
-            latest_beneficiary_medical_record = MedicalRecord.objects.filter(
-                beneficiary__id=current_beneficiary_id
-            ).latest("created")
-            
-            service_provider_name = (
-                latest_beneficiary_medical_record.service.service_personnel.first_name
-                + ""
-                + latest_beneficiary_medical_record.service.service_personnel.last_name
-            )
-        except: # improve catching of empty result QS here
-            beneficiary_medical_records = None
-            latest_beneficiary_medical_record = None
-            
-            service_provider_name = ""
-            
+
+        beneficiary_medical_records = MedicalRecord.objects.filter(
+            beneficiary__id=current_beneficiary_id
+        )
+        if not beneficiary_medical_records:
+            context["title"] = "Beneficiary Details"
+            context["service_title"] = "services"
+            context["medication_title"] = "medications"
+            context["lab_title"] = "labs"
+            context["beneficiary"] = current_beneficiary
+            context["service_paginator_list"] = ""
+            context["latest_beneficiary_service"] = ""
+            return context
+
+        latest_beneficiary_medical_record = MedicalRecord.objects.filter(
+            beneficiary__id=current_beneficiary_id
+        ).latest("created")
+        service_provider_name = (
+            latest_beneficiary_medical_record.service.service_personnel.first_name
+            + ""
+            + latest_beneficiary_medical_record.service.service_personnel.last_name
+        )
+
         services = {"services": []}
 
         latest_beneficiary_service = {
-            "service_name": latest_beneficiary_medical_record.service,
-            "service_facility": latest_beneficiary_medical_record.service.service_type,
-            "interaction_date": latest_beneficiary_medical_record.interaction_date,
-            "service_provider": service_provider_name,
-            "service_provider_comments": latest_beneficiary_medical_record.provider_comments,
-            "supporting_documents": latest_beneficiary_medical_record.document,
-            "prescription": latest_beneficiary_medical_record.prescription.title,
-            "when_to_take": latest_beneficiary_medical_record.when_to_take,
-            "user_roles": user_roles()
-            
+            "service_name": latest_beneficiary_medical_record.service or "",
+            "service_facility": latest_beneficiary_medical_record.service_facility
+            or "",
+            "interaction_date": latest_beneficiary_medical_record.interaction_date
+            or "",
+            "service_provider": service_provider_name or "",
+            "service_provider_comments": latest_beneficiary_medical_record.provider_comments
+            or "",
+            "prescription": latest_beneficiary_medical_record.prescription.title or "",
+            "when_to_take": latest_beneficiary_medical_record.when_to_take or "",
         }
 
         # Get all services for the beneficiary
@@ -696,6 +694,7 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
 
         return context
 
+
 @login_required(login_url="/login/")
 def user_events(request):
     users = User.objects.all()
@@ -774,7 +773,7 @@ def beneficiary_report(request):
         province_labels.append(province.name)
         beneficiary_count_data.append(total_province_beneficiaries)
 
-        province_label_json_list = json.dumps(province_labels)
+    province_label_json_list = json.dumps(province_labels)
 
     # Service Counts by Month
 
