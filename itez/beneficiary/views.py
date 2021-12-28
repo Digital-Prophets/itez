@@ -583,7 +583,7 @@ def beneficiary_report(request):
         province_labels.append(province.name)
         beneficiary_count_data.append(total_province_beneficiaries)
 
-        province_label_json_list = json.dumps(province_labels)
+    province_label_json_list = json.dumps(province_labels)
 
     # Service Counts by Month
 
