@@ -90,7 +90,7 @@
                                             var confirmAction = confirm("Are you sure you want to delete selected agents?");
                                             if(confirmAction){
                                               document.agent_form.method = "post";
-                                              document.agent_form.action = "{% url 'beneficiary:multiple_agent_delete' %}";
+                                              document.agent_form.action = "{% url 'beneficiary:agent_delete_many' %}";
                                               actionButton.click
                                             }else{
                                               console.log("delete action for selected agents was canceled")
@@ -195,7 +195,7 @@
                               </tr>
                               {% endfor %}
                               {% else %}
-                              <h3>No Agent Users Available</h3>
+                                <h3 style="margin-top: 1em;">No Agent Users Available</h3>
                               {% endif %}
                             </tbody>
                           </table>
@@ -207,9 +207,9 @@
                           {% if is_paginated %}
 
                           {% if page_obj.has_previous %}
-                          <a class="btn btn-primary btn-lg text-white mb-0 me-0" href="?page=1">First</a>
-                          <a class="btn btn-primary btn-lg text-white mb-0 me-0"
-                            href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            <a class="btn btn-primary btn-lg text-white mb-0 me-0" href="?page=1">First</a>
+                            <a class="btn btn-primary btn-lg text-white mb-0 me-0"
+                              href="?page={{ page_obj.previous_page_number }}">Previous</a>
                           {% endif %}
 
                           {% for num in page_obj.paginator.page_range %}

@@ -13,7 +13,7 @@ urlpatterns = [
     path("beneficiary/list", views.BenenficiaryListView.as_view(), name="list"),
     path("beneficiary/create", views.BeneficiaryCreateView.as_view(), name="create"),
     path("agent/list", views.AgentListView.as_view(), name="agent_list"),
-    path("beneficiary/<int:pk>/service", views.beneficiary_service, name="beneficiary_service"),
+    path("beneficiary/<int:pk>/service", views.service_details, name="service_details"),
     
     path("agent/create", views.AgentCreateView.as_view(), name="agent_create"),
     path(
@@ -23,18 +23,18 @@ urlpatterns = [
     ),
     path(
         "agent/<int:pk>/delete",
-        views.agent_delete_view,
+        views.agent_delete,
         name="agent_delete",
     ),
     path(
-        "multiple/agent/delete",
-        views.multiple_agent_delete_view,
-        name="multiple_agent_delete",
+        "agent/delete/many",
+        views.agent_delete_many,
+        name="agent_delete_many",
     ),
     path(
-        "multiple/beneficiary/delete",
-        views.multiple_beneficiary_delete_view,
-        name="multiple_beneficiary_delete",
+        "beneficiary/delete/many",
+        views.beneficiary_delete_many,
+        name="beneficiary_delete_many",
     ),
      path(
         "agent/<int:pk>/update",
@@ -68,7 +68,7 @@ urlpatterns = [
     ),
     path(
         "beneficiary/<int:pk>/delete",
-        views.beneficiary_delete_view,
+        views.beneficiary_delete,
         name="delete",
     ),
     path(

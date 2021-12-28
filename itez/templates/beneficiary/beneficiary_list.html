@@ -100,7 +100,7 @@
                                             var confirmAction = confirm("Are you sure you want to delete selected beneficiaries?");
                                             if(confirmAction){
                                               document.beneficiary_form.method = "post";
-                                              document.beneficiary_form.action = "{% url 'beneficiary:multiple_beneficiary_delete' %}";
+                                              document.beneficiary_form.action = "{% url 'beneficiary:beneficiary_delete_many' %}";
                                               actionButton.click
                                             }else{
                                               console.log("delete action for selected beneficiaries was canceled")
@@ -209,7 +209,7 @@
                               </tr>
                               {% endfor %}
                               {% else %}
-                              <h3>No Beneficiaries Available</h3>
+                              <h3 style="margin-top: 1em;">No Beneficiaries Available</h3>
                               {% endif %}
                             </tbody>
                           </table>

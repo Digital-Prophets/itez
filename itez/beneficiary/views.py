@@ -434,14 +434,14 @@ class AgentUpdateView(LoginRequiredMixin, UpdateView):
 
 
 @login_required(login_url="/login/")
-def beneficiary_delete_view(request, pk):
+def beneficiary_delete(request, pk):
     beneficiary = Beneficiary.objects.get(id=pk)
     beneficiary.delete()
     return redirect(reverse("beneficiary:list"))
 
 
 @login_required(login_url="/login/")
-def multiple_beneficiary_delete_view(request):
+def beneficiary_delete_many(request):
     if request.method == 'POST':
         beneficiary_action = request.POST.get("beneficiary-action-select")
         if not '--' in beneficiary_action:
@@ -455,7 +455,7 @@ def multiple_beneficiary_delete_view(request):
 
 from django.core import serializers 
 @login_required(login_url="/login/")
-def beneficiary_service(request, pk):
+def service_details(request, pk):
     service = Service.objects.get(id=pk)
     jsonified_beneficiary_service = serializers.serialize('json', [service])
     struct = json.loads(jsonified_beneficiary_service)
@@ -464,7 +464,7 @@ def beneficiary_service(request, pk):
 
 
 @login_required(login_url="/login/")
-def multiple_agent_delete_view(request):
+def agent_delete_many(request):
     if request.method == 'POST':
         agent_action = request.POST.get("agent-action-select")
         if not '--' in agent_action:
@@ -477,7 +477,7 @@ def multiple_agent_delete_view(request):
 
 
 @login_required(login_url="/login/")
-def agent_delete_view(request, pk):
+def agent_delete(request, pk):
     agent = Agent.objects.get(id=pk)
     agent.delete()
     return redirect(reverse("beneficiary:agent_list"))
