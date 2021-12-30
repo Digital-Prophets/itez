@@ -60,7 +60,7 @@ from itez.beneficiary.models import Service
 from django.db.models import Count
 
 from django.core.paginator import Paginator
-from .tasks import generate_export_file
+from .tasks import generate_export_file, generate_medical_report
 from notifications.signals import notify
 
 
@@ -239,10 +239,9 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         beneficiary_object_id = self.kwargs.get("beneficiary_id", None)
-        form.instance.beneficiary = Beneficiary.objects.get(id=beneficiary_object_id)
+        beneficiary_obj = Beneficiary.objects.get(id=beneficiary_object_id)
         notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} created medical record')
-        return super(MedicalRecordCreateView, self).form_valid(form)
-
+        files = form.files.getlist("documents")
         files_dict = create_files_dict(
             directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files]
         )
@@ -255,11 +254,6 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
         form.save()
         return super(MedicalRecordCreateView, self).form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super(BeneficiaryCreateView, self).get_context_data(**kwargs)
-        context["title"] = "create new beneficiary"
-        notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} created a beneficiary')
-        return context
 
 class BenenficiaryListView(LoginRequiredMixin, ListView):
     """
