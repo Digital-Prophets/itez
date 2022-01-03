@@ -198,7 +198,6 @@ class MedicalRecordListView(LoginRequiredMixin, ListView):
             pk=self.kwargs["beneficiary_id"]
         )
         context["title"] = "Medical Records"
-        # notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} accessed Medical Record list')
         return context
 
 
@@ -215,7 +214,6 @@ class MedicalRecordDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(MedicalRecordDetailView, self).get_context_data(**kwargs)
         context["title"] = "Medical Record"
-        # notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} accessed medical record pages')
         return context
 
 
@@ -236,13 +234,13 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(MedicalRecordCreateView, self).get_context_data(**kwargs)
         context["title"] = "add medical record"
-        # notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} accessed the medical create page')
         return context
 
     def form_valid(self, form):
         beneficiary_object_id = self.kwargs.get("beneficiary_id", None)
         beneficiary_obj = Beneficiary.objects.get(id=beneficiary_object_id)
         notify.send(self.request.user,  recipient=self.request.user, verb= "created medical record")
+
         files = form.files.getlist("documents")
         files_dict = create_files_dict(
             directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files]
@@ -481,6 +479,7 @@ def agent_delete(request, pk):
     agent = Agent.objects.get(id=pk)
     agent.delete()
     notify.send(request.user,  recipient=request.user, verb= "deleted agent")
+
     return redirect(reverse("beneficiary:agent_list"))
 
 
@@ -678,6 +677,7 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
         context["title"] = "create agent"
         context["roles"] = roles
         context["user_roles"] = user_roles()
+        notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} created agent')
         return context
 
 
