@@ -93,7 +93,7 @@
               {% else %}
               <img class="img-xs rounded-circle" src="/static/assets/images/faces/male.jpeg" alt="Profile image" onclick="document.getElementById('profile_photo_update_modal').style.display='block'"> 
               {% endif %}
-              <div style="margin-top: 3;"><i class="fa fa-camera" aria-hidden="true"></i></div>
+              <div style="margin-top: 3; font-size: 12"><i class="fa fa-camera" aria-hidden="true" style="font-size: 12"></i></div>
               <p class="mb-1 mt-3 font-weight-semibold">
                {% if not request.user.first_name and not request.user.last_name %}
                    <p class="fw-light text-muted mb-0">{{ request.user.username }}</p>
