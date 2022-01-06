@@ -677,6 +677,7 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
         context["title"] = "create agent"
         context["roles"] = roles
         context["user_roles"] = user_roles()
+        notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} created agent')
         return context
 
 
