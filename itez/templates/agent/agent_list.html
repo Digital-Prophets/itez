@@ -57,7 +57,7 @@
                           </div>
                           <div>
                             <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">                             
-                                      <a href="{% url 'beneficiary:agent_create' %}" class="text-white" style="text-decoration: none;" data-toggle="tooltip" title="Add Beneficiary">
+                                      <a href="{% url 'beneficiary:agent_create' %}" class="text-white" style="text-decoration: none;" data-toggle="tooltip" title="Add Agent" >
                                 <i class="mdi mdi-account-plus"></i >
                                 </a>
                               </button>
@@ -153,15 +153,9 @@
                                 <td>
                                   <h6 style="font-weight: normal;">{{ agent.birthdate }}</h6>
                                 </td>
-                                <!-- <td>
-                                  <h6>{{ agent.user.group.all }}</h6>
-                                </td> -->
                                 <td>
                                   <h6 style="font-weight: normal;">{{ agent.gender }}</h6>
                                 </td>
-                                <!-- <td>
-                                  <h6>{{ agent.Location }}</h6>
-                                </td> -->
                                 <td>
                                   <div class="badge ">
                                     <a href="{% url 'beneficiary:agent_update' pk=agent.id %}" data-toggle="tooltip" title="Edit">
