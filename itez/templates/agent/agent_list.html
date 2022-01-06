@@ -66,8 +66,7 @@
 
                         <div class="table-responsive  mt-1">
                           <form name="agent_form" class="form-delete">{% csrf_token %}
-                            <select class="select-style" id="agent-selector" name="agent-action-select">
-                              <option id="negative-select" selected>-----------------</option>
+                            <select class="select-style" id="agent-selector" name="agent-action-select" style="font-size: 14px; color: lightgrey;">
                               <option id="positive-select" value="delete selected">delete selected</option>
                             </select>
                             <button style="border-top-right-radius: 1em; border-top-left-radius: 1em; margin-top: -0.8em; padding-top: -10px; padding-bottom: 12px;" id="agent-select-button" class="btn btn-primary text-white mb-0 me-0" type="submit">                             
