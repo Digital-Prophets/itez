@@ -353,7 +353,8 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             for service in values:
                 services_paginator_list.append(service["service_object"])
 
-
+        # print("SERVICES",  services)
+        # print("SERVICES PAGINATOR",  services_paginator_list)
         service_paginator = Paginator(services["services"], 5)
         service_page_number = self.request.GET.get('service_page')
         service_paginator_list = service_paginator.get_page(service_page_number)
@@ -677,7 +678,6 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
         context["title"] = "create agent"
         context["roles"] = roles
         context["user_roles"] = user_roles()
-        notify.send(self.request.user,  recipient=self.request.user, verb=f'{self.request.user} created agent')
         return context
 
 
