@@ -586,6 +586,12 @@ class ServiceProviderPersonel(models.Model):
         _("Last Name"),
         max_length=200
     )
+    facility = models.ForeignKey(
+        'Facility',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
+    )
     date_of_birth = models.DateField(
         _("Date of Birth"),
         null=True,
@@ -722,7 +728,7 @@ class MedicalRecord(models.Model):
         Service,
         on_delete=models.CASCADE,
     )
-    service_facility = models.ForeignKey(
+    facility = models.ForeignKey(
         'Facility',
         on_delete=models.PROTECT,
         null=True,
