@@ -326,7 +326,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         latest_beneficiary_service = {
 
             "service_name": latest_beneficiary_medical_record.service,
-            "service_facility":  latest_beneficiary_medical_record.service_facility,
+            "facility":  latest_beneficiary_medical_record.facility,
             "interaction_date": latest_beneficiary_medical_record.interaction_date,
             "service_provider": service_provider_name,
             "service_provider_comments": latest_beneficiary_medical_record.provider_comments,
@@ -342,7 +342,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             services["services"].append(
                 {
                     "service_object": medical_record.service,
-                    "service_facility": medical_record.service_facility,
+                    "facility": medical_record.facility,
                     "service_provider" : service_personnel_name,
                     "service_comments" : medical_record.provider_comments,
                 }
@@ -565,7 +565,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         ).latest("created")
         service_provider_name = (
             latest_beneficiary_medical_record.service.service_personnel.first_name
-            + ""
+            + " "
             + latest_beneficiary_medical_record.service.service_personnel.last_name
         )
 
@@ -573,7 +573,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
 
         latest_beneficiary_service = {
             "service_name": latest_beneficiary_medical_record.service or "",
-            "service_facility": latest_beneficiary_medical_record.service_facility
+            "facility": latest_beneficiary_medical_record.facility
             or "",
             "interaction_date": latest_beneficiary_medical_record.interaction_date
             or "",
@@ -595,7 +595,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             services["services"].append(
                 {
                     "service_object": medical_record.service,
-                    "service_facility": medical_record.service.service_type,
+                    "service_facility": medical_record.service.service_personnel.facility.name,
                     "service_provider": service_personnel_name,
                     "service_comments": medical_record.provider_comments,
                     "service_created":  medical_record.service.datetime,
