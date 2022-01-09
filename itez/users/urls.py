@@ -11,7 +11,7 @@ from itez.users.views import (
 
 app_name = "users"
 urlpatterns = [
-    path("create_user/", view=UserCreateView, name="create_user"),
+    path("user/create", UserCreateView.as_view(), name="user_create"),
     path("user/profile/photo/upload/", user_profile_photo_update, name="profile_photo"),
     path("user/profile/", user_profile, name="profile"),
     path("~redirect/", view=user_redirect_view, name="redirect"),
