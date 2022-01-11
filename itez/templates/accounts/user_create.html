@@ -25,7 +25,8 @@
           <form class="form-sample" action="/user/create/" method="post">
             {% csrf_token %} 
             {{ form.media }}
-            {% crispy form form.helper %}
+            {{form }}
+            <button type="submit" class="btn btn-primary">Create</button>
           </form>
         </div>
       </div>
