@@ -4,6 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView, CreateView
+from itez.authentication.user_roles import user_roles
 from itez.users.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponse
@@ -12,6 +13,7 @@ from itez.users.models import Profile
 from itez.beneficiary.models import District, Province
 from itez.users.models import EDUCATION_LEVEL, GENDER_CHOICES, SEX_CHOICES
 from notifications.signals import notify
+from rolepermissions.roles import RolesManager
 
 
 
@@ -19,10 +21,43 @@ User = get_user_model()
 
 
 class UserCreateView(LoginRequiredMixin, CreateView):
-    model = User
-    slug_field = "username"
-    slug_url_kwarg = "username"
+    """
+    Create an user object.
+    """
 
+    model = User
+    form_class = UserCreationForm
+    template_name = "accounts/user_create.html"
+
+    def get_success_url(self):        
+        return reverse("beneficiary:user_events")
+
+    def form_invalid(self, form):
+        print("form is invalid")
+        # print(self.request.POST)
+        return super(UserCreateView, self).form_invalid(form)
+
+    def form_valid(self, form):
+        notify.send(self.request.user,  recipient=self.request.user, verb= "created user")
+        return super(UserCreateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCreateView, self).get_context_data(**kwargs)
+        roles = RolesManager.get_roles_names()
+        user = self.request.user
+        all_unread = user.notifications.unread()[:4]
+        context["notifications"] = all_unread
+        context["title"] = "create user"
+        context["roles"] = roles
+        context["user_roles"] = user_roles()
+        return context
+
+@login_required(login_url="/login/")
+def user_delete(request, user_id):
+    user = User.objects.get(id=user_id)
+    user.delete()
+    notify.send(request.user,  recipient=request.user, verb= "deleted user")
+    return redirect(reverse("beneficiary:user_events"))
 
 class UserDetailView(LoginRequiredMixin, DetailView):
 
