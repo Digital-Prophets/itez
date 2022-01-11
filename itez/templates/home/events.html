@@ -121,13 +121,13 @@
                                       <i class="menu-icon mdi mdi-delete-forever" style="color:red"></i>
                                       <script>
                                         try{
-                                          if("{{ user.id }}" === "{{ agent.id }}"){
+                                          if("{{ user.id }}" === "{{ user.id }}"){
                                             const deleteButton = document.getElementById("{{ user.id }}");
                                             deleteButton.addEventListener("click", () => {
                                               var response;
                                               response = confirm("Are you sure you want to delete this user");
                                               if(response){
-                                                const setProperty = deleteButton.href = "#";
+                                                const setProperty = deleteButton.href = "{% url  'user:delete' user_id=request.user.id %}";
                                                 setProperty.click()
                                               }else if(!(response)){
                                                 console.log("cancelled post delete");
