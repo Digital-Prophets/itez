@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView, CreateView
 from itez.authentication.user_roles import user_roles
-from itez.users.forms import UserCreationForm
+from itez.users.forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponse
 from itez.users.models import User as user_model
@@ -26,7 +26,7 @@ class UserCreateView(LoginRequiredMixin, CreateView):
     """
 
     model = User
-    form_class = UserCreationForm
+    form_class = UserRegistrationForm
     template_name = "accounts/user_create.html"
 
     def get_success_url(self):        
