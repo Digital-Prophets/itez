@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.forms.models import ModelForm
 from django.utils.translation import gettext_lazy as _
 from itez.users.models import User
-
+from django.contrib.auth.forms import UserCreationForm
 
 
 class UserChangeForm(admin_forms.UserChangeForm):
@@ -14,50 +14,11 @@ class UserChangeForm(admin_forms.UserChangeForm):
         model = User
 
 
-# class UserCreationForm(admin_forms.UserCreationForm):
-#     class Meta(admin_forms.UserCreationForm.Meta):
-#         model = User
 
-#         error_messages = {
-#             "username": {"unique": _("This username has already been taken.")}
-#         }
-class UserCreationForm(ModelForm):
+class UserRegistrationForm(UserCreationForm):
     class Meta:
 
         model = User
-        exclude = ["created"]
+        exclude = ["created", "password"]
+        
        
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.form_tag = False
-    #     self.helper.layout = Layout(
-    #         Fieldset(
-    #             "User Details",
-    #             Row(
-    #                 Div("username", css_class="form-group col-md-6 mb-0"),
-    #                 Div("password", css_class="form-group col-md-6 mb-0"),
-    #                 Div("first_name", css_class="form-group col-md-6 mb-0"),
-    #                 Div("last_name", css_class="form-group col-md-6 mb-0"),
-    #                 Div("email", css_class="form-group col-md-6 mb-0"),
-    #                 Div("is_superuser", css_class="form-group col-md-6 mb-0"),
-    #                 Div("is_staff", css_class="form-group col-md-6 mb-0"),
-    #                 Div("is_active", css_class="form-group col-md-6 mb-0"),
-    #                 # Div("date_joined", css_class="form-group col-md-6 mb-0"),
-    #                 # Div("date", css_class="form-group col-md-6 mb-0"),
-    #             ),
-    #         ),
-            
-    #         FormActions(
-    #             Submit("submit", "Create User"),
-    #             HTML('<a class="btn btn-danger" href="/events">Cancel</a>'),
-    #         ),
-    #     )
-
-    # def save(self, commit=True):
-    #     instance = super(UserCreationForm, self).save(commit=False)
-    #     if commit:
-    #         instance.save()
-    #     # self.save_m2m()  # we  can use this if we have many to many field on the model i.e Service
-    #     return instance

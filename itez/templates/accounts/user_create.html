@@ -15,18 +15,29 @@
 {% block stylesheets %} {% endblock stylesheets %} {% block content %}
 
 <div class="content-wrapper">
-     {% include "includes/notifications_modal.html" %}
+  {% include "includes/notifications_modal.html" %}
   <div class="row">
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">{{ title|title }}</h4>
 
-          <form class="form-sample" action="/user/create/" method="post">
-            {% csrf_token %} 
-            {{ form.media }}
-            {{form }}
-            <button type="submit" class="btn btn-primary">Create</button>
+          <form
+            class="form-label"
+            action="/user/create/"
+            method="post"
+            style="display: grid"
+          >
+              <div class="form-row">
+                <div class="col">
+                    <fieldset>
+                    {% csrf_token %}
+                      {{ form|crispy}}
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        <a class="btn btn-danger" href="/events">Cancel</a>
+                    </fieldset>
+                </div>
+              </div>
           </form>
         </div>
       </div>
@@ -47,7 +58,6 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
 
 <script src="/static/assets/js/dashboard.js"></script>
 <script src="/static/assets/js/Chart.roundedBarCharts.js"></script>
