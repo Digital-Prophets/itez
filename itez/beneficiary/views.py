@@ -724,7 +724,7 @@ def user_events(request):
     users = User.objects.all()
     # users_list = [user for user in users]
     page_num = request.GET.get("page", 1)
-    p = Paginator(users, 2)
+    p = Paginator(users, 20)
     user = request.user
     all_unread = user.notifications.unread()[:4]
     page_obj = p.get_page(page_num)
