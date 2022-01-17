@@ -3518,6 +3518,7 @@ textarea.form-control-lg {
   border-color: #0d6efd;
 }
 .form-check-input:checked[type="checkbox"] {
+  margin-left:2;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
 }
 .form-check-input:checked[type="radio"] {
@@ -16745,6 +16746,7 @@ code {
   right: 0;
 }
 .form-check .form-check-label input[type="checkbox"] + .input-helper:before {
+  margin-left: 8;
   content: "";
   width: 18px;
   height: 18px;
@@ -16780,6 +16782,7 @@ code {
   .form-check-label
   input[type="checkbox"]:checked
   + .input-helper:after {
+  margin-left: 8px;
   width: 18px;
   opacity: 1;
   line-height: 18px;

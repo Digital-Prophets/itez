@@ -16,7 +16,6 @@ from notifications.signals import notify
 from rolepermissions.roles import RolesManager
 
 
-
 User = get_user_model()
 
 
@@ -29,7 +28,7 @@ class UserCreateView(LoginRequiredMixin, CreateView):
     form_class = UserRegistrationForm
     template_name = "accounts/user_create.html"
 
-    def get_success_url(self):        
+    def get_success_url(self):
         return reverse("beneficiary:user_events")
 
     def form_invalid(self, form):
@@ -38,7 +37,7 @@ class UserCreateView(LoginRequiredMixin, CreateView):
         return super(UserCreateView, self).form_invalid(form)
 
     def form_valid(self, form):
-        notify.send(self.request.user,  recipient=self.request.user, verb= "created user")
+        notify.send(self.request.user, recipient=self.request.user, verb="created user")
         return super(UserCreateView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -52,12 +51,14 @@ class UserCreateView(LoginRequiredMixin, CreateView):
         context["user_roles"] = user_roles()
         return context
 
+
 @login_required(login_url="/login/")
 def user_delete(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
-    notify.send(request.user,  recipient=request.user, verb= "deleted user")
+    notify.send(request.user, recipient=request.user, verb="deleted user")
     return redirect(reverse("beneficiary:user_events"))
+
 
 class UserDetailView(LoginRequiredMixin, DetailView):
 
@@ -68,10 +69,13 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 user_detail_view = UserDetailView.as_view()
 
+
 @login_required(login_url="/login/")
 def user_profile_photo_update(request):
     current_profile_object = Profile.objects.get(id=request.user.id)
-    profile_photo = request.FILES.get("profile-photo", current_profile_object.profile_photo)
+    profile_photo = request.FILES.get(
+        "profile-photo", current_profile_object.profile_photo
+    )
     current_profile_object.profile_photo = profile_photo
     current_profile_object.save()
     return redirect(reverse("beneficiary:home"))
@@ -83,8 +87,7 @@ def user_profile(request):
     user_profile = Profile.objects.get(id=current_user.id)
     # user_district = District.objects.get(id=user_profile.id)
     # user_province = Province.objects.get(id=user_profile.id)
-    
-    
+
     if request.method == "POST":
         phone_no_1 = request.POST.get("phone-no-1", user_profile.phone_number)
         phone_no_2 = request.POST.get("phone-no-2", user_profile.phone_number_2)
@@ -146,20 +149,47 @@ def user_profile(request):
     return render(request, "includes/user_profile.html", context)
 
 
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+# class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
+#     model = User
+#     fields = ["name"]
+#     success_message = _("Information successfully updated")
+
+#     def get_success_url(self):
+#         return self.request.user.get_absolute_url()  # type: ignore [union-attr]
+
+#     def get_object(self):
+#         return self.request.user
+
+
+# user_update_view = UserUpdateView.as_view()
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
-    fields = ["name"]
-    success_message = _("Information successfully updated")
+    template_name = "accounts/user_update.html"
+    success_url = "/events"
+    fields = [
+        "username",
+    ]
+    # exclude= ["password"]
 
-    def get_success_url(self):
-        return self.request.user.get_absolute_url()  # type: ignore [union-attr]
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("beneficiary:events"))
 
-    def get_object(self):
-        return self.request.user
-
-
-user_update_view = UserUpdateView.as_view()
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        user = User.objects.get(id=self.request.user.id)
+        form = UserRegistrationForm(instance=user)
+        user = self.request.user
+        all_unread = user.notifications.unread()[:4]
+        context["notifications"] = all_unread
+        context["title"] = "update user"
+        context["form"] = form
+        context["user_roles"] = user_roles()
+        return context
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):

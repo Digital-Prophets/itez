@@ -34,8 +34,16 @@ class MedicalRecordForm(ModelForm):
         model = MedicalRecord
         exclude = ["created", "medical_record_id", "beneficiary"]
         widgets = {
-            'interaction_date': widgets.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'type':'date'}),
-            'provider_comments': forms.TextInput(attrs={'size': 500, 'title': 'Extra notes or comments',  'required': False}),
+            "interaction_date": widgets.DateInput(
+                format=("%m/%d/%Y"), attrs={"class": "form-control", "type": "date"}
+            ),
+            "provider_comments": forms.TextInput(
+                attrs={
+                    "size": 500,
+                    "title": "Extra notes or comments",
+                    "required": False,
+                }
+            ),
         }
 
     def __init__(self, *args, **kwargs):
@@ -186,6 +194,6 @@ class BeneficiaryForm(ModelForm):
     def save(self, commit=True):
         instance = super(BeneficiaryForm, self).save(commit=False)
         if commit:
-            instance.save()       
+            instance.save()
         # self.save_m2m()  # we  can use this if we have many to many field on the model i.e Service
         return instance

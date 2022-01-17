@@ -24,13 +24,13 @@ def zip_directory(archive_name=None, format=None, directory=None):
 
 
 def handle_upload(f, destination_directory=None):
-        fullpath = f"{settings.MEDIA_ROOT}/supporting_documents/{destination_directory}"
-        if not os.path.exists(fullpath):
-            os.makedirs(fullpath)
+    fullpath = f"{settings.MEDIA_ROOT}/supporting_documents/{destination_directory}"
+    if not os.path.exists(fullpath):
+        os.makedirs(fullpath)
 
-        with open(f"{fullpath}/{f.name}", "wb+") as file:
-            for chunk in f.chunks():
-                file.write(chunk)
+    with open(f"{fullpath}/{f.name}", "wb+") as file:
+        for chunk in f.chunks():
+            file.write(chunk)
 
 
 def create_files_dict(directory=None, filenames=[]):

@@ -56,10 +56,12 @@ class UserManager(BaseUserManager):
 
         return user
 
+
 class NotificationActive(models.Manager):
     def get_queryset(self):
         from datetime import datetime
-        return super(NotificationActive, self).get_queryset().order_by("-date") 
+
+        return super(NotificationActive, self).get_queryset().order_by("-date")
 
 
 class User(AbstractBaseUser, PermissionsMixin):
