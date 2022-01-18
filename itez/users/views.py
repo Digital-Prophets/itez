@@ -190,6 +190,21 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         context["form"] = form
         context["user_roles"] = user_roles()
         return context
+    
+        
+@login_required(login_url="/login/")
+def update_view(request, pk):
+    user = User.objects.get(id=pk)
+    form = UserRegistrationForm(request.POST or None, instance=user)
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+        return redirect("/events")
+    context = {
+        "form": form,
+        "title": "update_user",
+    }
+    return render(request, "accounts/user_update.html", context)
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
