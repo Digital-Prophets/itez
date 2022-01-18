@@ -28,7 +28,7 @@ GENDER_CHOICES = (
 )
 
 
-class UserRegistrationForm(forms.Form):
+class UserRegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
     username = forms.Field(widget=forms.TextInput(attrs={"class": "form-control"}))

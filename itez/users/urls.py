@@ -1,7 +1,8 @@
 from django.urls import path
 
 from itez.users.views import (
-    UserUpdateView,
+    update_view,
+    # UserUpdateView,
     user_delete,
     user_detail_view,
     user_redirect_view,
@@ -17,6 +18,7 @@ urlpatterns = [
     path("user/profile/photo/upload/", user_profile_photo_update, name="profile_photo"),
     path("user/profile/", user_profile, name="profile"),
     path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("update/<int:pk>/", view=UserUpdateView.as_view(), name="update"),
+    # path("update/<int:pk>/", view=UserUpdateView.as_view(), name="update"),
+    path("update/<int:pk>/", view=update_view, name="update"),
     path("<str:username>/", view=user_detail_view, name="detail"),
 ]
