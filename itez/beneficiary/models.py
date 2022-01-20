@@ -15,7 +15,7 @@ GENDER_CHOICES = (
     ("Male", _("Male")),
     ("Female", _("Female")),
     ("Transgender", _("Transgender")),
-    ("Other", _("Other")),
+    ("Intersex", _("Intersex")),
 )
 SEX_CHOICES = (("Male", _("Male")), ("Female", _("Female")))
 EDUCATION_LEVEL = (
