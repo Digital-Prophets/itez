@@ -26,7 +26,7 @@ from notifications.signals import notify
 
 class MedicalRecordForm(ModelForm):
     documents = forms.FileField(
-        widget=forms.ClearableFileInput(attrs={"multiple": True})
+            required= False    
     )
 
     class Meta:
@@ -36,7 +36,7 @@ class MedicalRecordForm(ModelForm):
         widgets = {
             "interaction_date": widgets.DateInput(
                 format=("%m/%d/%Y"), attrs={"class": "form-control", "type": "date"}
-            ),
+            ),     
             "provider_comments": forms.TextInput(
                 attrs={
                     "size": 500,
@@ -55,7 +55,7 @@ class MedicalRecordForm(ModelForm):
             Fieldset(
                 "Service",
                 Row(
-                    Column("service_facility", css_class="form-group col-md-6 mb-0"),
+                    Column("facility", css_class="form-group col-md-6 mb-0"),
                     Column("interaction_date", css_class="form-group col-md-6 mb-0"),
                     Column("service", css_class="form-group col-md-6 mb-0"),
                     Column("documents", css_class="form-group col-md-6 mb-0"),
