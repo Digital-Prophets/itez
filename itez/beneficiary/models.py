@@ -15,9 +15,9 @@ GENDER_CHOICES = (
     ("Male", _("Male")),
     ("Female", _("Female")),
     ("Transgender", _("Transgender")),
-    ("Intersex", _("Intersex")),
+    ("Other", _("Other")),
 )
-SEX_CHOICES = (("Male", _("Male")), ("Female", _("Female")))
+SEX_CHOICES = (("Male", _("Male")), ("Female", _("Female")), ("Intersex", _("Intersex")))
 EDUCATION_LEVEL = (
     ("none", _("None")),
     ("primary", _("Primary")),
@@ -493,6 +493,8 @@ SERVICE_TYPES = (
     ("HTS", _("HTS (HIV Testing Services)")),
     ("LAB", _("LAB")),
     ("PHARMACY", _("PHARMACY")),
+    ("OPD", _("OPD")),
+    ("VL", _("VL")),
 )
 
 
