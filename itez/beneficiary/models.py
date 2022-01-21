@@ -488,6 +488,13 @@ class Drug(models.Model):
     def __str__(self):
         return self.name
 
+TITLE = (
+    ("HTS", _("HTS (HIV Testing Services)")),
+    ("LAB", _("Lab Review")),
+    ("PHARMACY", _("Drug Pickup")),
+    ("OPD", _("OPD Services")),
+    ("VL", _("VL Checkup")),
+)
 
 SERVICE_TYPES = (
     ("HTS", _("HTS (HIV Testing Services)")),
@@ -512,6 +519,9 @@ class Service(models.Model):
     title = models.CharField(
         _("Service Title"),
         max_length=255,
+        null=True, 
+        blank=True, 
+        choices=TITLE
     )
     service_personnel = models.ForeignKey(
         ServiceProviderPersonel, on_delete=models.PROTECT, null=True, blank=True
