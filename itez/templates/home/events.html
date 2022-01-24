@@ -42,6 +42,14 @@
                             <div>
                               <h4 class="card-title card-title-dash">System Users</h4>
                             </div>
+                            <div>
+                            <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">                             
+                                      <a href="{% url 'user:user_create' %}" class="text-white" style="text-decoration: none;" data-toggle="tooltip" title="Add User" >
+                                <i class="mdi mdi-account-plus"></i >
+                                </a>
+                              </button>
+                            </a>
+                          </div>
                           </div>
                           <div class="table-responsive  mt-1">
                             <table class="table select-table">
@@ -102,11 +110,36 @@
                                     <h6>{{user.last_login}}</h6>
                                   </td>
                                   
-                                   <td><div class="badge">
-                                    <a href="http://localhost:8000/admin/users/user/{{user.id}}/change/">
-                                          <i class="menu-icon mdi mdi-pencil" style="color:blue"></i>
-                                        </a>
-                                    </div>
+                                   <td>
+                                  <div class="badge badge-opacity-info">
+                                    <a href="{% url 'users:update' pk=user.id %}" target="_blank" data-toggle="tooltip" title="Edit">
+                                      <i class="menu-icon mdi mdi-pencil" class="tooltiptext"></i>
+                                    </a>
+                                  </div>
+                                    <div class="badge">
+                                    <a id="{{ user.id }}" data-toggle="tooltip" title="Delete">
+                                      <i class="menu-icon mdi mdi-delete-forever" style="color:red"></i>
+                                      <script>
+                                        try{
+                                          if("{{ user.id }}" === "{{ user.id }}"){
+                                            const deleteButton = document.getElementById("{{ user.id }}");
+                                            deleteButton.addEventListener("click", () => {
+                                              var response;
+                                              response = confirm("Are you sure you want to delete this user");
+                                              if(response){
+                                                const setProperty = deleteButton.href = "{% url  'user:delete' user_id=request.user.id %}";
+                                                setProperty.click()
+                                              }else if(!(response)){
+                                                console.log("cancelled post delete");
+                                              }
+                                            });
+                                          }
+                                        }catch(error){
+                                          console.log(error)
+                                        }
+                                    </script>
+                                  </a>
+                                  </div>
                                       </td>
                                   </td>
                                 </tr>

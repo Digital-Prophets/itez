@@ -9,7 +9,7 @@
       <form class="w3-container" method="post"  enctype="multipart/form-data" action="{% url 'user:profile_photo' %}"> 
           {% csrf_token %}
         <div class="w3-section">
-           <div class="col-sm-12 card mb-2">
+           <div class="col-sm-12 card mb-2" style="margin-top:30px">
                  <label for="profile_photo" class="form-label text-muted">Profile Photo:</label>
                  <input name="profile-photo" id="profile_photo" type="file" class="form-control">
              </div>
