@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/static/assets/css/loading_button.css">
 <link rel="stylesheet" href="/static/assets/css/datatables.min.css" />
 
+
 {% endblock css_plugins %}
 
 <!-- Specific Page CSS goes HERE  -->
@@ -131,13 +132,13 @@
                                   {{ beneficiary.beneficiary_id }}</a>
                               </td>
                               <td>
-                                <div class="d-flex ">
+                                <div class="d-flex" >
                                   {% if beneficiary.profile_photo %}
-                                  <img src="{{ beneficiary.profile_photo.url }}" style="width: 10%; height:10%;">
+                                  <img src="{{ beneficiary.profile_photo.url }}" style="width:10%;height:10%;">
                                   {% elif beneficiary.sex == "Male" %}
-                                  <img src="/static/assets/images/faces/male.jpeg" style="width: 10%; height:10%;" alt="">
+                                  <img class="image_resize" src="/static/assets/images/faces/male.jpeg" style="width:10%;height:10%;" alt="">
                                   {% else %}
-                                  <img src="/static/assets/images/faces/female.jpeg" style="width: 10%; height:10%;" alt="">
+                                  <img src="/static/assets/images/faces/female.jpeg"  style="width:10%;height:10%;" alt="">
                                   {% endif %}
                                   <div>
                                     <a  href="#">
@@ -147,7 +148,7 @@
                                   </div>
                                 </div>
                               </td>
-                              <td>
+                              <td style="margin-right:50%;">
                                 <h6>{{ beneficiary.sex }}</h6>
                                 <p>{{ beneficiary.gender }}</p>
                               </td>
