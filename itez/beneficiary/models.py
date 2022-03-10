@@ -103,7 +103,7 @@ class Beneficiary(models.Model):
     HIV_STATUS = (
         ("positive", _("Positive")),
         ("negative", _("Negative")),
-        ("unkown", _("Uknown")),
+        ("unknown", _("Unknown")),
     )
 
     EDUCATION_LEVEL = (
