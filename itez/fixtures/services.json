@@ -1,0 +1,59 @@
+
+[
+    {
+        "model": "beneficiary.Service",
+        "pk": 1,
+        "fields": {
+            "title": "OPD",
+            "client_type": "client type",
+            "service_type": "service_type",
+            "datetime": "2022-03-09",
+            "comments": "working"
+        }
+    },
+    {
+        "model": "beneficiary.Service",
+        "pk": 2,
+        "fields": {
+            "title": "HTS",
+            "client_type": "client type",
+            "service_type": "service_type",
+            "datetime": "2022-03-09",
+            "comments": "working"
+        }
+    },
+    {
+        "model": "beneficiary.Service",
+        "pk": 3,
+        "fields": {
+            "title": "VL",
+            "client_type": "client type",
+            "service_type": "service_type",
+            "datetime": "2022-03-09",
+            "comments": "working"
+        }
+    },
+    {
+        "model": "beneficiary.Service",
+        "pk": 4,
+        "fields": {
+            "title": "Labs",
+            "client_type": "client type",
+            "service_type": "service_type",
+            "datetime": "2022-03-09",
+            "comments": "working"
+        }
+    },
+    {
+        "model": "beneficiary.Service",
+        "pk": 5,
+        "fields": {
+            "title": "Pharmacy",
+            "client_type": "client type",
+            "service_type": "service_type",
+            "datetime": "2022-03-09",
+            "comments": "working"
+        }
+    }
+
+]

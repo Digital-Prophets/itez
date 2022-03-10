@@ -1,0 +1,122 @@
+[
+    {
+        "model": "beneficiary.Agent",
+        "pk": 1,
+        "fields": {
+            "user": "1",
+            "first_name": "John",
+            "last_name": "John",
+            "birthdate": "1980-01-12",
+            "agent_id": "abcd1234",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 2,
+        "fields": {
+            "user": "2",
+            "first_name": "Peter",
+            "last_name": "Peter",
+            "birthdate": "1981-01-12",
+            "agent_id": "abcd1231",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 3,
+        "fields": {
+            "user": "3",
+            "first_name": "Tiwonge",
+            "last_name": "Chanda",
+            "birthdate": "1980-02-12",
+            "agent_id": "abcd1232",
+            "gender": "Female"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 4,
+        "fields": {
+            "user": "4",
+            "first_name": "Dalia",
+            "last_name": "Siwale",
+            "birthdate": "1981-01-12",
+            "agent_id": "abcd1233",
+            "gender": "Female"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 5,
+        "fields": {
+            "user": "5",
+            "first_name": "Patrick",
+            "last_name": "Sichone",
+            "birthdate": "1972-01-18",
+            "agent_id": "abcd1235",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 6,
+        "fields": {
+            "user": "6",
+            "first_name": "Edgar",
+            "last_name": "Chewe",
+            "birthdate": "1981-01-12",
+            "agent_id": "abcd1236",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 7,
+        "fields": {
+            "user": "7",
+            "first_name": "Bertha",
+            "last_name": "Malama",
+            "birthdate": "1985-01-12",
+            "agent_id": "abcd1237",
+            "gender": "Female"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 8,
+        "fields": {
+            "user": "8",
+            "first_name": "Peter",
+            "last_name": "Mutale",
+            "birthdate": "1987-01-12",
+            "agent_id": "abcd1238",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 9,
+        "fields": {
+            "user": "9",
+            "first_name": "Morgan",
+            "last_name": "Daka",
+            "birthdate": "1981-01-12",
+            "agent_id": "abcd1239",
+            "gender": "Male"
+        }
+    },
+    {
+        "model": "beneficiary.Agent",
+        "pk": 10,
+        "fields": {
+            "user": "10",
+            "first_name": "Ruth",
+            "last_name": "Michelo",
+            "birthdate": "1981-01-12",
+            "agent_id": "abcd1240",
+            "gender": "Female"
+        }
+    }
+]

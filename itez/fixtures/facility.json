@@ -1,0 +1,113 @@
+
+[
+    {
+        "model": "beneficiary.Facility",
+        "pk": 1,
+        "fields": {
+            "province": 1,
+            "district": 1,
+            "name":"facility 1",
+            "facility_type": 1
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 2,
+        "fields": {
+            "province": 2,
+            "district": 2,
+            "name":"facility 2",
+            "facility_type": 2
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 3,
+        "fields": {
+            "province": 3,
+            "district": 3,
+            "name":"facility 3",
+            "facility_type": 3
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 4,
+        "fields": {
+            "province": 4,
+            "district": 4,
+            "name":"facility 4",
+            "facility_type": 4
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 5,
+        "fields": {
+            "province": 5,
+            "district": 5,
+            "name":"facility 5",
+            "facility_type": 5
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 6,
+        "fields": {
+            "province": 6,
+            "district": 6,
+            "name":"facility 6",
+            "facility_type": 6
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 7,
+        "fields": {
+            "province": 7,
+            "district": 7,
+            "name":"facility 7",
+            "facility_type": 7
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 8,
+        "fields": {
+            "province": 8,
+            "district": 8,
+            "name":"facility 8",
+            "facility_type": 8
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 9,
+        "fields": {
+            "province": 9,
+            "district": 9,
+            "name":"facility 9",
+            "facility_type": 9
+
+        }
+    },
+    {
+        "model": "beneficiary.Facility",
+        "pk": 10,
+        "fields": {
+            "province": 10,
+            "district": 10,
+            "name":"facility 10",
+            "facility_type": 10
+
+        }
+    }   
+]

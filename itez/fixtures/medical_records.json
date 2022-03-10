@@ -1,0 +1,20 @@
+
+[
+    {
+        "model": "beneficiary.MedicalRecord",
+        "pk": 1,
+        "fields": {
+            "beneficiary":1,
+            "service":1,
+            "facility":1,
+            "provider_comments": "test1 is well",
+            "interaction_date": "2022-03-08",
+            "prescription": "Medication",
+            "no_of_days": "1",
+            "when_to_take": "morning",
+            "lab" : "Test1 results",
+            "approved_by": "Doctor James Phiri",
+            "created": "2022-03-08"
+        }
+    }   
+]

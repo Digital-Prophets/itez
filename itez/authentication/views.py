@@ -8,7 +8,7 @@ from django.template import loader
 from rolepermissions.roles import assign_role
 from rolepermissions.decorators import has_role_decorator
 from django.urls import reverse
-from itez.authentication.forms import LoginForm, SignUpForm, UserCreationForm
+from itez.authentication.forms_old import LoginForm, SignUpForm, UserCreationForm
 from itez.users.models import User
 from itez.users.models import Profile
 from rolepermissions.checkers import has_role

@@ -1,0 +1,120 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Sign IN {% endblock %} 
+
+<!-- Specific CSS Plugins goes HERE  -->
+{% block css_plugins %}{% endblock css_plugins %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %} 
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 1px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #0c489e;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 30%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  
+}
+</style>
+
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="image-wrapper">
+          </div>
+          <div class="col-lg-4 mx-auto">
+           <body>
+<form method="post" action=""  style="background: white; border-radius:10px; height:650px;">
+  {% csrf_token %}
+  <div class="imgcontainer" style="margin-bottom: 50px;">
+    <h1 style="font-size:2.5em text-align-center ">Welcome</h1>
+    <img src="https://assets-eaglenews.s3.ap-northeast-1.amazonaws.com/2020/12/unnamed.jpg" alt="logo" class="avatar">
+  </div>
+  <h6 class="fw-light" style="text-align: center;">
+                {% if msg %}
+                    <span class="text-danger">{{ msg | safe }}</span>
+                {% else %}
+                    Add your credentials:
+                  <br/><br/>
+
+                {% endif %}
+              </h6>
+  <div class="container">
+     {{ form.username }}
+     {{ form.password }}     
+    <button type="submit">Login</button>
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Keep me signed in
+    </label>
+  </div>
+  <div class="text-center mt-4 fw-light">
+                  <h1 style="padding-right:1em">&#128151;</h1>
+                  <br/>
+                  &copy; <a target="_blank" href="http://digiprophets.com/" style="padding-right:3em">DigitalProphets</a>
+                  <br/>
+  </div>
+</form>
+
+</body>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+  
+{% endblock content %}
+
+<!-- Specific JS Plugins goes HERE  -->
+{% block js_plugins %}{% endblock js_plugins %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+

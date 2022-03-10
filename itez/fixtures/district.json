@@ -1,0 +1,103 @@
+
+[
+    {
+        "model": "beneficiary.District",
+        "pk": 1,
+        "fields": {
+            "name":"District 1",
+            "province": 1,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 2,
+        "fields": {
+            "name":"District 2",
+            "province": 2,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 3,
+        "fields": {
+            "name":"District 3",
+            "province": 3,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 4,
+        "fields": {
+            "name":"District 4",
+            "province": 4,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 5,
+        "fields": {
+            "name":"District 5",
+            "province": 5,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 6,
+        "fields": {
+            "name":"District 6",
+            "province": 6,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 7,
+        "fields": {
+            "name":"District 7",
+            "province": 7,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 8,
+        "fields": {
+            "name":"District 8",
+            "province": 8,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 9,
+        "fields": {
+            "name":"District 9",
+            "province": 9,
+            "created": "2022-03-08"
+
+        }
+    },
+    {
+        "model": "beneficiary.District",
+        "pk": 10,
+        "fields": {
+            "name":"District 10",
+            "province": 10,
+            "created": "2022-03-08"
+
+        }
+    }   
+]

@@ -1,0 +1,74 @@
+
+[
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 1,
+        "fields": {
+            "name":"facility type 1"
+        }
+    },
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 2,
+        "fields": {
+            "name":"facility type 2"
+        }
+    } ,
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 3,
+        "fields": {
+            "name":"facility type 3"
+        }
+    } ,
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 4,
+        "fields": {
+            "name":"facility type 4"
+        }
+    } ,
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 5,
+        "fields": {
+            "name":"facility type 5"
+        }
+    } ,
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 6,
+        "fields": {
+            "name":"facility type 6"
+        }
+    } ,
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 7,
+        "fields": {
+            "name":"facility type 7"
+        }
+    } ,
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 8,
+        "fields": {
+            "name":"facility type 8"
+        }
+    } ,
+    
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 9,
+        "fields": {
+            "name":"facility type 9"
+        }
+    } ,
+    {
+        "model": "beneficiary.FacilityType",
+        "pk": 10,
+        "fields": {
+            "name":"facility type 10"
+        }
+    } 
+]

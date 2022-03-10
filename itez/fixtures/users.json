@@ -1,0 +1,142 @@
+[
+    {
+        "model": "users.User",
+        "pk": 1,
+        "fields": {
+            "username": "Angela",
+            "first_name": "Angela",
+            "last_name": "Zulu",
+            "email": "t@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 2,
+        "fields": {
+            "username": "Daniel",
+            "first_name": "Daniel",
+            "last_name": "Miti",
+            "email": "t@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 3,
+        "fields": {
+            "username": "admin3",
+            "first_name": "admin 3",
+            "last_name": "admin 3",
+            "email": "admin3@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 4,
+        "fields": {
+            "username": "Towela",
+            "first_name": "Towela",
+            "last_name": "Moyo",
+            "email": "t@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 5,
+        "fields": {
+            "username": "Lushomo",
+            "first_name": "Lushomo",
+            "last_name": "Njobvu",
+            "email": "l@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 6,
+        "fields": {
+            "username": "Jika",
+            "first_name": "Jika",
+            "last_name": "Chola",
+            "email": "j@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 7,
+        "fields": {
+            "username": "Luckson",
+            "first_name": "Luckson",
+            "last_name": "Choma",
+            "email": "l@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 8,
+        "fields": {
+            "username": "Boyd",
+            "first_name": "Boyd",
+            "last_name": "Chunga",
+            "email": "b@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 9,
+        "fields": {
+            "username": "Eric",
+            "first_name": "Eric",
+            "last_name": "Mbewe",
+            "email": "e@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    },
+    {
+        "model": "users.User",
+        "pk": 10,
+        "fields": {
+            "username": "Robyn",
+            "first_name": "Robyn",
+            "last_name": "Moyo",
+            "email": "r@mail.com",
+            "is_superuser": "False",
+            "is_staff": "False",
+            "is_active": "True",
+            "date": "2022-03-08"
+        }
+    }
+]
