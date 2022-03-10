@@ -58,6 +58,8 @@
                               </button>
                           </div>
                         </div>
+
+                        
                         <div class="table-responsive  mt-1">
                           <form name="beneficiary_form" class="form-delete">{% csrf_token %}
                             <select class="select-style" id="beneficiary-selector" name="beneficiary-action-select" style="font-size: 14px; color: lightgrey;">
@@ -67,139 +69,141 @@
                               Go
                             </button>
 
-                            <table class="table select-table" id="table_id">
-                              
-                            <thead>
-                              <tr>
-                                <th>
-                                  <div class="form-check form-check-flat mt-0">
-                                    <label class="form-check-label">
-                                      <input type="checkbox" class="form-check-input selectall" aria-checked="false"><i
-                                        class="input-helper"></i></label>
-                                       <script>
-                                        var actionButton = document.getElementById("beneficiary-select-button");
-                                        var formAction = document.getElementById("form-delete");
-                                        var selectText = document.getElementById("beneficiary-selector");
-                                        actionButton.addEventListener("click", function(){
-                                          var value = selectText.options[selectText.selectedIndex].value;
-                                          var text = selectText.options[selectText.selectedIndex].text;
-                                          if(text == "delete selected"){
-                                            var confirmAction = confirm("Are you sure you want to delete selected beneficiaries?");
-                                            if(confirmAction){
-                                              document.beneficiary_form.method = "post";
-                                              document.beneficiary_form.action = "{% url 'beneficiary:beneficiary_delete_many' %}";
-                                              actionButton.click
-                                            }else{
-                                              console.log("delete action for selected beneficiaries was canceled")
-                                            }
-                                          }
-                                        });
-                                         $('.selectall').click(function() {
-                                            if ($(this).is(':checked')) {
-                                                $('input:checkbox').prop('checked', true);
-                                            } else {
-                                                $('input:checkbox').prop('checked', false);
-                                            }
-                                        });
-                                       </script>
-                                  </div>
-                                </th>
-                                  <th>Beneficiary  ID</th>
-                                  <th>Full Name</th>
-                                  <th>Gender & Sex</th>
-                                  <th>Facility</th>
-                                  <th>Registered Date</th>
-                                  <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {% if beneficiaries %}
-                              {% for beneficiary in beneficiaries %}
-                              <tr>
-                                <td>
-                                  <div class="form-check form-check-flat mt-0">
-                                    <label class="form-check-label">
-                                      <input name="beneficiary-ids" value="{{ beneficiary.beneficiary_id }}" type="checkbox" class="form-check-input"><i
-                                        class="input-helper"></i></label>
-                                  </div>
-                                </td>
-                                <td>
-                                  <a style="text-decoration: none;" href="{{ beneficiary.get_absolute_url }}">
-                                    {{ beneficiary.beneficiary_id }}</a>
-                                </td>
-                                <td>
-                                  <div class="d-flex ">
-                                    {% if beneficiary.profile_photo %}
-                                    <img src="{{ beneficiary.profile_photo.url }}">
-                                    {% elif beneficiary.sex == "Male" %}
-                                    <img src="/static/assets/images/faces/male.jpeg" alt="">
-                                    {% else %}
-                                    <img src="/static/assets/images/faces/female.jpeg" alt="">
-                                    {% endif %}
-                                    <div>
-                                      <a style="text-decoration: none;" href="#">
-                                        <h6>{{ beneficiary.first_name }} {{ beneficiary.last_name }}</h6>
-                                        <p>{{beneficiary.get_age }} years old</p>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <h6>{{ beneficiary.sex }}</h6>
-                                  <p>{{ beneficiary.gender }}</p>
-                                </td>
-                                <td>
-                                  <h6 style="font-weight: normal;">{{ beneficiary.registered_facility }}</h6>
-                                </td>
-                                <td>
-                                  <h6 style="font-weight: normal;">{{ beneficiary.created }}</h6>
-                                </td>
-                                <td>
-                                  <div class="badge badge-success">
-                                    <a href="{% url 'beneficiary:medical_record_create' beneficiary.pk %}"
-                                      data-toggle="tooltip" title="Add Medical Record">
-                                      <i class="menu-icon mdi mdi-file"></i>
-                                    </a>
-                                  </div>
-                                  <div class="badge badge-opacity-info">
-                                    <a href="{% url 'beneficiary:update' pk=beneficiary.id %}" data-toggle="tooltip" title="Edit">
-                                      <i class="menu-icon mdi mdi-pencil" class="tooltiptext"></i>
-                                    </a>
-                                  </div>
+                            <!-- test -->
 
-                                  <div class="badge badge-opacity-danger">
-                                    <a id="{{ beneficiary.id }}" data-toggle="tooltip" title="Delete">
-                                      <i class="menu-icon mdi mdi-delete-forever"></i>
-                                      <script>
-                                        try{
-                                          if("{{ beneficiary.id }}" === "{{ beneficiary.id }}"){
-                                            const deleteButton = document.getElementById("{{ beneficiary.id }}");
-                                            deleteButton.addEventListener("click", () => {
-                                              var response;
-                                              response = confirm("Are you sure you want to delete this beneficiary");
-                                              if(response){
-                                                const setProperty = deleteButton.href = "{% url 'beneficiary:delete' pk=beneficiary.id %}";
-                                                setProperty.click()
-                                              }else if(!(response)){
-                                                console.log("cancelled post delete");
-                                              }
-                                            });
+                        <table class="table select-table" id="table_id">
+                          <thead>
+                            <tr>
+                              <th>
+                                <div class="form-check form-check-flat mt-0">
+                                  <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input selectall" aria-checked="false"><i
+                                      class="input-helper"></i></label>
+                                     <script>
+                                      var actionButton = document.getElementById("beneficiary-select-button");
+                                      var formAction = document.getElementById("form-delete");
+                                      var selectText = document.getElementById("beneficiary-selector");
+                                      actionButton.addEventListener("click", function(){
+                                        var value = selectText.options[selectText.selectedIndex].value;
+                                        var text = selectText.options[selectText.selectedIndex].text;
+                                        if(text == "delete selected"){
+                                          var confirmAction = confirm("Are you sure you want to delete selected beneficiaries?");
+                                          if(confirmAction){
+                                            document.beneficiary_form.method = "post";
+                                            document.beneficiary_form.action = "{% url 'beneficiary:beneficiary_delete_many' %}";
+                                            actionButton.click
+                                          }else{
+                                            console.log("delete action for selected beneficiaries was canceled")
                                           }
-                                        }catch(error){
-                                          console.log(error)
                                         }
-                                    </script>
-                                    
-                                  </a>
+                                      });
+                                       $('.selectall').click(function() {
+                                          if ($(this).is(':checked')) {
+                                              $('input:checkbox').prop('checked', true);
+                                          } else {
+                                              $('input:checkbox').prop('checked', false);
+                                          }
+                                      });
+                                     </script>
+                                </div>
+                              </th>
+                                <th>Beneficiary  ID</th>
+                                <th style="padding-left:7%;">Full Name</th>
+                                <th>Gender & Sex</th>
+                                <th>Facility</th>
+                                <th>Registered Date</th>
+                                <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% if beneficiaries %}
+                            {% for beneficiary in beneficiaries %}
+                            <tr>
+                              <td>
+                                <div class="form-check form-check-flat mt-0">
+                                  <label class="form-check-label">
+                                    <input name="beneficiary-ids" value="{{ beneficiary.beneficiary_id }}" type="checkbox" class="form-check-input"><i
+                                      class="input-helper"></i></label>
+                                </div>
+                              </td>
+                              <td>
+                                <a style="text-decoration: none;" href="{{ beneficiary.get_absolute_url }}">
+                                  {{ beneficiary.beneficiary_id }}</a>
+                              </td>
+                              <td>
+                                <div class="d-flex ">
+                                  {% if beneficiary.profile_photo %}
+                                  <img src="{{ beneficiary.profile_photo.url }}" style="width: 10%; height:10%;">
+                                  {% elif beneficiary.sex == "Male" %}
+                                  <img src="/static/assets/images/faces/male.jpeg" style="width: 10%; height:10%;" alt="">
+                                  {% else %}
+                                  <img src="/static/assets/images/faces/female.jpeg" style="width: 10%; height:10%;" alt="">
+                                  {% endif %}
+                                  <div>
+                                    <a  href="#">
+                                      <h6>{{ beneficiary.first_name }} {{ beneficiary.last_name }}</h6>
+                                      <p>{{beneficiary.get_age }} years old</p>
+                                    </a>
                                   </div>
-                                </td>
-                              </tr>
-                              {% endfor %}
-                              {% else %}
-                              <h3 style="margin-top: 1em;">No Beneficiaries Available</h3>
-                              {% endif %}
-                            </tbody>
-                          </table>
+                                </div>
+                              </td>
+                              <td>
+                                <h6>{{ beneficiary.sex }}</h6>
+                                <p>{{ beneficiary.gender }}</p>
+                              </td>
+                              <td>
+                                <h6 style="font-weight: normal;">{{ beneficiary.registered_facility }}</h6>
+                              </td>
+                              <td>
+                                <h6 style="font-weight: normal;">{{ beneficiary.created }}</h6>
+                              </td>
+                              <td>
+                                <div class="badge badge-success">
+                                  <a href="{% url 'beneficiary:medical_record_create' beneficiary.pk %}"
+                                    data-toggle="tooltip" title="Add Medical Record">
+                                    <i class="menu-icon mdi mdi-file"></i>
+                                  </a>
+                                </div>
+                                <div class="badge badge-opacity-info">
+                                  <a href="{% url 'beneficiary:update' pk=beneficiary.id %}" data-toggle="tooltip" title="Edit">
+                                    <i class="menu-icon mdi mdi-pencil" class="tooltiptext"></i>
+                                  </a>
+                                </div>
+
+                                <div class="badge badge-opacity-danger">
+                                  <a id="{{ beneficiary.id }}" data-toggle="tooltip" title="Delete">
+                                    <i class="menu-icon mdi mdi-delete-forever"></i>
+                                    <script>
+                                      try{
+                                        if("{{ beneficiary.id }}" === "{{ beneficiary.id }}"){
+                                          const deleteButton = document.getElementById("{{ beneficiary.id }}");
+                                          deleteButton.addEventListener("click", () => {
+                                            var response;
+                                            response = confirm("Are you sure you want to delete this beneficiary");
+                                            if(response){
+                                              const setProperty = deleteButton.href = "{% url 'beneficiary:delete' pk=beneficiary.id %}";
+                                              setProperty.click()
+                                            }else if(!(response)){
+                                              console.log("cancelled post delete");
+                                            }
+                                          });
+                                        }
+                                      }catch(error){
+                                        console.log(error)
+                                      }
+                                  </script>
+                                  
+                                </a>
+                                </div>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <h3 style="margin-top: 1em;">No Beneficiaries Available</h3>
+                            {% endif %}
+                            
+                        </table>
+                        <!-- end test -->
                           </form>
                         </div>
                         <div class="m-3">
