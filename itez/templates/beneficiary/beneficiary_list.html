@@ -34,14 +34,14 @@
                           </div>
 
                           <div class="form-group inline ">
-                            <div class="search">
+                            <div class="search container-fluid mt-1">
                               <form class="search-form flex-column search" autocomplete='off' action="#">
-                                <input type="search" class="form-control search " name="q" data-toggle="tooltip" title="Search"
+                                <input type="search" class="form-control search col-sm-1" name="q" data-toggle="tooltip" title="Search"
                                   placeholder="Search beneficiary" title="Search here" id="search_here"
                                   >
                                 <div>
                                   <svg>
-                                    <i class="icon-search"></i>
+                                    <i class="bi bi-search"></i>
                                   </svg>
                                 </div>
                               </form>
@@ -50,11 +50,16 @@
                             <div>
                             	<button type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0" data-toggle="tooltip" title="Download Records">
                                 {% comment %} <i class="fa fa-circle-o-notch fa-spin px-2"></i> {% endcomment %}
-                                <i id="download-icon" class="mdi mdi-download"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                </svg>
                                   </button>
                                   <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">                             
                                       <a href="{% url 'beneficiary:create' %}" class="text-white" style="text-decoration: none;" data-toggle="tooltip" title="Add Beneficiary">
-                                <i class="mdi mdi-account-plus"></i >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+                                          <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z"/>
+                                        </svg>
                                 </a>
                               </button>
                           </div>
@@ -159,21 +164,30 @@
                                 <h6 style="font-weight: normal;">{{ beneficiary.created }}</h6>
                               </td>
                               <td>
-                                <div class="badge badge-success">
+                                <div class="badge bg-success">
                                   <a href="{% url 'beneficiary:medical_record_create' beneficiary.pk %}"
                                     data-toggle="tooltip" title="Add Medical Record">
-                                    <i class="menu-icon mdi mdi-file"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-bar-graph" viewBox="0 0 16 16">
+                                      <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1z"/>
+                                      <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                                    </svg>
                                   </a>
                                 </div>
-                                <div class="badge badge-opacity-info">
+                                <div class="badge bg-danger">
                                   <a href="{% url 'beneficiary:update' pk=beneficiary.id %}" data-toggle="tooltip" title="Edit">
-                                    <i class="menu-icon mdi mdi-pencil" class="tooltiptext"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
                                   </a>
                                 </div>
-
+                              
                                 <div class="badge badge-opacity-danger">
                                   <a id="{{ beneficiary.id }}" data-toggle="tooltip" title="Delete">
-                                    <i class="menu-icon mdi mdi-delete-forever"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
+                                      <path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"/>
+                                      <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                    </svg>
                                     <script>
                                       try{
                                         if("{{ beneficiary.id }}" === "{{ beneficiary.id }}"){
@@ -195,7 +209,7 @@
                                   </script>
                                   
                                 </a>
-                                </div>
+                              </div>
                               </td>
                             </tr>
                             {% endfor %}
