@@ -59,14 +59,14 @@
                        
 
                             <div>
-                            	<button type="button" class="btn btn-success btn-icon-text btn-lg text-white mb-0 me-0" data-toggle="tooltip" title="Download Records">
+                            	<button type="button" class="btn btn-success btn-icon-text btn-lg" data-toggle="tooltip" title="Download Records">
                                 {% comment %} <i class="fa fa-circle-o-notch fa-spin px-2"></i> {% endcomment %}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                                   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                                   <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
                                 </svg>
                                   </button>
-                                  <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button">                             
+                                  <button class="btn btn-primary btn-lg text-white" type="button">                             
                                       <a href="{% url 'beneficiary:create' %}" class="text-white" style="text-decoration: none;" data-toggle="tooltip" title="Add Beneficiary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
                                           <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z"/>
@@ -86,60 +86,58 @@
                               Go
                             </button>
 
-
-                            
-                            <!-- test -->
-
-                        <table class="table select-table" id="table_id">
-                          <thead>
-                            <tr>
-                              <th>
-                                <div class="form-check form-check-flat mt-0">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input selectall" aria-checked="false"><i
-                                      class="input-helper"></i></label>
-                                     <script>
-                                      var actionButton = document.getElementById("beneficiary-select-button");
-                                      var formAction = document.getElementById("form-delete");
-                                      var selectText = document.getElementById("beneficiary-selector");
-                                      actionButton.addEventListener("click", function(){
-                                        var value = selectText.options[selectText.selectedIndex].value;
-                                        var text = selectText.options[selectText.selectedIndex].text;
-                                        if(text == "delete selected"){
-                                          var confirmAction = confirm("Are you sure you want to delete selected beneficiaries?");
-                                          if(confirmAction){
-                                            document.beneficiary_form.method = "post";
-                                            document.beneficiary_form.action = "{% url 'beneficiary:beneficiary_delete_many' %}";
-                                            actionButton.click
-                                          }else{
-                                            console.log("delete action for selected beneficiaries was canceled")
-                                          }
-                                        }
-                                      });
-                                       $('.selectall').click(function() {
-                                          if ($(this).is(':checked')) {
-                                              $('input:checkbox').prop('checked', true);
-                                          } else {
-                                              $('input:checkbox').prop('checked', false);
-                                          }
-                                      });
-                                     </script>
-                                </div>
-                              </th>
-                                <th>Beneficiary  ID</th>
-                                <th style="padding-left:7%;">Full Name</th>
-                                <th>Gender & Sex</th>
-                                <th>Facility</th>
-                                <th>Registered Date</th>
-                                <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% if beneficiaries %}
+                            <div class="mt-3">       
+                              <table class="table select-table" id="table_id">
+                                <thead>
+                                  <tr>
+                                    <th>
+                                      <div class="form-check form-check-flat">
+                                        <label class="form-check-label">
+                                          <input type="checkbox" class="form-check-input selectall" aria-checked="false"><i
+                                            class="input-helper"></i></label>
+                                           <script>
+                                            var actionButton = document.getElementById("beneficiary-select-button");
+                                            var formAction = document.getElementById("form-delete");
+                                            var selectText = document.getElementById("beneficiary-selector");
+                                            actionButton.addEventListener("click", function(){
+                                              var value = selectText.options[selectText.selectedIndex].value;
+                                              var text = selectText.options[selectText.selectedIndex].text;
+                                              if(text == "delete selected"){
+                                                var confirmAction = confirm("Are you sure you want to delete selected beneficiaries?");
+                                                if(confirmAction){
+                                                  document.beneficiary_form.method = "post";
+                                                  document.beneficiary_form.action = "{% url 'beneficiary:beneficiary_delete_many' %}";
+                                                  actionButton.click
+                                                }else{
+                                                  console.log("delete action for selected beneficiaries was canceled")
+                                                }
+                                              }
+                                            });
+                                             $('.selectall').click(function() {
+                                                if ($(this).is(':checked')) {
+                                                    $('input:checkbox').prop('checked', true);
+                                                } else {
+                                                    $('input:checkbox').prop('checked', false);
+                                                }
+                                            });
+                                           </script>
+                                      </div>
+                                    </th>
+                                      <th>Beneficiary  ID</th>
+                                      <th></th>
+                                      <th>Full Name</th>
+                                      <th>Gender & Sex</th>
+                                      <th>Facility</th>
+                                      <th>Registered Date</th>
+                                      <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% if beneficiaries %}
                             {% for beneficiary in beneficiaries %}
                             <tr>
                               <td>
-                                <div class="form-check form-check-flat mt-0">
+                                <div class="form-check form-check-flat">
                                   <label class="form-check-label">
                                     <input name="beneficiary-ids" value="{{ beneficiary.beneficiary_id }}" type="checkbox" class="form-check-input"><i
                                       class="input-helper"></i></label>
@@ -149,24 +147,28 @@
                                 <a style="text-decoration: none;" href="{{ beneficiary.get_absolute_url }}">
                                   {{ beneficiary.beneficiary_id }}</a>
                               </td>
-                              <td>
-                                <div class="d-flex" >
-                                  {% if beneficiary.profile_photo %}
-                                  <img src="{{ beneficiary.profile_photo.url }}" style="width:10%;height:10%;">
+                              <td style="width:8%; height:8%;" >
+                                {% if beneficiary.profile_photo %}
+                                  <img  src="{{ beneficiary.profile_photo.url }}">
                                   {% elif beneficiary.sex == "Male" %}
-                                  <img class="image_resize" src="/static/assets/images/faces/male.jpeg" style="width:10%;height:10%;" alt="">
-                                  {% else %}
-                                  <img src="/static/assets/images/faces/female.jpeg"  style="width:10%;height:10%;" alt="">
+                                  <img src="/static/assets/images/faces/male.jpeg" alt="">
+                                  {% elif beneficiary.sex == "Female" %}
+                                  <img src="/static/assets/images/faces/female.jpeg" alt="">
+                                  {%else%}
+                                  <p>No image uploaded</p>
                                   {% endif %}
-                                  <div>
+                                  
+                              </td>
+                              <td>
+                                
+                                  <div >
                                     <a  href="#">
                                       <h6>{{ beneficiary.first_name }} {{ beneficiary.last_name }}</h6>
                                       <p>{{beneficiary.get_age }} years old</p>
                                     </a>
                                   </div>
-                                </div>
                               </td>
-                              <td style="margin-right:50%;">
+                              <td >
                                 <h6>{{ beneficiary.sex }}</h6>
                                 <p>{{ beneficiary.gender }}</p>
                               </td>
@@ -229,9 +231,9 @@
                             {% else %}
                             <h3 style="margin-top: 1em;">No Beneficiaries Available</h3>
                             {% endif %}
-                            
-                        </table>
-                        <!-- end test -->
+                                </tbody>
+                              </table>
+                            </div>
                           </form>
                         </div>
                         <div class="m-3">
