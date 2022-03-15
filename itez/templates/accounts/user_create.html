@@ -11,7 +11,7 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %} {% endblock stylesheets %} {% block content %}
 
-<div class="content-wrapper">
+<div class="content-wrapper dashboard_background">
 
   <div class="row">
     <div class="col-12 grid-margin">
@@ -19,14 +19,15 @@
         <div class="card-body">
           <h4 class="card-title">{{ title|title }}</h4>
           <form
-            class="form-label"
+            class="form-label "
             action="/user/create/"
             method="post"
-            style="display: grid"
+            style="display: grid " 
           >
               <div class="form-row">
                 <div class="col">
-                    <fieldset>
+                  
+                    <fieldset class="form-group col-lg-12 mb-2">
                     {% csrf_token %}
                       {{ form|crispy}}
                         <button type="submit" class="btn btn-primary">Create</button>
