@@ -29,10 +29,6 @@
           action="/beneficiary/create"
           method="post"
           enctype="multipart/form-data">
-            <div class="form-row">
-              
-            </div>
-          </form>
             {% csrf_token %} {% crispy form form.helper %}
           </form>
         </div>
