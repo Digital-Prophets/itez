@@ -4,7 +4,7 @@
         "model": "beneficiary.District",
         "pk": 1,
         "fields": {
-            "name":"District 1",
+            "name":"Chibombo",
             "province": 1,
             "created": "2022-03-08"
 
@@ -14,7 +14,7 @@
         "model": "beneficiary.District",
         "pk": 2,
         "fields": {
-            "name":"District 2",
+            "name":"Chisamba",
             "province": 2,
             "created": "2022-03-08"
 
@@ -24,7 +24,7 @@
         "model": "beneficiary.District",
         "pk": 3,
         "fields": {
-            "name":"District 3",
+            "name":"Chitambo",
             "province": 3,
             "created": "2022-03-08"
 
@@ -34,7 +34,7 @@
         "model": "beneficiary.District",
         "pk": 4,
         "fields": {
-            "name":"District 4",
+            "name":"Itezhi-Tezhi",
             "province": 4,
             "created": "2022-03-08"
 
@@ -44,7 +44,7 @@
         "model": "beneficiary.District",
         "pk": 5,
         "fields": {
-            "name":"District 5",
+            "name":"Kabwe",
             "province": 5,
             "created": "2022-03-08"
 
@@ -54,7 +54,7 @@
         "model": "beneficiary.District",
         "pk": 6,
         "fields": {
-            "name":"District 6",
+            "name":"Kapiri Mposhi",
             "province": 6,
             "created": "2022-03-08"
 
@@ -64,7 +64,7 @@
         "model": "beneficiary.District",
         "pk": 7,
         "fields": {
-            "name":"District 7",
+            "name":"Luano",
             "province": 7,
             "created": "2022-03-08"
 
@@ -74,7 +74,7 @@
         "model": "beneficiary.District",
         "pk": 8,
         "fields": {
-            "name":"District 8",
+            "name":"Mkushi",
             "province": 8,
             "created": "2022-03-08"
 
@@ -84,7 +84,7 @@
         "model": "beneficiary.District",
         "pk": 9,
         "fields": {
-            "name":"District 9",
+            "name":"Mumbwa",
             "province": 9,
             "created": "2022-03-08"
 
@@ -94,10 +94,32 @@
         "model": "beneficiary.District",
         "pk": 10,
         "fields": {
-            "name":"District 10",
+            "name":"Ngabwe",
             "province": 10,
             "created": "2022-03-08"
 
-        }
-    }   
+                    }
+    },  
+    {
+        "model": "beneficiary.District",
+        "pk": 11,
+        "fields": {
+            "name":"Serenje",
+            "province": 10,
+            "created": "2022-03-08"
+
+                    }
+    }, 
+
+    {
+        "model": "beneficiary.District",
+        "pk": 12,
+        "fields": {
+            "name":"Shibuyunji",
+            "province": 10,
+            "created": "2022-03-08"
+
+                    }
+    }
+    
 ]

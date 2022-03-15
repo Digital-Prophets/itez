@@ -1,0 +1,21 @@
+[
+    {
+        "model": "beneficiary.BeneficiaryParent",
+        "pk": 1,
+        "fields": {
+            
+            "father_first_name": "John",
+            "father_last_name": "Tembo",
+            "mother_first_name": "Grade",
+            "mother_last_name": "Tembo",
+            "address": "Kabwata",
+            "father_phone_number": "123456789",
+            "mother_phone_number": "12345678",
+            "father_date_of_birth": "1980-01-12",
+            "mother_date_of_birth": "1985-06-10",
+            "father_village": "Male",
+            "mother_village": "1980-01-12",
+            "created": "abcd1234"
+        }
+    }
+]

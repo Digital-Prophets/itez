@@ -65,7 +65,7 @@ class MedicalRecordForm(ModelForm):
                     Column("no_of_days", css_class="form-group col-md-6 mb-0"),
                     Column("lab", css_class="form-group col-md-6 mb-0"),
                     Column("approved_by", css_class="form-group col-md-6 mb-0"),
-                    Column("approver_signature", css_class="form-group col-md-6 mb-0"),
+                    Column("approver_signature", css_class="form-group col-md-12 mb-0"),
                     css_class="form-row",
                 ),
             ),
