@@ -16,6 +16,7 @@ class Command(BaseCommand):
         call_command("loaddata", "itez/fixtures/facility.json", verbosity=0)
         call_command("loaddata", "itez/fixtures/beneficiary.json", verbosity=0)
         call_command("loaddata", "itez/fixtures/agents.json", verbosity=0)
+        call_command("loaddata", "itez/fixtures/service_provider_personal_qualification.json", verbosity=0)
         call_command("loaddata", "itez/fixtures/services.json", verbosity=0)
         call_command("loaddata", "itez/fixtures/medical_records.json", verbosity=0)
 

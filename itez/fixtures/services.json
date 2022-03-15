@@ -4,7 +4,8 @@
         "model": "beneficiary.Service",
         "pk": 1,
         "fields": {
-            "title": "OPD",
+            "title": "OPD Services",
+            "service_personnel":1,
             "client_type": "client type",
             "service_type": "service_type",
             "datetime": "2022-03-09",
@@ -15,7 +16,8 @@
         "model": "beneficiary.Service",
         "pk": 2,
         "fields": {
-            "title": "HTS",
+            "title": "HTS (HIV Testing Services",
+            "service_personnel":1,
             "client_type": "client type",
             "service_type": "service_type",
             "datetime": "2022-03-09",
@@ -26,7 +28,8 @@
         "model": "beneficiary.Service",
         "pk": 3,
         "fields": {
-            "title": "VL",
+            "title": "VL Checkup",
+            "service_personnel":1,
             "client_type": "client type",
             "service_type": "service_type",
             "datetime": "2022-03-09",
@@ -37,7 +40,8 @@
         "model": "beneficiary.Service",
         "pk": 4,
         "fields": {
-            "title": "Labs",
+            "title": "Lab Review",
+            "service_personnel":1,
             "client_type": "client type",
             "service_type": "service_type",
             "datetime": "2022-03-09",
@@ -48,7 +52,8 @@
         "model": "beneficiary.Service",
         "pk": 5,
         "fields": {
-            "title": "Pharmacy",
+            "title": "Drug Pickup",
+            "service_personnel":1,
             "client_type": "client type",
             "service_type": "service_type",
             "datetime": "2022-03-09",

@@ -1,0 +1,14 @@
+[
+    {
+        "model": "beneficiary.ServiceProviderPersonel",
+        "pk": 1,
+        "fields": {
+            "first_name": "John",
+            "last_name": "John",
+            "facility": 1,
+            "birthdate": "1980-01-12",
+            "department": "department1",
+            "qualification": 1
+        }
+    }
+]
