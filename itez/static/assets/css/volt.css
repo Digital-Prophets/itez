@@ -1,26 +1,15 @@
 /*
-
 =========================================================
-* Volt - Free Bootstrap 5 Dashboard
-=========================================================
-
-* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
-* Copyright 2021 Themesberg (https://www.themesberg.com)
-
-* Designed and coded by https://themesberg.com
-
+* Itez -  Dashboard
 =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal. Contact us if you want to remove it.
 
-*/
-
-
+/* Background Color for the Itez Dashboard */
 .dashboard_background {
   background-color: #dee2e6;
 }
 
-
+/* Font weight for the table elements  */
 .table.select-table td h6, .table.select-table td .h6 {
   font-weight: 400;
 }
