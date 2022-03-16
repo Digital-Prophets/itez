@@ -10,8 +10,8 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %} {% endblock stylesheets %} {% block content %}
 
-<div class="content-wrapper dashboard_background">
-	
+<div class="content-wrapper">
+	 {% include "includes/notifications_modal.html" %}
   <div class="row">
     <div class="col-md-4 grid-margin">
 		
@@ -33,15 +33,15 @@
 					{% elif beneficiary.profile_photo and beneficiary.gender == 'Male' %}
 					<img
 						style="border-radius: 0.6em;"
-						class="img-lg rounded-square mt-4"
-						src="/static/assets/images/faces/male.jpeg" style="width:50%;"
+						class="img-xs rounded-square mt-4"
+						src="/static/assets/images/faces/male.jpeg"
 						alt="Profile image"
 					/>
 
 					{% elif not beneficiary.profile_photo and beneficiary.gender == 'Female' %}
 					<img
 						style="border-radius: 0.6em; border-radius: 6em"
-						class="img-lg rounded-square mt-4"
+						class="img-xs rounded-square mt-4"
 						src="/static/assets/images/faces/female.jpeg"
 						alt="Profile image"
 					/>
@@ -49,7 +49,7 @@
 					{% else %}
 					<img
 						style="border-radius: 0.6em; border-radius: 6em"
-						class="img-lg rounded-square mt-4"
+						class="img-xs rounded-square mt-4"
 						src="/static/assets/images/faces/male.jpeg"
 						alt="Profile image"
 					/>
@@ -339,8 +339,7 @@
 				<h2 class="mt-1" style="font-size: 20px;">
 					Last Visit
 				</h2>
-				<button id="download-medical-report-button" class="btn btn-primary" style="border-radius: 2px;">Download</button>
-				
+				<button id="download-medical-report-button" class="btn btn-primary btn-sm text-white" style="border-radius: 2px;">Download</button>
 			</div>
 					<div class="card" style="margin-top: 10px; 
 					border-radius: 2px;
@@ -356,7 +355,7 @@
 						  </div>
 						  <div class="row" style="margin-bottom: 10px;">
 							  <div class="col-xs-12 col-sm-6 col-md-4"><span><strong>{{latest_beneficiary_service.service_name}}</strong> </span></div>
-							  <div class="col-xs-12 col-sm-6 col-md-4"><span> <strong>{{latest_beneficiary_service.service_facility}}</strong> </span></div>
+							  <div class="col-xs-12 col-sm-6 col-md-4"><span> <strong>{{latest_beneficiary_service.facility}}</strong> </span></div>
 							  <div class="col-xs-12 col-sm-6 col-md-4">
 								<span><strong>{{latest_beneficiary_service.interaction_date|date:"d M Y"}}</strong> </span>
 								  
@@ -380,16 +379,17 @@
 							</div>
 								
 						</div>
-						<div class="card-header">
+						<!-- <div class="card-header">
 							<div class="row" style="margin-bottom: 10px;">								
 								<div class="col-xs-12 col-sm-6 col-md-4"><span class="text-muted">Supporting Documents</span></div>								
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-6 col-md-4">
-									<p>Documents</p>
+									{{latest_beneficiary_service.supporting_documents}}
+
 								</div>
 							</div>
-						</div>
+						</div> -->
 					  </div>
 					</div>
 				  </div>

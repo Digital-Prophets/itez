@@ -25,9 +25,9 @@ from notifications.signals import notify
 
 
 class MedicalRecordForm(ModelForm):
-    documents = forms.FileField(
-            required= False    
-    )
+    # documents = forms.FileField(
+    #         required= False    
+    # )
 
     class Meta:
 

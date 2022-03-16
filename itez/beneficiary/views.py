@@ -245,15 +245,15 @@ class MedicalRecordCreateView(LoginRequiredMixin, CreateView):
             verb="created medical record",
         )
 
-        files = form.files.getlist("documents")
-        files_dict = create_files_dict(
-            directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files]
-        )
+        # files = form.files.getlist("documents")
+        # files_dict = create_files_dict(
+        #     directory=beneficiary_obj.beneficiary_id, filenames=[f.name for f in files]
+        # )
 
-        for f in files:
-            handle_upload(f, destination_directory=beneficiary_obj.beneficiary_id)
+        # for f in files:
+        #     handle_upload(f, destination_directory=beneficiary_obj.beneficiary_id)
 
-        form.instance.documents = json.dumps(files_dict)
+        # form.instance.documents = json.dumps(files_dict)
         form.instance.beneficiary = beneficiary_obj
         form.save()
         return super(MedicalRecordCreateView, self).form_valid(form)
@@ -303,86 +303,87 @@ class BenenficiaryListView(LoginRequiredMixin, ListView):
         return context
 
 
-class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
-    """
-    Beneficiary Details view.
-    """
+# class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
+#     """
+#     Beneficiary Details view.
+#     """
 
-    context_object_name = "beneficiary"
-    model = Beneficiary
-    paginate_by = 2
-    template_name = "beneficiary/beneficiary_detail.html"
+#     context_object_name = "beneficiary"
+#     model = Beneficiary
+#     paginate_by = 2
+#     template_name = "beneficiary/beneficiary_detail.html"
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(BeneficiaryDetailView, self).get_context_data(**kwargs)
-        current_beneficiary_id = self.kwargs.get("pk")
-        current_beneficiary = Beneficiary.objects.get(id=current_beneficiary_id)
-        beneficiary_medical_records = MedicalRecord.objects.filter(
-            beneficiary__id=current_beneficiary_id
-        )
-        latest_beneficiary_medical_record = MedicalRecord.objects.filter(
-            beneficiary__id=current_beneficiary_id
-        ).latest("created")
-        print(
-            "Service Provider" + str(latest_beneficiary_medical_record.service.document)
-        )
+#     def get_context_data(self, *args, **kwargs):
+#         context = super(BeneficiaryDetailView, self).get_context_data(**kwargs)
+#         current_beneficiary_id = self.kwargs.get("pk")
+#         current_beneficiary = Beneficiary.objects.get(id=current_beneficiary_id)
+#         beneficiary_medical_records = MedicalRecord.objects.filter(
+#             beneficiary__id=current_beneficiary_id
+#         )
+#         latest_beneficiary_medical_record = MedicalRecord.objects.filter(
+#             beneficiary__id=current_beneficiary_id
+#         ).latest("created")
+#         print(
+#             "Service Provider" + str(latest_beneficiary_medical_record.service.document)
+#         )
 
-        services = {"services": []}
+#         services = {"services": []}
 
-        service_provider_name = (
-            latest_beneficiary_medical_record.service.service_personnel.first_name
-            + ""
-            + latest_beneficiary_medical_record.service.service_personnel.last_name
-        )
-        latest_beneficiary_service = {
-            "service_name": latest_beneficiary_medical_record.service,
-            "facility": latest_beneficiary_medical_record.facility,
-            "interaction_date": latest_beneficiary_medical_record.interaction_date,
-            "service_provider": service_provider_name,
-            "service_provider_comments": latest_beneficiary_medical_record.provider_comments,
-            "supporting_documents": latest_beneficiary_medical_record.document,
-            "prescription": latest_beneficiary_medical_record.prescription.title,
-            "when_to_take": latest_beneficiary_medical_record.when_to_take,
-        }
+#         service_provider_name = (
+#             latest_beneficiary_medical_record.service.service_personnel.first_name
+#             + ""
+#             + latest_beneficiary_medical_record.service.service_personnel.last_name
+#         )
+#         print("Document",latest_beneficiary_medical_record.document)
+#         latest_beneficiary_service = {
+#             "service_name": latest_beneficiary_medical_record.service,
+#             "facility": latest_beneficiary_medical_record.facility,
+#             "interaction_date": latest_beneficiary_medical_record.interaction_date,
+#             "service_provider": service_provider_name,
+#             "service_provider_comments": latest_beneficiary_medical_record.provider_comments,
+#             "supporting_documents": latest_beneficiary_medical_record.document,
+#             "prescription": latest_beneficiary_medical_record.prescription.title,
+#             "when_to_take": latest_beneficiary_medical_record.when_to_take,
+#         }
 
-        # Get all services for the beneficiary
-        for medical_record in beneficiary_medical_records:
-            service_personnel_name = (
-                medical_record.service.service_personnel.first_name
-                + "  "
-                + medical_record.service.service_personnel.last_name
-            )
+#         # Get all services for the beneficiary
+#         for medical_record in beneficiary_medical_records:
+#             service_personnel_name = (
+#                 medical_record.service.service_personnel.first_name
+#                 + "  "
+#                 + medical_record.service.service_personnel.last_name
+#             )
 
-            services["services"].append(
-                {
-                    "service_object": medical_record.service,
-                    "facility": medical_record.facility,
-                    "service_provider": service_personnel_name,
-                    "service_comments": medical_record.provider_comments,
-                }
-            )
+#             services["services"].append(
+#                 {
+#                     "service_object": medical_record.service,
+#                     "facility": medical_record.facility,
+#                     "service_provider": service_personnel_name,
+#                     "service_comments": medical_record.provider_comments,
+#                 }
+#             )
 
-        services_paginator_list = []
-        for _, values in services.items():
-            for service in values:
-                services_paginator_list.append(service["service_object"])
+#         services_paginator_list = []
+#         for _, values in services.items():
+#             for service in values:
+#                 services_paginator_list.append(service["service_object"])
 
-        # print("SERVICES",  services)
-        # print("SERVICES PAGINATOR",  services_paginator_list)
-        service_paginator = Paginator(services["services"], 5)
-        service_page_number = self.request.GET.get("service_page")
-        service_paginator_list = service_paginator.get_page(service_page_number)
+#         # print("SERVICES",  services)
+#         # print("SERVICES PAGINATOR",  services_paginator_list)
+#         service_paginator = Paginator(services["services"], 5)
+#         service_page_number = self.request.GET.get("service_page")
+#         service_paginator_list = service_paginator.get_page(service_page_number)
 
-        medical_record_latest = MedicalRecord.objects.latest("created")
+#         medical_record_latest = MedicalRecord.objects.latest("created")
 
-        context["title"] = "Beneficiary Details"
-        context["service_title"] = "services"
-        context["medication_title"] = "medications"
-        context["lab_title"] = "labs"
-        context["beneficiary"] = current_beneficiary
-        context["service_paginator_list"] = service_paginator_list
-        context["latest_beneficiary_service"] = latest_beneficiary_service
-        return context
+#         context["title"] = "Beneficiary Details"
+#         context["service_title"] = "services"
+#         context["medication_title"] = "medications"
+#         context["lab_title"] = "labs"
+#         context["beneficiary"] = current_beneficiary
+#         context["service_paginator_list"] = service_paginator_list
+#         context["latest_beneficiary_service"] = latest_beneficiary_service
+#         return context
 
 
 class BeneficiaryUpdateView(LoginRequiredMixin, UpdateView):
@@ -582,6 +583,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         latest_beneficiary_medical_record = MedicalRecord.objects.filter(
             beneficiary__id=current_beneficiary_id
         ).latest("created")
+
         service_provider_name = (
             latest_beneficiary_medical_record.service.service_personnel.first_name
             + " "

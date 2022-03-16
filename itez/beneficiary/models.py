@@ -1,4 +1,5 @@
 import datetime
+from distutils.command.upload import upload
 import json
 from django.urls import reverse
 from django.utils import timezone
@@ -580,12 +581,17 @@ class MedicalRecord(models.Model):
         _("When to Take"), max_length=500, null=True, blank=True
     )
     lab = models.TextField(_("Lab Comments"), null=True, blank=True)
-    documents = models.CharField(
-        max_length=300,
+    # documents = models.CharField(
+    #     max_length=300,
+    #     null=True,
+    #     blank=True,
+    #     editable=False,
+    #     help_text="A jsonified object containing meta data where documents are stored.",
+    # )
+    documents = models.FileField(
+        upload_to="supporting_documents",
         null=True,
         blank=True,
-        editable=False,
-        help_text="A jsonified object containing meta data where documents are stored.",
     )
     approved_by = models.CharField(
         _("Approved by"),

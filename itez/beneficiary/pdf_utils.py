@@ -247,7 +247,7 @@ class PDF(FPDF, HTMLMixin):
             table_data = [
                 [
                     f"Service Facility:",
-                    record.service_facility.name,
+                    record.facility.name,
                     f"Service Name:",
                     record.service.title,
                 ],
