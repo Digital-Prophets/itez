@@ -583,6 +583,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         latest_beneficiary_medical_record = MedicalRecord.objects.filter(
             beneficiary__id=current_beneficiary_id
         ).latest("created")
+        print("Document", latest_beneficiary_medical_record)
 
         service_provider_name = (
             latest_beneficiary_medical_record.service.service_personnel.first_name
@@ -602,6 +603,8 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
             or "",
             "prescription": latest_beneficiary_medical_record.prescription.title or "",
             "when_to_take": latest_beneficiary_medical_record.when_to_take or "",
+            "documents": latest_beneficiary_medical_record.documents
+
         }
 
         # Get all services for the beneficiary
@@ -633,7 +636,7 @@ class BeneficiaryDetailView(LoginRequiredMixin, DetailView):
         service_page_number = self.request.GET.get("service_page")
         service_paginator_list = service_paginator.get_page(service_page_number)
 
-        medical_record_latest = MedicalRecord.objects.latest("created")
+        # medical_record_latest = MedicalRecord.objects.latest("created")
         context["notifications"] = all_unread
         context["title"] = "Beneficiary Details"
         context["service_title"] = "services"

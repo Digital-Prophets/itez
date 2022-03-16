@@ -10,7 +10,7 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %} {% endblock stylesheets %} {% block content %}
 
-<div class="content-wrapper">
+<div class="content-wrapper dashboard_background">
 	 {% include "includes/notifications_modal.html" %}
   <div class="row">
     <div class="col-md-4 grid-margin">
@@ -40,15 +40,15 @@
 
 					{% elif not beneficiary.profile_photo and beneficiary.gender == 'Female' %}
 					<img
-						style="border-radius: 0.6em; border-radius: 6em"
+						style=" width:50%; height:50%; margin-left:20%;border-radius: 0.6em; border-radius: 6em; "
 						class="img-xs rounded-square mt-4"
-						src="/static/assets/images/faces/female.jpeg"
+						src="/static/assets/images/faces/female.jpeg "
 						alt="Profile image"
 					/>
 
 					{% else %}
 					<img
-						style="border-radius: 0.6em; border-radius: 6em"
+						style="width:50%; height:50%; margin-left:20%; border-radius: 0.6em; border-radius: 6em; width:20%;"
 						class="img-xs rounded-square mt-4"
 						src="/static/assets/images/faces/male.jpeg"
 						alt="Profile image"
@@ -331,66 +331,79 @@
       </div>
     </div>
 
+
+	<!-- test -->          
+		
+
+	<!-- end test -->
+	
+
     <div class="col-lg-8 grid-margin">
 		<div class="row">
 			<div class="col-lg-12 grid margin">
+				<p>
+				
+				</p>
 				<div class="accordion" id="accordionExample">
 				<div class="d-flex justify-content-between">	
-				<h2 class="mt-1" style="font-size: 20px;">
-					Last Visit
-				</h2>
+				
 				<button id="download-medical-report-button" class="btn btn-primary btn-sm text-white" style="border-radius: 2px;">Download</button>
-			</div>
+				</div>
 					<div class="card" style="margin-top: 10px; 
 					border-radius: 2px;
 					box-shadow: 0px 3px 15px rgb(0 0 0 / 20%)">
 					  <div class="card-header" id="headingOne">
-						  <div class="row" style="margin-bottom: 10px;">
-							  <!-- Meta Data Section -->
-							  <div class="col-xs-12 col-sm-6 col-md-4"><span class="text-muted">Service Name</span> </div>
-							  <div class="col-xs-12 col-sm-6 col-md-4"> <span class="text-muted">Service Facility</span> </div>
-							  <div class="col-xs-12 col-sm-6 col-md-4">
-								  <span class="text-muted">Interaction Date</span>
-							  </div>
-						  </div>
-						  <div class="row" style="margin-bottom: 10px;">
-							  <div class="col-xs-12 col-sm-6 col-md-4"><span><strong>{{latest_beneficiary_service.service_name}}</strong> </span></div>
-							  <div class="col-xs-12 col-sm-6 col-md-4"><span> <strong>{{latest_beneficiary_service.facility}}</strong> </span></div>
-							  <div class="col-xs-12 col-sm-6 col-md-4">
-								<span><strong>{{latest_beneficiary_service.interaction_date|date:"d M Y"}}</strong> </span>
-								  
-							  </div>
-						  </div>				
+						<h2 class="mt-1" style="font-size: 20px;">
+							Last Visit
+						</h2>
+
+						<!-- tests -->
+						<table class="table">
+							
+							<thead>
+							  <tr>
+								<th>Service Name</th>
+								<th>Service Facility</th>
+								<th>Interaction Date</th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr>
+								<td>{{latest_beneficiary_service.service_name}}</td>
+								<td>{{latest_beneficiary_service.facility}}</td>
+								<td>{{latest_beneficiary_service.interaction_date|date:"d M Y"}}</td>
+							  </tr>
+							  
+							</tbody>
+						  </table>
+
+						  <table class="table" style="margin-top:5%;">
+							
+							<thead>
+							  <tr>
+								<th>Service Provider</th>
+								<th>Provider Comments</th>
+								<th>Supporting Documents</th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr>
+								<td>{{latest_beneficiary_service.service_provider}}</td>
+								<td>{{latest_beneficiary_service.service_provider_comments}}</td>
+								<td>
+									<button type="button" class="btn btn-primary">
+										<a href="{{latest_beneficiary_service.documents.url}}" >Supported Document</a>
+									</button>
+									</td>
+							  </tr>
+							  
+							</tbody>
+						  </table>
+						<!-- end tests -->
+						  			
 					  </div>
 				  
-					  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-						<div class="card-header" id="headingOne">
-							<div class="row" style="margin-bottom: 10px;">
-								<!-- Meta Data Section -->
-								<div class="col-xs-12 col-sm-6 col-md-4"> <span class="text-muted">Service Provider</span> </div>
-								<div class="col-xs-12 col-sm-6 col-md-4"> <span class="text-muted">Provider Comments</span></div>
-								
-							</div>	
-							<div class="row" style="margin-bottom: 10px;">
-								<div class="col-xs-12 col-sm-6 col-md-4"><span> <strong>{{latest_beneficiary_service.service_provider}}</strong></span></div>
-								<div class="col-xs-12 col-sm-6 col-md-4"><span> <strong>{{latest_beneficiary_service.service_provider_comments}}</strong> </span></div>
-								
-								<span></span>
-							</div>
-								
-						</div>
-						<!-- <div class="card-header">
-							<div class="row" style="margin-bottom: 10px;">								
-								<div class="col-xs-12 col-sm-6 col-md-4"><span class="text-muted">Supporting Documents</span></div>								
-							</div>
-							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-4">
-									{{latest_beneficiary_service.supporting_documents}}
-
-								</div>
-							</div>
-						</div> -->
-					  </div>
+				
 					</div>
 				  </div>
 			</div>
