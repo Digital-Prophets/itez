@@ -94,7 +94,10 @@ THIRD_PARTY_APPS = [
     # "notifications_rest",
     "mapwidgets",
     "django_celery_results",
+
 ]
+
+
 
 LOCAL_APPS = [
     "itez.users.apps.UsersConfig",

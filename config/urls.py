@@ -47,6 +47,8 @@ urlpatterns += [
     path("api/docs/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path("swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
 
+    # 
+
     # Additional APIViews
     path(
         "drug/", 

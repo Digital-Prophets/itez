@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from itez.beneficiary import views
-
 app_name = "beneficiary"
 
 urlpatterns = [
