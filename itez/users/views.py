@@ -4,14 +4,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView, CreateView
-from itez.authentication.user_roles import user_roles
-from itez.users.forms import UserRegistrationForm
+# from authentication.user_roles import user_roles
+from users.forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponse
-from itez.users.models import User as user_model
-from itez.users.models import Profile
-from itez.beneficiary.models import District, Province
-from itez.users.models import EDUCATION_LEVEL, GENDER_CHOICES, SEX_CHOICES
+from users.models import User as user_model
+from users.models import Profile
+from myplaces.models import *
+from users.models import EDUCATION_LEVEL, GENDER_CHOICES, SEX_CHOICES
 from notifications.signals import notify
 from rolepermissions.roles import RolesManager
 

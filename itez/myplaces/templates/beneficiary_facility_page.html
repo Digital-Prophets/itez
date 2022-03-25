@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+
+<meta charset="utf-8">
+
+<title>my favorite places</title>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<!-- <script src="/static/assets/js/leaflet.ajax.js"></script> -->
+<script src="/static/assets/js/leaflet.ajax.js" charset="utf-8"></script>
+
+
+
+</head>
+
+
+
+<body>
+    <script type="text/javascript">
+        function place_pos(map, options){
+        var dataset = new L.GeoJSON.AJAX("{% url 'my_places' %}" ,{
+        onEachFeature: function(feature, layer){
+        layer.bindPopup(feature.properties.name)
+        }
+        });
+        dataset.addTo(map)
+        }
+</script>
+    
+<h1>My favorite place</h1>
+
+{% for place in places %}
+
+
+
+place name: {{place.name}} <br>
+
+<small>{{place.distance}}--- far from me</small> <br>
+
+
+{% endfor %}
+
+
+
+
+
+</body>
+
+
+</html>

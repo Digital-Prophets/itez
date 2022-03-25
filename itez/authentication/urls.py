@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.urls import path
-from itez.authentication.views import login_view, register_user, create_user
+from authentication.views import login_view, register_user, create_user
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
-from itez.authentication.serializers import LoginSerializer
+from authentication.serializers import LoginSerializer
 
 
 class LoginViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):

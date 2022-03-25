@@ -1,0 +1,189 @@
+{% load leaflet_tags %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% leaflet_js %}
+    {% leaflet_css %}
+    <style>
+      .leaflet-container { width: 100%; height: 800px; }
+    </style>
+    <script>
+      var dataurl = '{% url "my_places" %}';
+
+      window.addEventListener("map:init", function (event) {
+        var map = event.detail.map;
+        // Download GeoJSON data with Ajax
+        fetch(dataurl)
+          .then(function(resp) {
+            return resp.json();
+          })
+          .then(function(data) {
+            L.geoJson(data, {
+              onEachFeature: function onEachFeature(feature, layer) {
+                var props = feature.properties;
+                var content = `<h4>Name: ${props.name}</h4><p>Description: ${props.description}</p><p>District: ${props.District}</p><p>Province: ${props.province}</p><p>Country: ${props.Country}</p>`;
+                layer.bindPopup(content);
+            }}).addTo(map);
+          });
+      });
+    </script>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Itez Dashboard</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="/static/assets/assets/favicon.ico" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/assets/css/styles.css" rel="stylesheet" />
+
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#page-top">Itez Platform</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                       
+                         
+                        
+                        <li class="nav-item"><a class="nav-link" href="facility">Facility</a></li>
+                       
+                        
+                        
+                         
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                     
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">Data management of Intersex and Trans-persons in Zambia.</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <!-- <p class="text-white-75 mb-5">Itez Project</p> -->
+                        <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Data management of Intersex and Trans-persons in Zambia.</h2>
+                        <hr class="divider divider-light" />
+                        <p class="text-white-75 mb-4">Data management of Intersex and Trans-persons in Zambia.</p>
+                        <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services-->
+        <section class="page-section" id="services">
+          <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
+            <!-- <div class="col-lg-8 text-center">
+                <h1 class="justify-content-center font-weight-bold">Services</h1>
+               
+            </div> -->
+            <div class="row">
+                
+                <div class="col-md-8" style="height: 400px;">
+                  {% leaflet_map "main" %}
+                 </div>
+               <div class="col-md-4">
+              <!-- test -->
+              <div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-sm-flex justify-content-between align-items-start">
+                    <div>
+                      <h2> Facility</h2>
+                      
+                        
+                    </div>
+        
+               
+                  </div>
+        
+                  
+                  <div class=" table" >
+                    <form name="beneficiary_form" class="form-delete">{% csrf_token %}
+        
+        
+                      <div class="mt-3">       
+                        <table class="table select-table" id="table_id">
+                         
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Description</th>
+                              <th>District</th>
+                              <th>Province</th>
+                              <th>Country</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+        
+                         
+                            {%for place in places %}
+                      <tr>
+                        
+                        <td>{{place.name}}</td>
+                        <td>{{place.description}}</td>
+                        <td>{{place.District}}</td>
+                        <td>{{place.province}}</td>
+                        <td>{{place.Country}}</td>
+                          
+                      
+                      </tr>
+                      {% endfor %}
+                    
+                          </tbody>
+                        </table>
+                      </div>
+                    </form>
+                  </div>
+        
+                </div>
+              </div>
+              <!-- end test -->
+        
+        </section>
+         <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - Company Name</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
