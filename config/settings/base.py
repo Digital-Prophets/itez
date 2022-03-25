@@ -104,9 +104,21 @@ THIRD_PARTY_APPS = [
 
 
 REPORT_BUILDER_INCLUDE = [
-    "beneficiary",
-    "agent",
-    "beneficiaryparent",
+    "beneficiary"
+    ,"agent"
+    ,"beneficiaryparent"
+    ,"province"
+    ,"district"
+    ,"servicearea"
+    ,"workdetail"
+    ,"implementingpartner"
+    ,"facilitytype"
+    ,"facility"
+    ,"serviceproviderpersonelqualification"
+    ,"serviceproviderpersonel"
+    ,"drug"
+    ,"service"
+    ,"medicalrecord"
 ]
 LOCAL_APPS = [
     "itez.users.apps.UsersConfig",
@@ -360,7 +372,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
 }
- 
+
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ["*"]
