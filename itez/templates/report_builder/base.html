@@ -1,0 +1,42 @@
+{% extends 'layouts/base.html' %}
+{% block rb_head %}
+
+    {% block angular_app %}
+        {% block report_header %}
+        {% endblock %}
+    {% endblock %}
+{% endblock %}
+ 
+{% block content %}
+    <div class="pageloader"></div>
+    <div class="infraloader is-active"></div>    <!-- Main sidebar menu -->
+
+    <div style="height: calc(100% - 106px); margin-top: 0.1em;">
+        
+        <div id="dashboard-wrapper" class="dashboard-outer">
+            <div class="dashboard-wrapper">
+                {% block report_builder_content %}
+                {% block nav %}
+                    {{ block.super }}
+                    <style>
+                        app-header {
+                            "Build Custom Reports Here."
+                        }
+                    </style>
+                    <div [innerHTML]="Build Custom Reports Here."></div>
+                {% endblock %}
+    
+            {% endblock report_builder_content %}
+            <!-- Dashboard Wrapper -->
+        </div>
+    </div>
+    <script>
+
+    </script>
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script> $(".mat-toolbar-single-row").text("Report Builder")</script>
+    {% endblock javascripts %}
+
+{% endblock %}
+
