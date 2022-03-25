@@ -55,7 +55,12 @@ DATABASES = {
         "PORT": env("DATABASE_PORT"),
     }
 }
-
+# REPORT_BUILDER_THEME = True
+# REPORT_BUILDER_ASYNC_REPORT = True
+# REPORT_BUILDER_MODEL_MANAGER = 'on_site'
+# REPORT_BUILDER_INCLUDE = [
+#     "itez.beneficiary",
+# ]
 # URLS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
@@ -94,8 +99,27 @@ THIRD_PARTY_APPS = [
     # "notifications_rest",
     "mapwidgets",
     "django_celery_results",
+    "report_builder",
 ]
 
+
+REPORT_BUILDER_INCLUDE = [
+    "beneficiary"
+    ,"agent"
+    ,"beneficiaryparent"
+    ,"province"
+    ,"district"
+    ,"servicearea"
+    ,"workdetail"
+    ,"implementingpartner"
+    ,"facilitytype"
+    ,"facility"
+    ,"serviceproviderpersonelqualification"
+    ,"serviceproviderpersonel"
+    ,"drug"
+    ,"service"
+    ,"medicalrecord"
+]
 LOCAL_APPS = [
     "itez.users.apps.UsersConfig",
     "itez.authentication.apps.AuthenticationConfig",
@@ -209,11 +233,12 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.template.context_processors.i18n",
-                "django.template.context_processors.media",
-                "django.template.context_processors.static",
+                
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "itez.utils.context_processors.settings_context",
+                "django.template.context_processors.static",
+                "django.template.context_processors.media",
             ],
         },
     }
@@ -342,15 +367,11 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 # -------------------------------------------------------------------------------
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "itez.authentication.backends.ActiveSessionAuthentication",
-    ),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
 }
-
 
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
