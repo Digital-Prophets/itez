@@ -1,6 +1,7 @@
 from django.urls import path
 
-from itez.users.views import (
+
+from users.views import (
     update_view,
     # UserUpdateView,
     user_delete,

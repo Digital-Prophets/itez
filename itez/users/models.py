@@ -1,3 +1,4 @@
+from trace import Trace
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -7,8 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
-from itez.beneficiary.models import District
-
+# from myplaces_app.beneficiary.models import District
+from myplaces.models import *
 
 from django.db import models
 
@@ -71,6 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(db_index=False, null=True, blank=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
@@ -155,7 +157,7 @@ class Profile(models.Model):
         _("Phone Number 2"), max_length=15, null=True, blank=True
     )
     address = models.TextField(_("Address"), max_length=300, null=True, blank=True)
-    city = models.ForeignKey(District, on_delete=models.SET_NULL, null=True, blank=True)
+    # city = models.ForeignKey(District, on_delete=models.SET_NULL, null=True, blank=True)
     postal_code = models.CharField(
         _("Postal Code"), max_length=100, null=True, blank=True
     )

@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class UsersConfig(AppConfig):
-    name = "itez.users"
+    name = "users"
     verbose_name = _("Users")
 
     def ready(self):
-        import itez.users.signals  # noqa F401
+        import users.signals  # noqa F401

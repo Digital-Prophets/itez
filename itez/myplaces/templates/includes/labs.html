@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">{{ lab_title|title }}</h4>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Lab Type</th>
+            <th>Request Date</th>
+            <th>Results</th>
+            <th>Result Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lab in labs %}
+          <tr>
+            <td>{{ lab.title }}</td>
+            <td>{{ lab.requested_date }}</td>
+            <td class="text-active">{{ lab.results }}</td>
+            <td>{{ lab.results_status }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <hr />
+    <div class="paginator" style="float: right;">
+      <span class="sr-only">
+        {% if medication_paginator_list.has_previous %}
+           <a href="?service_page=1">&laquo; first</a>
+           <a href="?service_page={{medication_paginator_list.previous_page_number}}">previous</a>
+         {% endif %}
+
+         <span class="current">
+           Page {{ medication_paginator_list.number }} of {{ medication_paginator_list.paginator.num_pages }}
+         </span>
+
+         {% if medication_paginator_list.has_next %}
+           <a href="?service_page={{medication_paginator_list.next_page_number}}">next</a>
+           <a href="?service_page={{medication_paginator_list.paginator.num_pages}}">last &raquo;</a>
+         {% endif %}
+      </span>
+    </div>
+  </div>
+</div>

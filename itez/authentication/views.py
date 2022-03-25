@@ -8,11 +8,11 @@ from django.template import loader
 from rolepermissions.roles import assign_role
 from rolepermissions.decorators import has_role_decorator
 from django.urls import reverse
-from itez.authentication.forms import LoginForm, SignUpForm, UserCreationForm
-from itez.users.models import User
-from itez.users.models import Profile
+from authentication.forms_old import LoginForm, SignUpForm, UserCreationForm
+from users.models import User
+from users.models import Profile
 from rolepermissions.checkers import has_role
-from itez.authentication.user_roles import user_roles
+from authentication.user_roles import user_roles
 
 
 @login_required(login_url="/login/")
@@ -73,7 +73,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect("/facility")
             else:
                 msg = "Invalid credentials"
         else:

@@ -7,7 +7,7 @@ from django.utils.html import escape
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from itez.users.forms import UserChangeForm, UserCreationForm
+from users.forms import *
 from .models import Profile, UserWorkDetail, User
 
 
